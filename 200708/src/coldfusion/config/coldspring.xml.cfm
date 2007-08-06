@@ -11,7 +11,7 @@
 			<value>AdogoColdspring</value>
 		</property>
 		<property name="dsn">
-			<value>adogo1-1</value>
+			<value>adogo</value>
 		</property>
 		<property name="type">
 			<value>mysql</value>
@@ -33,51 +33,92 @@
 	
 	
 	<!-- Setup Product-related components -->
-	<bean id="authorService" class="us.adogo.AuthorService">
+	<bean id="memberService" class="us.adogo.MemberService">
 		<constructor-arg name="name">
-			<value>author</value>
+			<value>member</value>
 		</constructor-arg>
 		<constructor-arg name="reactorFactory">
 			<ref bean="reactorFactory" />
 		</constructor-arg>
-		<constructor-arg name="authorGateway">
-			<ref bean="authorGateway" />
+		<constructor-arg name="memberGateway">
+			<ref bean="memberGateway" />
 		</constructor-arg>
-		<constructor-arg name="authorDAO">
-			<ref bean="authorDAO" />
+		<constructor-arg name="memberDAO">
+			<ref bean="memberDAO" />
 		</constructor-arg>
 	</bean>
 	
-	<bean id="authorGateway" factory-bean="reactorFactory" factory-method="createGateway">
+	<bean id="memberGateway" factory-bean="reactorFactory" factory-method="createGateway">
 		<constructor-arg name="objectAlias">
-			<value>author</value>
+			<value>member</value>
 		</constructor-arg>
 	</bean>
 	
-	<bean id="authorDAO" factory-bean="reactorFactory" factory-method="createDao">
+	<bean id="memberDAO" factory-bean="reactorFactory" factory-method="createDao">
 		<constructor-arg name="objectAlias">
-			<value>author</value>
+			<value>member</value>
 		</constructor-arg>
 	</bean>
 	
-	<!-- Generate remote facade for Author Service -->
-	<bean id="authorService_Flex" class="coldspring.aop.framework.RemoteFactoryBean">
+	<!-- Generate remote facade for Member Service -->
+	<bean id="memberServiceFlex" class="coldspring.aop.framework.RemoteFactoryBean" lazy-init="false">
 		<property name="target">
-			<ref bean="authorService" />
+			<ref bean="memberService" />
 		</property>
 		<property name="serviceName">
-			<value>RemoteAuthorService</value>
+			<value>MemberServiceRemote</value>
 		</property>
 		<property name="relativePath">
-			<value>/flex/cfcs/remote</value>
+			<value>/coldfusion/remote</value>
 		</property>
 		<property name="remoteMethodNames">
-			<value>get*</value>
+			<value>get*,create,update,read,delete</value>
 		</property>
 		<property name="beanFactoryName">
    			<value>ServiceFactory</value>
 		</property>
 	</bean>
 	
+	<bean id="memberServiceAjax" class="coldspring.aop.framework.RemoteFactoryBean" lazy-init="false">
+		<property name="target">
+			<ref bean="memberService" />
+		</property>
+		<property name="serviceName">
+			<value>MemberServiceAjax</value>
+		</property>
+		<property name="relativePath">
+			<value>/coldfusion/remote</value>
+		</property>
+		<property name="remoteMethodNames">
+			<value>get*,create,update,read,delete</value>
+		</property>
+		<property name="beanFactoryName">
+			<value>ServiceFactory</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>AJAXGridAdvisor</value>
+			</list>
+		</property>
+		<!--
+		<metadata>
+			<methods>
+				<method name="get*">
+					<parameter name="cfgridpage" />
+					<parameter name="cfgridpageSize" />
+					<parameter name="cfgridpagesortcolumn" />
+					<parameter name="cfgridpagesortdirection" />
+				</method>
+				<method name="update">
+					<parameter name="gridaction" />
+					<parameter name="gridrow" />
+					<parameter name="gridchanged" />
+				</method>
+			</methods>
+	   </metadata>
+		-->
+	</bean>
 	
+	<bean id="AJAXGridAdvisor" class="us.adogo.AJAXGridAdvisor" />
+			
 </beans>
