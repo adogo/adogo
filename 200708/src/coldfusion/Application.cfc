@@ -17,11 +17,11 @@
 		<!--- 
 		<cffile output="#now()#: onApplicationStart" action="write" file="#getDirectoryFromPath( getCurrentTemplatePath() )#log.txt" addnewline="true" />
 		--->
-		<cfset serviceDefinitionLocation = expandPath('/coldfusion/config/coldSpring.xml.cfm') />
+		<cfset serviceDefinitionLocation = expandPath('/adogo/bin/coldfusion/config/coldSpring.xml.cfm') />
 		<cfset application.serviceFactory = createObject('component', 'coldspring.beans.DefaultXmlBeanFactory').init() />
 		<cfset application.serviceFactory.loadBeansFromXmlFile(serviceDefinitionLocation) />
-		<cfset authorService = application.serviceFactory.getBean("memberServiceFlex") />
-		<cfset authorService = application.serviceFactory.getBean("memberServiceAjax") />
+		<cfset authorService = application.serviceFactory.getBean("memberService_flex") />
+		<cfset authorService = application.serviceFactory.getBean("memberService_ajax") />
 		<cfreturn true />
 	</cffunction>
 	
@@ -33,7 +33,9 @@
 
 	<cffunction name="onRequestStart" hint="" access="public" returntype="boolean">
 		<cfargument name="theTargetPage" type="String" required="true"/>
-		<cfset onApplicationStart() />
+      <cfif StructKeyExists(url,"reload")>
+   		<cfset onApplicationStart() />
+   	</cfif>
 		<cfreturn true />
 	</cffunction>
 	<!--- 

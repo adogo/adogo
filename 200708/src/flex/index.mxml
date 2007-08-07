@@ -17,41 +17,21 @@
 			private function initApp() : void {
 				MemberService.getAll();
 			}
-			
-			public function update(event : DataGridEvent) : void {       
-				if(event.reason == DataGridEventReason.CANCELLED) return; 
-
-				if (event.rowIndex > 0) {
-					arguments[event.dataField] = TextInput(event.currentTarget.itemEditorInstance).text;
-					arguments['id'] = membersDG.selectedItem.ID;
-	   
-					if( membersDG.selectedItem[event.dataField] == arguments[event.dataField]) return;
-	
-					MemberService.update(arguments);	
-				}
-			}
 		]]>
 	</mx:Script>
 
-
-
 	<mx:WebService   id="MemberService" 
-					 wsdl="http://adogo/coldfusion/remote/MemberServiceRemote.cfc?wsdl"
+					 wsdl="http://localhost/adogo/bin/coldfusion/remote/MemberServiceFlex.cfc?wsdl"
 					 showBusyCursor="true">
-		<mx:operation name="create" />
 		<mx:operation name="getAll" result="members = event.result as Array;"/>
-		<mx:operation name="update" fault="Alert.show(event.fault.toString())"  />
 	</mx:WebService>
 
-
-	
 	<mx:Panel width="800" height="300" layout="absolute" horizontalCenter="0" verticalCenter="0" title="Manage Tables">
 		<mx:TabNavigator left="10" top="10" right="10" bottom="10">
 			<mx:Canvas label="Members" width="100%" height="100%">
-				<mx:DataGrid id="membersDG" height="100%" y="0" width="100%" x="0" dataProvider="{members}" editable="true" itemEditEnd="update(event)">
+				<mx:DataGrid id="membersDG" height="100%" y="0" width="100%" x="0" dataProvider="{members}">
 					<mx:columns>
 						<mx:DataGridColumn dataField="ID" headerText="ID" editable="false" />
-						<mx:DataGridColumn dataField="USERNAME" headerText="Username" />
 						<mx:DataGridColumn dataField="FIRSTNAME" headerText="First Name" />
 						<mx:DataGridColumn dataField="LASTNAME" headerText="Last Name" />
 						<mx:DataGridColumn dataField="BIRTHDATE" headerText="BirthDate" />

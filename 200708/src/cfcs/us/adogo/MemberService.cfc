@@ -1,7 +1,12 @@
 <cfcomponent name="MemberService" extends="BaseService" output="false">
 	
 	<cffunction name="getAll" output="false" returntype="query">
-		<cfreturn variables.instance.memberGateway.getAll(argumentsCollection=arguments) />
+      <!--- This is for the ajax service. --->
+      <cfargument name="cfgridpage" default="1" />
+		<cfargument name="cfgridpageSize" default="5" />
+		<cfargument name="cfgridpagesortcolumn" default="firstname" />
+		<cfargument name="cfgridpagesortdirection" default="asc" />
+		<cfreturn variables.instance.memberGateway.getAll() />
 	</cffunction>
 
 	<cffunction name="getByFields" output="false" returntype="query">
@@ -9,14 +14,21 @@
 	</cffunction>
 
 	<cffunction name="create" output="false" returntype="any">
-		<cfset var record = variables.instance.reactorFactory.createRecord("member").init(argumentCollection=arguments) />
+      <cfargument name="_to" type="struct" required="false" default="#StructNew()#" />
+      <cfset var args = arguments._to />
+		<cfset var record = variables.instance.reactorFactory.createRecord("member") />
+      <cfset var errors = Arraynew(1) />
+      <cfif StructIsEmpty(args)>
+         <cfset args = arguments />
+      </cfif>
+      <cfset record.init(argumentCollection=args) />
 		<cfset record.validate() />
 		<cfif record.hasErrors()>
-			<cfreturn record._getErrorCollection().getTranslatedErrors() />
+			<cfset errors = record._getErrorCollection().getTranslatedErrors() />
 		<cfelse>
 			<cfset record.save() />
-			<cfreturn record.getID() />
 		</cfif>
+      <cfreturn errors />
 	</cffunction>
 
 	<cffunction name="update" output="false" returntype="array">
