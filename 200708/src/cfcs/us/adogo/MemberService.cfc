@@ -1,11 +1,12 @@
 <cfcomponent name="MemberService" extends="BaseService" output="false">
 	
 	<cffunction name="getAll" output="false" returntype="query">
-      <!--- This is for the ajax service. --->
-      <cfargument name="cfgridpage" default="1" />
-		<cfargument name="cfgridpageSize" default="5" />
-		<cfargument name="cfgridpagesortcolumn" default="firstname" />
-		<cfargument name="cfgridpagesortdirection" default="asc" />
+      <!--- This is for the ajax service. 
+      <cfargument name="cfgridpage" default="1" required="false" />
+		<cfargument name="cfgridpageSize" default="5" required="false" />
+		<cfargument name="cfgridpagesortcolumn" default="firstname" required="false" />
+		<cfargument name="cfgridpagesortdirection" default="asc" required="false" />
+      --->
 		<cfreturn variables.instance.memberGateway.getAll() />
 	</cffunction>
 
