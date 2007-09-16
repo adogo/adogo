@@ -5,7 +5,7 @@
 		<cfargument name="login" required="yes" type="string" />
 		<cfargument name="pass" required="yes" type="string" />
 		<cfargument name="first_name" required="yes" type="string" />
-		<cfargument name="last_ame" required="yes" type="string" />
+		<cfargument name="last_name" required="yes" type="string" />
 		<cfargument name="email" required="yes" type="string" />
 		<cfargument name="url" required="no" type="string" />
 		<cfset var userFactory = createObject("component","UserFactory").init() />
@@ -36,7 +36,7 @@
 		<cfargument name="id" required="yes" type="numeric" />
 
 		<cfset var userFactory = createObject("component","UserFactory").init() />
-		<cfset var deletedUser = userFactory.find(argumentCollection = arguments) />
+		<cfset var deletedUser = userFactory.search(argumentCollection = arguments) />
 		<cfset userFactory.delete(argumentCollection = arguments) />
 
 		<cfreturn "You have successfully deleted #deletedUser.first_name# #deletedUser.last_name#" />
@@ -46,13 +46,13 @@
 	<cffunction name="get" access="remote" returntype="struct" >
 		<cfargument name="id" required="yes" type="numeric" />
 		<cfset var userFactory = createObject("component","UserFactory").init() />
-		<cfset var foundUser = userFactory.find(argumentCollection = arguments) />
+		<cfset var foundUser = userFactory.search(argumentCollection = arguments) />
 		<cfset var column = "" />
 		<cfset var returnUser =  StructNew() />
 		
 		<!--- Convert the query to a struct --->
 		<cfset fields = foundUser.columnList />
-		<cfloop list="#foundUser.columnList#" item="column">
+		<cfloop list="#foundUser.columnList#" index="column">
 			<cfset returnUser[column] = foundUser[column] />
 		</cfloop>
 
@@ -60,7 +60,7 @@
 	</cffunction>
 	
 	<!--- USER SEARCH --->
-	<cffunction name="find" access="remote" returntype="query" >
+	<cffunction name="search" access="remote" returntype="query" >
 		<cfargument name="id" required="false" default="" />
 		<cfargument name="login" required="false" default="" />
 		<cfargument name="pass" required="false" default="" />
@@ -70,7 +70,7 @@
 		<cfargument name="url" required="false" default="" />
 		
 		<cfset var userFactory = createObject("component","UserFactory").init() />
-		<cfset var foundUsers = userFactory.find(argumentCollection = arguments) />
+		<cfset var foundUsers = userFactory.search(argumentCollection = arguments) />
 		
 		<cfreturn foundUsers/>
 	</cffunction>

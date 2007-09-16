@@ -32,7 +32,10 @@
 			// CALL USER SEARCH METHOD
 			private function SearchManager_Search_User(firstName:String, lastName:String):void
 			{
-				SearchManager.Search_User(firstName, lastName);
+				var user : Object = new Object;
+				user.first_name = firstName;
+				user.last_name = lastName;
+				SearchManager.search(user);
 			}
 		
 			// HANDLE USER SEARCH RESULTS
@@ -48,7 +51,8 @@
 			// HANDLE USER SEARCH FAULTS
 			private function SearchManager_Search_User_Fault(event:FaultEvent):void
 			{
-				Alert.show("An error occured","Program Error")
+				Alert.show(event.fault.message);
+//				Alert.show("An error occured","Program Error")
 			}
 		
 			// USER SEARCH HANDLER
@@ -89,8 +93,8 @@
 		wsdl="http://localhost/services/UserManager.cfc?wsdl"
 		showBusyCursor="true">
 		
-		<mx:operation name="find" 
-			result="SearchManager_Search_User_Result( SearchManager.Search_User.lastResult )" 
+		<mx:operation name="search" 
+			result="SearchManager_Search_User_Result( SearchManager.search.lastResult )" 
 			fault="SearchManager_Search_User_Fault(event)"/>
 			
 	</mx:WebService>

@@ -43,7 +43,7 @@
 	</cffunction>
 	
 	<cffunction name="edit" returntype="void" access="public">
-		<cfargument name="id" required="yes" type="numeric" />
+		<cfargument name="id" required="yes" type="string" />
 		<cfargument name="login" required="yes" type="string" />
 		<cfargument name="pass" required="yes" type="string" />
 		<cfargument name="first_name" required="yes" type="string" />
@@ -61,20 +61,22 @@
 			</cfif>
 		</cfloop>
 		
+      <cfdump var="#editParams#"><cfabort>
+      
 		<cfset updateQuery(argumentCollection = editParams) />
 	</cffunction>
 	
 	<cffunction name="updateQuery" returntype="void" access="public">
-		<cfargument name="id" required="yes" type="numeric" />
+		<cfargument name="id" required="yes" type="string" />
 		<cfargument name="login" required="yes" type="string" />
 		<cfargument name="pass" required="yes" type="string" />
 		<cfargument name="first_name" required="yes" type="string" />
 		<cfargument name="last_name" required="yes" type="string" />
 		<cfargument name="email" required="yes" type="string" />
 		<cfargument name="url" required="yes" type="string" />
-		<cfargument name="row" required="no" type="numeric" default="#variables.params.users+1#" />
+		<cfargument name="row" required="no" type="numeric" default="#variables.params.users.RecordCount+1#" />
 		
-		<cfif row NEQ variables.params.users+1>
+		<cfif row EQ variables.params.users.RecordCount+1>
 			<cfset QueryAddRow(variables.params.users) />
 		</cfif>
 
@@ -87,14 +89,14 @@
 		<cfset QuerySetCell(variables.params.users, "url", arguments.url, arguments.row) />
 	</cffunction>
 		
-	<cffunction name="find" access="public" returntype="query">
-		<cfargument name="id" required="false" default="" />
-		<cfargument name="login" required="false" default="" />
-		<cfargument name="pass" required="false" default="" />
-		<cfargument name="first_name" required="false" default="" />
-		<cfargument name="last_name" required="false" default="" />
-		<cfargument name="email" required="false" default="" />
-		<cfargument name="url" required="false" default="" />
+	<cffunction name="search" access="public" returntype="query">
+		<cfargument name="id" required="false" type="string" default="" />
+		<cfargument name="login" required="false" type="string" default="" />
+		<cfargument name="pass" required="false" type="string" default="" />
+		<cfargument name="first_name" required="false" type="string" default="" />
+		<cfargument name="last_name" required="false" type="string" default="" />
+		<cfargument name="email" required="false" type="string" default="" />
+		<cfargument name="url" required="false" type="string" default="" />
 		
 		<cfset var qry = "" />
 
@@ -103,25 +105,25 @@
 			FROM variables.params.users
 			WHERE 1=1
 			<cfif arguments.id NEQ "">
-				AND id = '#arguments.id#'
+            AND id = <cfqueryparam cfsqltype="cf_sql_smallint" value="#arguments.id#" />
 			</cfif>
 			<cfif arguments.login NEQ "">
-				AND login = '#arguments.login#'
+				AND login like '%#arguments.login#%'
 			</cfif>
 			<cfif arguments.pass NEQ "">
-				AND pass = '#arguments.pass#'
+				AND pass like '%#arguments.pass#%'
 			</cfif>
 			<cfif arguments.first_name NEQ "">
-				AND first_name = '#arguments.first_name#'
+				AND first_name like '%#arguments.first_name#%'
 			</cfif>
 			<cfif arguments.last_name NEQ "">
-				AND last_name = '#arguments.last_name#'
+				AND last_name like '%#arguments.last_name#%'
 			</cfif>
 			<cfif arguments.email NEQ "">
-				AND email = '#arguments.email#'
+				AND email like '%#arguments.email#%'
 			</cfif>
 			<cfif arguments.url NEQ "">
-				AND url = '#arguments.url#'
+				AND url like '%#arguments.url#%'
 			</cfif>
 		</cfquery>
 		
@@ -136,5 +138,8 @@
 		</cfquery>
 	</cffunction>
 
+   <cffunction name="dump" returntype="void" access="public" output="true">
+      <cfdump var="#variables.params#" />
+   </cffunction>
 	
 </cfcomponent>
