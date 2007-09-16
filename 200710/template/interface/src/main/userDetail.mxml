@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="doInit();">
+
+	<mx:Script>
+		<![CDATA[
+			//Imported Classes
+			import mx.controls.Alert;
+		    import mx.events.ValidationResultEvent;
+		    import mx.rpc.events.AbstractEvent;
+		    import mx.rpc.events.FaultEvent;
+		    import mx.utils.ObjectUtil;
+		    import flash.events.*;
+		    import mx.managers.PopUpManager;
+		    import mx.core.IFlexDisplayObject;
+		    import mx.events.CloseEvent;
+		    import mx.rpc.Fault;
+		    import mx.controls.DataGrid;
+
+			// DEFINE VARS FOR STORING VALIDATION OBJECTS
+	        private var VuserName:ValidationResultEvent
+	        private var Vpassword:ValidationResultEvent 
+	        private var Vfirst_name:ValidationResultEvent 
+	        private var Vlast_name:ValidationResultEvent 
+	        private var Vemail:ValidationResultEvent 
+	        
+	        // CENTER POPUP 
+			private function doInit():void
+			{
+				PopUpManager.centerPopUp(this);
+			}
+
+			// REMOVE POPUP
+			private function removeWindow():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+			// CALL ADD USER MEHTOD
+			private function UserDetail_Add_User(login:String, pass:String, first_name:String,
+					last_name:String, email:String, url:String):void
+			{
+				UserDetail.Add_User(login, pass, first_name,last_name, email, url);
+			}	
+			
+			// HANDLE ADD USER RESULTS
+			private function UserDetail_Add_User_Result(result:String):void
+			{
+				Alert.show(result);
+			}
+
+			// HANDLE ADD USER FAULTS
+			private function UserDetail_Add_User_Fault(event:FaultEvent):void
+			{
+				Alert.show("An error occured","Program Error")
+			}
+
+			// ADD USER HANDLER
+			private function addUserHandler():void
+			{
+				UserDetail_Add_User(login.text, pass.text, first_name.text, last_name.text, email.text, url.text);
+			}
+
+			// CALL EDIT USER METHOD
+			private function UserDetail_Edit_User(id:String,login:String, pass:String, 
+					first_name:String,last_name:String, email:String, url:String):void
+			{
+				UserDetail.Edit_User(id,login,pass,first_name,last_name,email,url);
+			}
+
+			// HANDLE EDIT USER RESULTS
+			private function UserDetail_Edit_User_Result(result:String):void
+			{
+				Alert.show(result);
+			}
+
+			// HANDLE EDIT USER FAULT
+			private function UserDetail_Edit_User_Fault(event:FaultEvent):void
+			{
+				Alert.show("An error occured","Program Error")
+			}
+
+			// EDIT USER HANDLER
+			private function editUserHandler():void
+			{
+				UserDetail_Edit_User(uuid.text,login.text,pass.text,first_name.text,last_name.text,email.text,url.text);
+			}
+			
+			// CALL DELETE USER METHOD
+			private function UserDetail_Delete_User(id:String, first_name:String, last_name:String):void
+			{
+				UserDetail.Delete_User(id, first_name, last_name)
+			}
+			
+			// HANDLE DELETE USER RESULTS
+			private function UserDetail_Delete_User_Result(result:String):void
+			{
+				Alert.show(result);
+				clearScreen();
+			}
+			
+			// HANDLE DELETE USER FAULT
+			private function UserDetail_Delete_User_Fault(event:FaultEvent):void
+			{
+				Alert.show("An error occured","Program Error")
+			}
+			
+			// DELETE USER HANDLER
+			private function deleteUserHandler():void
+			{
+				if (uuid.text.length > 0)
+					UserDetail_Delete_User(uuid.text, first_name.text, last_name.text);
+				else
+					Alert.show("Unable to delete user, new user creation is loaded");
+			}
+	        
+			// FUNCTION TO VALIDATE, IF VALID SAVE FORM, IF NOT VALID SHOW ERRORS  
+	 		private function userSaveValidation():void
+	 		{
+	        	// Validate FORM INPUTS
+	           VuserName = loginVal.validate(); 
+	           Vpassword = passVal.validate(); 
+	           Vfirst_name = first_nameVal.validate(); 
+	           Vlast_name = last_nameVal.validate(); 
+	           Vemail = emailVal.validate(); 
+	           
+	           if (VuserName.type==ValidationResultEvent.INVALID || Vpassword.type==ValidationResultEvent.INVALID ||
+	          	   Vfirst_name.type==ValidationResultEvent.INVALID || Vlast_name.type==ValidationResultEvent.INVALID || 
+	          	   Vemail.type==ValidationResultEvent.INVALID){
+	           	return;
+	           }
+	           else {
+	    			if (uuid.text.length > 0) editUserHandler();
+	    			else addUserHandler();
+	           }
+	        } 
+
+			private function clearScreen():void
+			{
+					removeWindow();
+					uuid.text = '';
+					login.text = ''; 
+					pass.text = '';
+					first_name.text = '';
+					last_name.text = ''; 
+					email.text = ''; 
+					url.text = '';
+			}
+		]]>
+	</mx:Script>
+	<!-- VALIDATOR MODEL -->
+	<mx:Model id="CheckModel">
+		<UserInfo>
+	        <UserName>{login.text}</UserName>
+	        <Password>{pass.text}</Password>
+	        <FirstName>{first_name.text}</FirstName>
+	        <LastName>{last_name.text}</LastName>
+	        <Email>{email.text}</Email>
+        </UserInfo>
+    </mx:Model>
+	
+	
+	<!-- SEARCH WEBSERVICE -->
+	<mx:WebService id="UserDetail" useProxy="false" 
+		wsdl="http://localhost/services/UserManager.cfc?wsdl"
+		showBusyCursor="true">
+		
+		<mx:operation name="add" 
+			result="UserDetail_Add_User_Result( UserDetail.Add_User.lastResult )" 
+			fault="UserDetail_Add_User_Fault(event)"/>
+			
+		<mx:operation name="edit" 
+			result="UserDetail_Edit_User_Result( UserDetail.Edit_User.lastResult )" 
+			fault="UserDetail_Edit_User_Fault(event)"/>
+			
+		<mx:operation name="remove" 
+			result="UserDetail_Delete_User_Result( UserDetail.Delete_User.lastResult )" 
+			fault="UserDetail_Delete_User_Fault(event)"/>
+			
+	</mx:WebService>
+    
+     <mx:Form width="100%" height="100%">
+            <mx:FormHeading label="Please fill in all required forms below."/>
+            	<!-- HIDDEN FORM ITEM CONTAINING UUID -->
+			
+            
+            <mx:FormItem required="true" label="Username:">
+                <mx:TextInput width="200" id="login"/>
+            </mx:FormItem>
+
+            <mx:FormItem required="true" label="Password:">
+                <mx:TextInput id="pass" width="200" displayAsPassword="true"/>
+            </mx:FormItem>
+
+            <mx:FormItem required="true" label="First Name:">
+                <mx:TextInput id="first_name" width="200"/>
+            </mx:FormItem>
+
+            <mx:FormItem required="true" label="Last Name:">
+                <mx:TextInput id="last_name" width="200"/>
+            </mx:FormItem>
+
+            <mx:FormItem required="true" label="Email Address:">
+                <mx:TextInput id="email" width="200"/>
+            </mx:FormItem>
+
+            <mx:FormItem  label="Website:">
+                <mx:TextInput id="url" width="200"/>
+            </mx:FormItem>
+            
+            <mx:FormItem visible="false">
+              <mx:TextInput id="uuid" width="200"/>
+            </mx:FormItem>
+        </mx:Form>
+        
+        <!-- VALIDATORS -->
+	<mx:StringValidator source="{login}" required="true" id="loginVal" property="text" minLength="1" maxLength="20" />
+	<mx:StringValidator source="{pass}" required="true" id="passVal" property="text" minLength="1" maxLength="20" />
+	<mx:StringValidator source="{first_name}" required="true" id="first_nameVal" property="text" minLength="1" maxLength="20" />
+	<mx:StringValidator source="{last_name}" required="true" id="last_nameVal" property="text" minLength="1" maxLength="20" />
+	<mx:StringValidator source="{email}" required="true" id="emailVal" property="text" minLength="1" maxLength="20" />
+	
+	<mx:ApplicationControlBar x="0" width="100%"  height="35" borderStyle="solid">
+		<mx:Button label="Save" click="userSaveValidation()" />
+		<mx:Button label="Exit" click="clearScreen()"/>
+		<mx:Button label="Delete" click="deleteUserHandler()" />
+	</mx:ApplicationControlBar>
+</mx:TitleWindow>
