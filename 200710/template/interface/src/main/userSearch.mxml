@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" title="User Search">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+		  layout="absolute"
+		  width="100%"
+		  height="100%"
+		  title="User Search">
 
     <mx:Script>
     	<![CDATA[
@@ -26,22 +30,14 @@
            		VlastName = lastNameVal.validate(); 
            
 				if (VlastName.type==ValidationResultEvent.INVALID) return;
-           	    else userSearchHandler();
+           	    else SearchManager.search();
 			}
 
-			// CALL USER SEARCH METHOD
-			private function SearchManager_Search_User(firstName:String, lastName:String):void
-			{
-				var user : Object = new Object;
-				user.first_name = firstName;
-				user.last_name = lastName;
-				SearchManager.search(user);
-			}
-		
 			// HANDLE USER SEARCH RESULTS
-			private function SearchManager_Search_User_Result(result:ArrayCollection):void
+			private function searchResult(event:ResultEvent):void
 			{
-				if (result.length > 0) userDG.dataProvider = result;
+				if (event.result.length > 0) 
+					userDG.dataProvider = event.result;
 				else {
 					Alert.show("No users found. Create a new one?", "Program Alert", 3, this, alertClickHandler);
 					userDG.dataProvider.removeAll();
@@ -49,17 +45,9 @@
 			}
 		
 			// HANDLE USER SEARCH FAULTS
-			private function SearchManager_Search_User_Fault(event:FaultEvent):void
+			private function searchFault(event:FaultEvent):void
 			{
 				Alert.show(event.fault.message);
-//				Alert.show("An error occured","Program Error")
-			}
-		
-			// USER SEARCH HANDLER
-			private function userSearchHandler():void
-			{
-				if (first_name.length > 0) SearchManager_Search_User(first_name.text,last_name.text)
-				else SearchManager_Search_User("",last_name.text)
 			}
 		
 			 // EVENT HANDLER FOR ALERT SELECTED OPTION
@@ -93,10 +81,20 @@
 		wsdl="http://localhost/services/UserManager.cfc?wsdl"
 		showBusyCursor="true">
 		
+		<!-- Search has functionality for more, but only first/last name are part of this -->
 		<mx:operation name="search" 
-			result="SearchManager_Search_User_Result( SearchManager.search.lastResult )" 
-			fault="SearchManager_Search_User_Fault(event)"/>
-			
+			result="searchResult(event)" 
+			fault="searchFault(event)">
+			<mx:request>
+				<id></id>
+				<login></login>
+				<pass></pass>
+	            <first_name>{first_name.text}</first_name>
+	            <last_name>{last_name.text}</last_name>
+	            <email></email>
+	            <url></url>
+         </mx:request>
+		</mx:operation>
 	</mx:WebService>
 
 
