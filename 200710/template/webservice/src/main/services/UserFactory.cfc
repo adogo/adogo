@@ -52,17 +52,15 @@
 		<cfargument name="url" required="no" type="string" default="" />
 		
 		<cfset var editParams = arguments />
-		<cfset var CurrentRow = "" />
+		<cfset var CurrentRow = 0 />
 
 		<!--- Need to get the row param --->
 		<cfloop query="variables.params.users">
+         <cfset CurrentRow = CurrentRow + 1 />
 			<cfif variables.params.users.id EQ arguments.id>
 				<cfset editParams.row = CurrentRow>
 			</cfif>
 		</cfloop>
-		
-      <cfdump var="#editParams#"><cfabort>
-      
 		<cfset updateQuery(argumentCollection = editParams) />
 	</cffunction>
 	

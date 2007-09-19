@@ -68,7 +68,7 @@
 			// HANDLE EDIT USER FAULT
 			private function editFault(event:FaultEvent):void
 			{
-				Alert.show("An error occured","Program Error")
+				Alert.show(event.fault.message);
 			}
 
 			
@@ -114,8 +114,10 @@
 	           	return;
 	           }
 	           else {
-	    			if (uuid.text.length > 0) editUser();
-	    			else addUser();
+	    			if (uuid.text.length > 0) 
+	    				editUser();
+	    			else
+	    				addUser();
 	           }
 	        } 
 
