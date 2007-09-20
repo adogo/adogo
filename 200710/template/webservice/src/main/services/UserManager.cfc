@@ -1,5 +1,11 @@
 <cfcomponent displayname="UserManager">
 
+   <cffunction name="init" access="public" returntype="UserManager">
+      <cfset var userFactory = createObject("component","UserFactory").init() />
+      <cfset userFactory.reset() />
+      <cfreturn this />
+   </cffunction>
+
 	<!--- ADD A NEW USER FUNCTION --->
 	<cffunction name="add" access="remote" returntype="string">
 		<cfargument name="login" required="yes" type="string" />

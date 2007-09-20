@@ -6,15 +6,7 @@
 			<cfset application.UserFactory = this />
 	
 			<cfparam name="variables.params" default="#structNew()#" />
-			
-			<cfset variables.params.users = QueryNew("id,login,pass,first_name,last_name,email,url,sex") />
-			
-			<!--- Create some sample users --->
-			<cfset this.add("legrosb","legros4life","Brian","LeGros","brian@adogo.us","http://www.brianlegros.com/blog") />
-			<cfset this.add("porgesm","gorgeoust","Maxim","Porges","max@adogo.us","http://www.maximporges.com") />
-			<cfset this.add("roopd","pepsisupporter","Daniel","Roop","dan@adogo.us","http://www.danielroop.com/blog/") />
-			<cfset this.add("huntt","tastytreat","Tyler","Hunt","tyler@adogo.us","http://blog.tylerhunt.com/") />
-			<cfset this.add("fortunaa","yumlobsters","Adam","Fortuna","adam@adogo.us","http://www.adamfortuna.com") />
+			<cfset reset() />
 		</cfif>
 		
 		<cfreturn application.UserFactory />
@@ -136,8 +128,15 @@
 		</cfquery>
 	</cffunction>
 
-   <cffunction name="dump" returntype="void" access="public" output="true">
-      <cfdump var="#variables.params#" />
+   <cffunction name="reset" returntype="void" access="public">
+      <cfset variables.params.users = QueryNew("id,login,pass,first_name,last_name,email,url,sex") />
+			
+		<!--- Create some sample users --->
+		<cfset this.add("legrosb","legros4life","Brian","LeGros","brian@adogo.us","http://www.brianlegros.com/blog") />
+		<cfset this.add("porgesm","gorgeoust","Maxim","Porges","max@adogo.us","http://www.maximporges.com") />
+		<cfset this.add("roopd","pepsisupporter","Daniel","Roop","dan@adogo.us","http://www.danielroop.com/blog/") />
+		<cfset this.add("huntt","tastytreat","Tyler","Hunt","tyler@adogo.us","http://blog.tylerhunt.com/") />
+		<cfset this.add("fortunaa","yumlobsters","Adam","Fortuna","adam@adogo.us","http://www.adamfortuna.com") />
    </cffunction>
-	
+
 </cfcomponent>

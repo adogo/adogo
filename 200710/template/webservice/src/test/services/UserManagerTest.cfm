@@ -1,33 +1,51 @@
+<cfcomponent name="UserManagerTest" displayname="UserManagerTest" extends="cfunit.framework.TestCase">
 
-<!--- <cfset userFactory = createObject("component","UserFactory").init() />
-<cfset application.userfactory = userFactory /> --->
+	<cffunction name="setUp" returntype="void" access="public">
+		<cfset variables.userManager = CreateObject("component", "services.UserManager").init() />
+	</cffunction>
+	
+	<cffunction name="testAdd" returntype="void" access="public">
+		<cfset var addResponse = "" />
+      <cfset var newUser = StructNew() />
 
-<cfset UserManager = CreateObject("component","UserManager") />
+      <cfset newUser.login="legrosbb" />
+      <cfset newUser.pass="newpass" />
+      <cfset newUser.first_name="Brian2" />
+      <cfset newUser.last_name="LeGros2" />
+      <cfset newUser.email="new@adogo.us" />
+      
+      <cfset editResponse = UserManager.edit(argumentCollection = newUser) />
+      <cfset assertEquals(addResponse, "You have sucessfully updated #newUser.first_name# #newUser.last_name#") />
+	</cffunction>
+	
+	<cffunction name="testEdit" returntype="void" access="public">
+      <cfset var editResponse = "" />
+      <cfset var newUser = StructNew() />
+      
+      <cfset newUser.id=1 />
+      <cfset newUser.login="legrosbb" />
+      <cfset newUser.pass="newpass" />
+      <cfset newUser.first_name="Brian2" />
+      <cfset newUser.last_name="LeGros2" />
+      <cfset newUser.email="new@adogo.us" />
+      
+      <cfset editResponse = UserManager.edit(argumentCollection = newUser) />
+      <cfset assertEquals(editResponse, "You have sucessfully updated #newUser.first_name# #newUser.last_name#") />
+	</cffunction>
 
-<h2>Get all</h2>
-<cfset users = UserManager.search() />
-<cfdump var="#users#">
+	<cffunction name="testRemove" returntype="void" access="public">
+		<cfset var removeResponse = UserManager.remove(id=1) />
+      <cfset assertEquals(removeResponse, "You have successfully deleted Brian LeGros") />
+	</cffunction>
 
-<h2>Add</h2>
-<cfset add = UserManager.add(login="afortuna",first_name="Adam",last_name="test2",email="test@adogo.us",url="http://test",pass="no") />
-<cfset users = UserManager.search() />
-<cfdump var="#add#">
-<cfdump var="#users#">
+	<cffunction name="testGet" returntype="void" access="public">
+      <cfset var user = UserManager.get(id=1) />
+      <cfset assertEquals(user.first_name, "Brian") />
+	</cffunction>
 
-<h2>Get</h2>
-<cfset first = UserManager.get(id=1) />
-<cfdump var="#first#">
+	<cffunction name="testSearch" returntype="void" access="public">
+      <cfset var users = UserManager.search() />
+      <cfset assertTrue(users.recordCount GT 0) />
+	</cffunction>
 
-<h2>Edit</h2>
-<cfset UserManager.edit(id=1,login="afortuna",first_name="Adam",last_name="test2",email="test@adogo.us",url="http://test",pass="no") />
-<cfset first = UserManager.get(id=1) />
-<cfdump var="#first#">
-
-<h2>Delete</h2>
-<cfset first = UserManager.remove(first.id) />
-<cfdump var="#first#">
-<cfset users = UserManager.search() />
-<cfdump var="#users#">
-
-
-
+</cfcomponent>
