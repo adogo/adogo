@@ -14,8 +14,9 @@
       <cfset newUser.last_name="LeGros2" />
       <cfset newUser.email="new@adogo.us" />
       
-      <cfset editResponse = UserManager.edit(argumentCollection = newUser) />
-      <cfset assertEquals(addResponse, "You have sucessfully updated #newUser.first_name# #newUser.last_name#") />
+      <cfset addResponse = UserManager.add(argumentCollection = newUser) />
+      <cfset assertEquals(actual=addResponse,
+                          expected="You have sucessfully added #newUser.first_name# #newUser.last_name# as a user") />
 	</cffunction>
 	
 	<cffunction name="testEdit" returntype="void" access="public">
@@ -30,22 +31,26 @@
       <cfset newUser.email="new@adogo.us" />
       
       <cfset editResponse = UserManager.edit(argumentCollection = newUser) />
-      <cfset assertEquals(editResponse, "You have sucessfully updated #newUser.first_name# #newUser.last_name#") />
+      
+      <cfset assertEquals(actual=editResponse,
+                          expected="You have sucessfully updated #newUser.first_name# #newUser.last_name#") />
 	</cffunction>
 
 	<cffunction name="testRemove" returntype="void" access="public">
 		<cfset var removeResponse = UserManager.remove(id=1) />
-      <cfset assertEquals(removeResponse, "You have successfully deleted Brian LeGros") />
+      <cfset assertEquals(actual=removeResponse,
+                          expected="You have successfully deleted Brian LeGros") />
 	</cffunction>
 
 	<cffunction name="testGet" returntype="void" access="public">
       <cfset var user = UserManager.get(id=1) />
-      <cfset assertEquals(user.first_name, "Brian") />
+      <cfset assertEquals(actual=user.first_name,
+                          expected="Brian") />
 	</cffunction>
 
 	<cffunction name="testSearch" returntype="void" access="public">
       <cfset var users = UserManager.search() />
-      <cfset assertTrue(users.recordCount GT 0) />
+      <cfset assertTrue(condition=(users.recordCount GT 0)) />
 	</cffunction>
 
 </cfcomponent>
