@@ -1,0 +1,108 @@
+require 'rubygems'
+require 'antwrap'
+require 'rake/clean'
+require 'rake/packagetask'
+require 'fileutils'
+require 'flextasks'
+
+include FileUtils
+
+CLOBBER.include(%w[target test report])
+
+Rjb::load(
+  Dir.glob('/Developer/Java/Ant/lib/*.jar').join(':') +
+  ':' +
+  Dir.glob('**/lib/*.jar').join(':')
+)
+
+desc 'Default task packages the application.'
+task :default => :package
+
+#task :package => ['test', 'build']
+
+Rake::PackageTask.new('buildtoolshootout', '0.0.1') do |package|
+  package.need_zip = true
+  package.package_files.include('{target}/*')
+end
+
+desc 'Build the application.'
+task :build => ['coldfusion:build', 'flex:build']
+
+desc 'Test the application.'
+task :test => ['coldfusion:test', 'flex:test']
+
+desc 'Initialize the build environment.'
+task :init do
+  mkdir_p('target/services')
+end
+
+namespace :coldfusion do
+  desc 'Build the ColdFusion code.'
+  task :build => :init do
+    cp(Dir.glob('webservice/src/main/*.{htm*,js,swf}'), 'target')
+    cp(Dir.glob('webservice/src/*/services/*.cf[mc]'), 'target/services')
+  end
+
+  desc 'Test the ColdFusion code.'
+  task :test do
+    ant = AntProject.new
+    ant.taskdef(
+      :name => 'cfunit',
+      :classname => 'net.sourceforge.cfunit.ant.CFUnit'
+    )
+    ant.cfunit(
+      :testcase => 'http://localhost:8300/services/UserManagerTest.cfc',
+      :verbose => true
+    )
+  end
+end
+
+namespace :flex do
+  desc 'Build the Flex application.'
+  task :build => [:init, :compile] do
+    cp('target/userManager.swf', 'target/services')
+  end
+
+  desc 'Compile the Flex application.'
+  Rake::Flex::MxmlcTask.new(:compile) do |mxmlc|
+    mxmlc.input = 'interface/src/main/userManager.mxml'
+    mxmlc.output = 'target/userManager.swf'
+  end
+
+  desc 'Test the Flex application.'
+  task :test => 'test:compile' do
+    ant = AntProject.new
+    ant.taskdef(
+      :name => 'flexunit',
+      :classname => 'com.adobe.ac.ant.tasks.FlexUnitTask'
+    )
+    ant.flexunit(
+      :swf => 'test/test.swf',
+      :todir => 'report/flexunit',
+      :haltonfailure => true,
+      :verbose => true,
+      :failureproperty => 'flexunit.failed'
+    )
+    ant.junitreport(:todir => 'report/flexunit') do |junitreport|
+      junitreport.fileset(:dir => 'report/flexunit') do |fileset|
+        fileset.include(:name => 'TEST-*.xml')
+      end
+      junitreport.report(:todir => 'report/flexunit')
+    end
+    ant.fail(
+      :message => 'Flex tests failed. See report for details.',
+      :if => 'flexunit.failed'
+    )
+  end
+
+  namespace :test do
+    desc 'Compile the Flex tests.'
+    Rake::Flex::MxmlcTask.new(:compile) do |mxmlc|
+      mxmlc.sources << 'interface/src/main'
+      mxmlc.includes << 'interface/lib'
+
+      mxmlc.input = 'interface/src/test/Test.mxml'
+      mxmlc.output = 'test/test.swf'
+    end
+  end
+end

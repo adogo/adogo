@@ -5,16 +5,25 @@
 	
 	<mx:Script>
 		<![CDATA[
+ 			import us.adogo.buildtoolshootout.UserTest;
+			import flexunit.junit.JUnitTestRunner;
 			import flexunit.framework.TestSuite;
-			import us.adogo.buildtoolshootout.UserTest;
-			
-			// After everything is built, configure the test
-			// runner to use the appropriate test suite and
-			// kick off the unit tests
+
+			[Bindable]
+			private var runner : JUnitTestRunner;
+
 			private function onCreationComplete() : void
 			{
- 				testRunner.test = createSuite();
- 				testRunner.startTest();
+				status.text = "Please wait running test suite...";
+
+				runner = new JUnitTestRunner();
+				runner.run(createSuite(), onTestComplete);
+ 			}
+
+ 			private function onTestComplete() : void
+ 			{
+				status.text = "Finished running test suite.";
+				fscommand( "quit" );
  			}
 			
 			// Creates the test suite to run
@@ -31,6 +40,5 @@
 		]]>
 	</mx:Script>
 
-	<!-- flexunit provides a very handy default test runner GUI -->
-	<flexunit:TestRunnerBase id="testRunner" width="100%" height="100%" />
+	<mx:Label id="status" />
 </mx:Application>
