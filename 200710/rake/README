@@ -1,0 +1,11 @@
+This is the sample application of the Adobe Developers of Greater Orlando.
+
+INSTRUCTIONS
+The flex application currently depends on the webserive cfc being available at 
+http://localhost/services/. The Flex application should be runnable from 
+anywhere. The ColdFusion side does not use a database, but instead has one 
+simulated in the factory.
+
+TESTING
+The flex side uses FlexUnit for testing, while the ColdFusion side uses CFUnit.
+Tests are in matching packages in their respective packages.

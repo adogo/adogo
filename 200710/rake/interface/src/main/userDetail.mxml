@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="doInit();">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.validators.Validator;
+			import mx.validators.ValidationResult;
+			//Imported Classes
+		    import flash.events.*;
+			import mx.controls.Alert;
+		    import mx.events.CloseEvent;
+		    import mx.events.ValidationResultEvent;
+		    import mx.core.IFlexDisplayObject;
+		    import mx.managers.PopUpManager;
+			import mx.rpc.events.ResultEvent;
+		    import mx.rpc.events.AbstractEvent;
+		    import mx.rpc.events.FaultEvent;
+		    import mx.rpc.Fault;
+		    import mx.utils.ObjectUtil;
+		    import us.adogo.buildtoolshootout.User;
+
+			[Bindable]
+			public var user : User = new User();
+			
+	        // CENTER POPUP 
+			private function doInit():void
+			{
+				PopUpManager.centerPopUp(this);
+			}
+
+			// REMOVE POPUP
+			private function removeWindow():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+			// CALL ADD USER MEHTOD
+			private function addUser():void
+			{
+				UserManager.add();
+			}
+
+			// CALL EDIT USER METHOD
+			private function editUser():void
+			{
+				UserManager.edit();
+			}
+			
+			// CALL DELETE USER METHOD
+			private function removeUser():void
+			{
+				if (uuid.text.length > 0) UserManager.remove();
+				else Alert.show("Unable to delete user, new user creation is loaded");
+			}
+			
+			// HANDLE DELETE USER RESULTS
+			private function removeResult(event:ResultEvent):void
+			{
+				Alert.show(event.result as String);
+				clearScreen();
+			}
+ 
+			// HANDLE DEFAULT RESULTS
+			private function defaultResult(event:ResultEvent):void
+			{
+				Alert.show(event.result as String);
+			}
+
+			// HANDLE DEFAULT FAULTS
+			private function defaultFault(event:FaultEvent):void
+			{
+				Alert.show("An error occured","Program Error")
+			}
+			
+			// FUNCTION TO VALIDATE, IF VALID SAVE FORM, IF NOT VALID SHOW ERRORS  
+	 		private function saveUser():void
+	 		{
+				var validator : Validator = new Validator();
+				var validationResult : Array;
+				
+				validationResult = Validator.validateAll([loginValidator,
+													 	  passValidator,
+														  first_nameValidator,
+							           					  last_nameValidator,
+														  emailValidator]);
+	           
+	           // If at least one validator failed, stop
+	           if (validationResult.length > 0) return;
+	           else {
+	    			if (uuid.text.length > 0) editUser();
+	    			else addUser();
+	           }
+	        } 
+
+			private function clearScreen():void
+			{
+					removeWindow();
+					uuid.text = '';
+					login.text = ''; 
+					pass.text = '';
+					first_name.text = '';
+					last_name.text = ''; 
+					email.text = ''; 
+					url.text = '';
+			}
+		]]>
+	</mx:Script>
+	
+	<!-- SEARCH WEBSERVICE -->
+	<mx:WebService id="UserManager" useProxy="false" 
+		wsdl="http://localhost/services/UserManager.cfc?wsdl"
+		showBusyCursor="true">
+		
+		<mx:operation name="add" 
+			result="defaultResult(event)" 
+			fault="defaultFault(event)">
+			<mx:request>
+				<login>{login.text}</login>
+				<pass>{pass.text}</pass>
+	            <first_name>{first_name.text}</first_name>
+	            <last_name>{last_name.text}</last_name>
+	            <email>{email.text}</email>
+	            <url>{url.text}</url>
+        	</mx:request>
+		</mx:operation>
+			
+		<mx:operation name="edit" 
+			result="defaultResult(event)" 
+			fault="defaultFault(event)">
+			<mx:request>
+				<id>{uuid.text}</id>
+				<login>{login.text}</login>
+				<pass>{pass.text}</pass>
+	            <first_name>{first_name.text}</first_name>
+	            <last_name>{last_name.text}</last_name>
+	            <email>{email.text}</email>
+	            <url>{url.text}</url>
+        	</mx:request>
+		</mx:operation>
+			
+		<mx:operation name="remove" 
+			result="removeResult(event)" 
+			fault="defaultFault(event)">
+			<mx:request>
+				<id>{uuid.text}</id>
+			</mx:request>
+		</mx:operation>
+			
+	</mx:WebService>
+    
+     <mx:Form width="100%" height="100%">
+        <mx:FormHeading label="Please fill in all required forms below."/>
+
+        <mx:FormItem required="true" label="Username:">
+            <mx:TextInput width="200" id="login"/>
+        </mx:FormItem>
+
+        <mx:FormItem required="true" label="Password:">
+            <mx:TextInput id="pass" width="200" displayAsPassword="true"/>
+        </mx:FormItem>
+
+        <mx:FormItem required="true" label="First Name:">
+            <mx:TextInput id="first_name" width="200"/>
+        </mx:FormItem>
+
+        <mx:FormItem required="true" label="Last Name:">
+            <mx:TextInput id="last_name" width="200"/>
+        </mx:FormItem>
+
+        <mx:FormItem required="true" label="Email Address:">
+            <mx:TextInput id="email" width="200"/>
+        </mx:FormItem>
+
+        <mx:FormItem  label="Website:">
+            <mx:TextInput id="url" width="200"/>
+        </mx:FormItem>
+        
+        <mx:FormItem visible="false">
+   			<mx:TextInput id="uuid" />
+        </mx:FormItem>
+    </mx:Form>
+        
+    <!-- VALIDATORS -->
+	<mx:StringValidator source="{login}" required="true" id="loginValidator" property="text" minLength="1" maxLength="20" />
+	<mx:StringValidator source="{pass}" required="true" id="passValidator" property="text" minLength="1" maxLength="20" />
+	<mx:StringValidator source="{first_name}" required="true" id="first_nameValidator" property="text" minLength="1" maxLength="20" />
+	<mx:StringValidator source="{last_name}" required="true" id="last_nameValidator" property="text" minLength="1" maxLength="20" />
+	<mx:StringValidator source="{email}" required="true" id="emailValidator" property="text" minLength="1" maxLength="20" />
+	
+	<mx:ApplicationControlBar x="0" width="100%"  height="35" borderStyle="solid">
+		<mx:Button label="Save" click="saveUser()" />
+		<mx:Button label="Exit" click="clearScreen()"/>
+		<mx:Button label="Delete" click="removeUser()" />
+	</mx:ApplicationControlBar>
+</mx:TitleWindow>
