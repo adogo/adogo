@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>adogo-combo</groupId>
+  <artifactId>adogo-combo</artifactId>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
+  <properties>
+    <flex.home>/opt/flex_sdk_2</flex.home>
+    <cf.root>/Applications/apache-tomcat-5.5.17/webapps/cfusion</cf.root>
+    <app.name>adogo</app.name>
+    <unit.test.directory>${cf.root}/${app.name}</unit.test.directory>
+    <unit.test.url>http://localhost:8080/cfusion/${app.name}/services/UserManagerTest.cfc</unit.test.url>
+  </properties>
+  <build>
+    <finalName>userManager</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/coldfusion</directory>
+        <includes>
+          <include>*/**</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/test/coldfusion</directory>
+        <includes>
+          <include>*/**</include>
+        </includes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>net.israfil.mojo</groupId>
+        <artifactId>maven-flex2-plugin</artifactId>
+        <version>1.1</version>
+        <extensions>true</extensions>
+        <configuration>
+          <flexHome>${flex.home}</flexHome>
+          <useNetwork>true</useNetwork>
+          <strict>true</strict>
+          <warning>true</warning>
+        </configuration>
+        <executions>
+          <execution>
+            <id>compile-swf</id>
+            <phase>compile</phase>
+            <configuration>
+              <finalName>UserManager</finalName>
+              <main>${project.build.finalName}.mxml</main>
+            </configuration>
+            <goals>
+              <goal>compile-swf</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>compile-test-swf</id>
+            <phase>compile</phase>
+            <configuration>
+              <finalName>${project.build.finalName}Test</finalName>
+              <main>Test.mxml</main>
+            </configuration>
+            <goals>
+              <goal>compile-swf</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-swf-to-build-directory</id>
+            <phase>compile</phase>
+            <configuration>
+              <tasks>
+                <copy file="${project.build.directory}/${project.build.finalName}.swf"
+                      todir="${project.build.outputDirectory}" />
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>test-swf-and-coldfusion</id>
+            <phase>test</phase>
+            <configuration>
+              <tasks>
+                <!-- Flex Unit Tests -->
+                <taskdef resource="com/adobe/ac/ant/tasks/tasks.properties"
+                         classpathref="maven.compile.classpath" />
+                <flexunit timeout="0"
+                          swf="${project.build.directory}/${project.build.finalName}Test.swf"
+                          toDir="${project.build.directory}/reports"
+                          haltonfailure="true" />
+
+                <!-- CF Unit Tests -->
+                <delete dir="${unit.test.directory}" />
+                <copy todir="${unit.test.directory}">
+                  <fileset dir="${project.build.outputDirectory}" />
+                </copy>
+                <taskdef name="CFUnit"
+                         classname="net.sourceforge.cfunit.ant.CFUnit"
+                         classpathref="maven.compile.classpath" />
+                <CFUnit testcase="${unit.test.url}"
+                        verbose="true" />
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+      <!-- CFUnit Dependencies -->
+      <dependency>
+        <groupId>net.sourceforge</groupId>
+        <artifactId>cfunit</artifactId>
+        <version>2.0-beta4</version>
+      </dependency>
+      <dependency>
+      <!-- FlexUnit Dependencies -->
+      <groupId>actionscript3.flexunit</groupId>
+      <artifactId>flexunit</artifactId>
+      <version>0.85</version>
+      <type>swc</type>
+    </dependency>
+    <dependency>
+      <groupId>actionscript3.flexunit</groupId>
+      <artifactId>flexunitoptional</artifactId>
+      <version>0.85</version>
+      <type>swc</type>
+    </dependency>
+    <dependency>
+      <groupId>com.adobe.ac.ant.tasks</groupId>
+      <artifactId>flexunitant</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <!-- Required by the FlexUnit Ant Task -->
+    <dependency>
+      <groupId>org.dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>1.1-beta-6</version>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+		  layout="absolute"
+		  width="100%"
+		  height="100%"
+		  title="User Search">
+
+    <mx:Script>
+    	<![CDATA[
+    		//Imported Classes
+			import mx.controls.Alert;
+		    import mx.events.ValidationResultEvent;
+		    import mx.rpc.events.AbstractEvent;
+		    import mx.rpc.events.FaultEvent;
+		    import mx.utils.ObjectUtil;
+		    import flash.events.*;
+		    import mx.managers.PopUpManager;
+		    import mx.core.IFlexDisplayObject;
+		    import mx.events.CloseEvent;
+		    import mx.rpc.events.ResultEvent;
+		    import mx.collections.ArrayCollection;
+
+			// DEFINE VARS FOR STORING VALIDATION OBJECTS
+	        private var VlastName:ValidationResultEvent 
+        
+			// FUNCTION TO VALIDATE, IF VALID SAVE FORM, IF NOT VALID SHOW ERRORS   
+	        private function userSearchValidation():void
+	        {
+        		// Validate FORM INPUTS
+           		VlastName = lastNameVal.validate(); 
+           
+				if (VlastName.type==ValidationResultEvent.INVALID) return;
+           	    else SearchManager.search();
+			}
+
+			// HANDLE USER SEARCH RESULTS
+			private function searchResult(event:ResultEvent):void
+			{
+				if (event.result.length > 0) 
+					userDG.dataProvider = event.result;
+				else {
+					Alert.show("No users found. Create a new one?", "Program Alert", 3, this, alertClickHandler);
+					userDG.dataProvider.removeAll();
+				}
+			}
+		
+			// HANDLE USER SEARCH FAULTS
+			private function searchFault(event:FaultEvent):void
+			{
+				Alert.show(event.fault.message);
+			}
+		
+			 // EVENT HANDLER FOR ALERT SELECTED OPTION
+	        private function alertClickHandler(event:CloseEvent):void
+	        {
+	        	if (event.detail==Alert.YES) showUserDetail();
+		        else return;
+	        }
+
+			// CALL USER ADD COMPONENT
+			private function showUserDetail():void
+			{
+				var popUp:userDetail = userDetail(
+	            PopUpManager.createPopUp(this, userDetail, true))
+	            if (userDG.selectedItem){
+	            	popUp.uuid.text = userDG.selectedItem.id;
+	            	popUp.login.text = userDG.selectedItem.login;
+	            	popUp.pass.text = userDG.selectedItem.pass;
+	            	popUp.first_name.text = userDG.selectedItem.first_name;
+	            	popUp.last_name.text = userDG.selectedItem.last_name;
+	            	popUp.email.text = userDG.selectedItem.email;
+	            	popUp.url.text = userDG.selectedItem.url;
+	            }
+	            else return;
+			}
+    	]]>
+    </mx:Script>
+
+	<!-- SEARCH WEBSERVICE -->
+	<mx:WebService id="SearchManager" useProxy="false" 
+		wsdl="http://localhost:8080/cfusion/adogo/services/UserManager.cfc?wsdl"
+		showBusyCursor="true">
+		
+		<!-- Search has functionality for more, but only first/last name are part of this -->
+		<mx:operation name="search" 
+			result="searchResult(event)" 
+			fault="searchFault(event)">
+			<mx:request>
+				<id></id>
+				<login></login>
+				<pass></pass>
+	            <first_name>{first_name.text}</first_name>
+	            <last_name>{last_name.text}</last_name>
+	            <email></email>
+	            <url></url>
+         </mx:request>
+		</mx:operation>
+	</mx:WebService>
+
+
+	<mx:Form x="10" y="10">
+		<mx:FormItem label="First Name:">
+			<mx:TextInput id="first_name"/>
+		</mx:FormItem>
+	</mx:Form>
+	<mx:Form x="259" y="10">
+		<mx:FormItem label="Last Name" required="true">
+			<mx:TextInput enter="userSearchValidation()" id="last_name"/>
+		</mx:FormItem>
+	</mx:Form>
+	<mx:Button x="537" y="25" label="Search" click="userSearchValidation()"/>
+	<mx:DataGrid x="10" y="72" doubleClickEnabled="true" doubleClick="showUserDetail()" id="userDG" height="100%" width="100%">
+		<mx:columns>
+			<mx:DataGridColumn headerText="First Name:" dataField="first_name"/>
+			<mx:DataGridColumn headerText="Last Name:" dataField="last_name"/>
+			<mx:DataGridColumn headerText="Email:" dataField="email"/>
+			<mx:DataGridColumn visible="false" dataField="login"/>
+			<mx:DataGridColumn visible="false" dataField="pass"/>
+			<mx:DataGridColumn visible="false" dataField="url"/>
+			<mx:DataGridColumn visible="false" dataField="id"/>
+			
+		</mx:columns>
+	</mx:DataGrid>
+	
+	<!-- VALIDATORS -->
+	<mx:StringValidator source="{last_name}" required="true" id="lastNameVal" property="text" minLength="1" maxLength="20" />
+</mx:Panel>
