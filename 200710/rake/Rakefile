@@ -18,7 +18,7 @@ Rjb::load(
 desc 'Default task packages the application.'
 task :default => :package
 
-#task :package => ['test', 'build']
+task :package => ['test', 'build']
 
 Rake::PackageTask.new('buildtoolshootout', '0.0.1') do |package|
   package.need_zip = true
