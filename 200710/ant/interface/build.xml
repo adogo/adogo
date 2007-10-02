@@ -1,0 +1,51 @@
+<project name="BuildToolShootOut_Flex" default="build" basedir=".">
+	
+	<taskdef name="flexunit" classname="com.adobe.ac.ant.tasks.FlexUnitTask" />
+	
+	<property name="flex.mxmlc.loc" location="C:/Program Files/Adobe/Flex Builder 3 Plug-in/sdks/2.0.1/bin/mxmlc.exe" />
+	<property name="flexunit.swc.loc" location="C:/adogo/flexunit/bin/flexunit.swc" />
+	<property name="flexunitoptional.swc.loc" location="C:/adogo/flexunit/bin/FlexUnitOptional.swc" />
+	
+	<property name="src.flex.loc" location="${basedir}/src/main" />
+	<property name="bin.flex.loc" location="${basedir}/target/main" />
+	<property name="test.flex.loc" location="${basedir}/src/test" />
+	<property name="doc.flex.loc" location="${basedir}/target/test" />
+	
+	<target name="init">
+		<mkdir dir="${bin.flex.loc}" />
+		<mkdir dir="${doc.flex.loc}" />
+	</target>
+	
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${bin.flex.loc}" defaultexcludes="false">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+		<delete includeemptydirs="true">
+			<fileset dir="${doc.flex.loc}" defaultexcludes="false">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<target name="build" depends="init">
+		<exec dir="${src.flex.loc}" executable="${flex.mxmlc.loc}">
+			<arg line="-output '${bin.flex.loc}/userManager.swf'" />
+			<arg line="userManager.mxml" />
+		</exec>
+	</target>
+
+	<target name="test" depends="init">
+		<exec dir="${test.flex.loc}" executable="${flex.mxmlc.loc}">
+			<arg line="-library-path+='${flexunit.swc.loc}'" />
+			<arg line="-library-path+='${flexunitoptional.swc.loc}'" />
+			<arg line="-source-path+='${src.flex.loc}'" />
+			<arg line="-output '${doc.flex.loc}/Test.swf'" />
+			<arg line="Test.mxml" />
+		</exec>
+		
+		<flexunit timeout="0" swf="${doc.flex.loc}/Test.swf" toDir="${doc.flex.loc}" haltonfailure="true" /> 
+	</target>
+	
+</project>

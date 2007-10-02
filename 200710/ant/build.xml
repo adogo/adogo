@@ -1,0 +1,51 @@
+<project name="BuildToolShootOut" default="package" basedir=".">
+
+	<property name="flex.loc" location="${basedir}/interface" />
+	<property name="cf.loc" location="${basedir}/webservice" />
+	
+	<property name="flex.build.loc" location="${flex.loc}/build.xml" />
+	<property name="cf.build.loc" location="${cf.loc}/build.xml" />
+	
+	<property name="package.loc" location="${basedir}/dist" />
+	<property name="package.zip.loc" location="${package.loc}/userManager.zip" />
+	<property name="src.flex.loc" location="${flex.loc}/src/main" />
+	<property name="bin.flex.loc" location="${flex.loc}/target/main" />
+	<property name="src.cf.loc" location="${cf.loc}/src/main" />
+	
+	<target name="init">
+		<ant antfile="${flex.build.loc}" target="init" inheritall="false"/>
+		<ant antfile="${cf.build.loc}" target="init" inheritall="false" />
+		
+		<mkdir dir="${package.loc}" />
+	</target>
+	
+	<target name="clean">
+		<ant antfile="${flex.build.loc}" target="clean" inheritall="false"/>
+		<ant antfile="${cf.build.loc}" target="clean" inheritall="false" />
+		
+		<delete includeemptydirs="true">
+			<fileset dir="${package.loc}" defaultexcludes="false">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<target name="build" depends="init">
+		<ant antfile="${flex.build.loc}" target="build" inheritall="false" />
+		<ant antfile="${cf.build.loc}" target="build" inheritall="false" />
+	</target>
+
+	<target name="test" depends="init">
+		<ant antfile="${flex.build.loc}" target="test" inheritall="false" />
+		<ant antfile="${cf.build.loc}" target="test" inheritall="false" />
+	</target>
+	
+	<target name="package" depends="build">
+		<zip destfile="${package.zip.loc}">
+			<fileset dir="${src.flex.loc}/html-template" />
+			<fileset dir="${bin.flex.loc}" />
+			<fileset dir="${src.cf.loc}" />
+		</zip>
+	</target>
+	
+</project>

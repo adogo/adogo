@@ -1,0 +1,56 @@
+<project name="BuildToolShootOut_CF" default="build" basedir=".">
+	
+	<taskdef name="cfunit" classname="net.sourceforge.cfunit.ant.CFUnit"/>
+
+	<property name="src.cf.loc" location="${basedir}/src/main" />
+	<property name="bin.cf.loc" location="${basedir}/target/main" />
+	<property name="test.cf.loc" location="${basedir}/src/test" />
+	<property name="doc.cf.loc" location="${basedir}/target/test" />
+	
+	<property name="cf.webroot.loc" location="C:/adogo/ColdFusion8/wwwroot" />
+	<property name="cf.webroot.url" value="http://localhost:8500" />
+
+	<target name="init">
+		<mkdir dir="${bin.cf.loc}" />
+		<mkdir dir="${doc.cf.loc}" />
+	</target>
+	
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${bin.cf.loc}" defaultexcludes="false">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+		<delete includeemptydirs="true">
+			<fileset dir="${doc.cf.loc}" defaultexcludes="false">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<target name="build" depends="init">
+		<echo>No build for CFML</echo>
+	</target>
+
+	<target name="test" depends="init">
+		<copy todir="${cf.webroot.loc}" overwrite="true" verbose="true">
+			<fileset dir="${src.cf.loc}">
+				<include name="**/*.cf*" />
+			</fileset>
+		</copy>
+		<copy todir="${cf.webroot.loc}/services" overwrite="true" verbose="true">
+			<fileset dir="${test.cf.loc}">
+				<include name="**/*.cf*" />
+			</fileset>
+		</copy>
+		
+		<record name="${doc.cf.loc}/cfunit.log" action="start"/>
+		
+		<cfunit testcase="${cf.webroot.url}/services/UserManagerTest.cfc" verbose="true" />
+		
+		<record name="${doc.cf.loc}/cfunit.log" action="stop"/>
+		
+		<delete dir="${cf.webroot.loc}/services" /> 
+	</target>
+	
+</project>
