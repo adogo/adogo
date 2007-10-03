@@ -7,22 +7,21 @@ require 'flextasks'
 
 include FileUtils
 
+PROJECT_NAME='buildtoolshootout'
+PROJECT_VERSION=[0, 0, 1].join('.')
+
 CLOBBER.include(%w[target test report])
 
-Rjb::load(
-  Dir.glob('/Developer/Java/Ant/lib/*.jar').join(':') +
-  ':' +
-  Dir.glob('**/lib/*.jar').join(':')
-)
+Rjb::load((Dir.glob('{/Developer/Java/Ant,**}/lib/*.jar')).join(':'))
 
 desc 'Default task packages the application.'
 task :default => :package
 
-task :package => ['test', 'build']
+task :package => [:test, :build]
 
-Rake::PackageTask.new('buildtoolshootout', '0.0.1') do |package|
+Rake::PackageTask.new(PROJECT_NAME, PROJECT_VERSION) do |package|
   package.need_zip = true
-  package.package_files.include('{target}/*')
+  package.package_files.include('target/*')
 end
 
 desc 'Build the application.'
