@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" verticalScrollPolicy="off" height="70" width="200"
+  paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5">
+	
+	<mx:Image source="{data.user.profileImageURL}" />
+	
+	<mx:VBox width="100%">
+	  <mx:Text width="100%" text="{data.text}" />
+	  <mx:Text width="100%" text="By {data.user.name} from {data.user.location} on {data.createdAt.toString()}" />
+	</mx:VBox>
+	
+</mx:HBox>

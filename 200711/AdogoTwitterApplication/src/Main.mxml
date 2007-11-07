@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute"
+	title="Adogo Twitter Application"
+	creationComplete="setup()"
+	width="300"
+	height="450">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			
+			import twitter.api.Twitter;
+			import twitter.api.events.TwitterEvent;
+
+			private var twitterService : Twitter = new Twitter();
+
+			[Bindable]
+			private var userTimeline : Object;
+
+			private function setup() : void {
+				twitterService.addEventListener(TwitterEvent.ON_PUBLIC_TIMELINE_RESULT, onPublicTimeline);
+				twitterService.addEventListener(TwitterEvent.ON_USER_TIMELINE_RESULT,onUserTimeline);
+				twitterService.addEventListener(TwitterEvent.ON_SET_STATUS,onSetStatus);
+				twitterService.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+				/*
+				twitterService.addEventListener(TwitterEvent.ON_FRIENDS_RESULT,onFriends);  
+				twitterService.addEventListener(TwitterEvent.ON_FRIENDS_TIMELINE_RESULT,onFriendsTimeline);  
+				twitterService.addEventListener(TwitterEvent.ON_PUBLIC_TIMELINE_RESULT,onPublicTimeline);  
+				twitterService.addEventListener(TwitterEvent.ON_SET_STATUS,onSetStatus);
+				twitterService.loadPublicTimeline();
+				*/
+			}
+			
+			private function onPublicTimeline(event : TwitterEvent):void {
+				
+			}
+			
+			/* Logs the user in and gets their recent posts */
+			private function login():void {
+        if (username.text.length <= 0 || password.text.length < 6)
+          loginError.visible = true;
+        else
+        {
+          loginError.visible = false;
+  				twitterService.setAuth(username.text, password.text);
+  				
+  				/* The twitter API doesn't make a request to the server when username and password
+  				   are set, so we need to make a call to the server.  We'll get a list of the recent
+  				   posts by this user. If we're able to do that, their username and password are 
+  				   correct. */
+  				twitterService.loadUserTimeline(username.text);
+        }
+			}
+
+			/* Called upon successfully fetching a users timeline */
+			private function onUserTimeline(event : TwitterEvent):void {
+				userTimeline = event.data;
+				currentState = 'loggedIn';
+			}
+			
+			/* Logs the user out by erasing their credentials and showing the login screen. */
+			private function logout():void{
+				twitterService.setAuth('', '');
+				userTimeline = null;
+				currentState = 'notLoggedIn';
+				username.text = '';
+  			password.text = '';
+			}
+			
+			/* Sends a request to twitter to update the status of the current user. */
+			private function updateStatus():void{
+			  if(statusText.text.length) twitterService.setStatus(statusText.text);
+			}
+			
+		  /* Called upon successfully setting the status of the current user. */
+			private function onSetStatus(event : TwitterEvent):void{
+				statusText.text = "";
+
+				/* The current page won't show the newly added item. We should update everything
+			     to make sure it's working right */
+				twitterService.loadUserTimeline(username.text);
+			}
+			
+			/* Show the login screen and a security error if authentication fails */
+			private function onSecurityError():void{
+				currentState = 'notLoggedIn';
+			  loginError.visible = true;
+			}
+		]]>
+	</mx:Script>    
+
+	<mx:ViewStack id="twitterStack" width="100%" height="100%" resizeToContent="true" backgroundColor="#AFEFF1">
+
+	  <!-- Form for the user to log in -->
+		<mx:Form id="loginForm" hideEffect="Fade" showEffect="Fade" height="100%" width="100%">
+		  <mx:Image source="assets/twitter.png" />
+		  <mx:Text id="loginError" text="Username and password not valid" showEffect="Fade"
+		    hideEffect="Fade" visible="false" />
+			<mx:FormItem label="Username" required="true">
+				<mx:TextInput id="username" />
+			</mx:FormItem>
+			<mx:FormItem label="Password" required="true">
+				<mx:TextInput id="password" displayAsPassword="true" maxChars="30" />
+			</mx:FormItem>
+			<mx:FormItem>
+				<mx:Button label="Login" click="login()" />
+			</mx:FormItem>
+		</mx:Form>
+
+    <!-- All user controls after the user logs in -->
+		<mx:VBox id="loggedIn" showEffect="Fade" hideEffect="Fade" height="100%" width="100%">
+			<!--<mx:TileList dataProvider="{userTimeline}" 
+			             maxColumns="1"
+    					     itemRenderer="StatusUpdate"
+    					     width="100%"
+    					     height="100%" />-->
+      <mx:List id="mylist"
+               dataProvider="{userTimeline}"
+               itemRenderer="StatusUpdate"
+               alternatingItemColors="[#ffffff,#f2f2f2]"
+               variableRowHeight="true"
+               wordWrap="true"
+               width="100%" height="100%"
+               
+            />
+            
+			<mx:Form id="updateForm" width="100%" textAlign="center">
+				<mx:TextArea maxChars="140" id="statusText" width="100%" textAlign="left" />
+				<mx:HBox textAlign="center" width="100%">
+  				<mx:Button id="updateButton" label="Twitter" click="updateStatus()" />
+    			<mx:Button label="Logout" click="logout()" />
+				</mx:HBox>
+			</mx:Form>
+		</mx:VBox>
+
+	</mx:ViewStack>
+    
+    
+  <mx:states>
+    <mx:State name="notLoggedIn">
+      <mx:SetProperty target="{twitterStack}" name="selectedChild" value="{loginForm}" />
+      <mx:SetProperty target="{loginError}" name="visible" value="false" />
+    </mx:State>
+    <mx:State name="loggedIn">
+      <mx:SetProperty target="{twitterStack}" name="selectedChild" value="{loggedIn}" />
+    </mx:State>
+  </mx:states>
+    
+</mx:WindowedApplication>
