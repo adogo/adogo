@@ -1,0 +1,53 @@
+<project name="updater" default="prep">
+	
+	<!-- Define svnant tasks and types. -->
+	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" />
+
+	<!-- Define antcontrib type -->
+	<taskdef resource="net/sf/antcontrib/antlib.xml"/>
+	
+	<target name="updateWorkingCopy">
+		<svn>
+			<status path="${working}" urlProperty="sourceURL" />
+		</svn>
+		<echo message="${sourceURL}" />
+		<echo message="${svnURL}${svnBranch}" />
+		
+		<echo message="The working copy is set to ${svnURL}${svnBranch}" />
+		<svn>
+			<update dir="${working}" />
+		</svn>
+		<svn>
+			<status path="${working}" revisionProperty="latestRevision"   />
+		</svn>
+	</target>
+	
+	<target name="prep" depends="updateWorkingCopy">
+		<echo>prep</echo>
+		<!-- Create the build directory structure used by compile -->
+		<delete dir="${reports.dir}"/>
+		<mkdir dir="${reports.dir}" />
+		<delete dir="${logs.dir}"/>
+		<mkdir dir="${logs.dir}" />
+		<delete dir="${output}"/>
+		<mkdir dir="${output}" />
+		<mkdir dir="${output}/" />
+		
+		
+
+		<!-- copy the html template files to the /wwwroot/swfs -->
+		<copy toDir="${output}/swfs">
+        	<fileset dir="${working}/flex/html-template/" />
+        </copy>
+
+
+		<copy toDir="${output}/">
+        	<fileset dir="${working}">
+				<exclude name="**/.svn"/>
+			</fileset>
+        </copy>
+
+
+	</target>
+</project>
+	

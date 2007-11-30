@@ -1,0 +1,43 @@
+<project name="supportnet" default="tag" basedir=".">
+    <description>
+       auto tag the repository
+    </description>
+
+	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" />
+	<!-- Define antcontrib type -->
+	<taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+  	<!-- auto tags a url
+		<property name="svnURL" value="${svnURL}"/>
+		<property name="svnBranch" value="${svnBranch}"/>
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}"/>
+		<property name="workingCopy" value="../../projects/${project.name}/${working}" />
+		-->
+
+	<target name="tag">
+
+		<svn username="${username}" password="${password}" >
+			<status path="${workingCopy}" revisionProperty="latestRevision" />
+		</svn>
+
+		<propertyregex property="svn_branch_label"
+			input="${svnBranch}"
+			regexp="/|\."
+			replace="_"
+			global="true"
+			casesensitive="false" />
+
+		<propertyregex property="newlabel"
+			input="${label}"
+			regexp="build(.*)"
+			replace="${svn_branch_label}\1"
+			casesensitive="false" />
+
+		<svn username="${username}" password="${password}" >
+			<copy srcUrl="${svnURL}${svnBranch}" destURL="${svnURL}/auto_tags/${newlabel}.${latestRevision}" revision="${latestRevision}" message="Auto tagging latest [${latestRevision}] build:${label} from:${svnURL}${svnBranch}" />
+		</svn>
+
+		<echo message="Auto tagging latest [${latestRevision}] build:${label} from:${svnURL}${svnBranch}" />
+	</target>
+</project>

@@ -1,0 +1,71 @@
+<project name="sample_compiler" default="all">
+	
+	<!-- compiled code goes here -->
+	<property name="mainApplication"  value="flex"/>
+	<property name="testApplication"  value="flex_test"/>
+	
+	<!-- Define the flextasks -->
+	<taskdef resource="flexTasks.tasks" />
+
+	<!-- Define flexUnit task -->
+	<taskdef resource="com/adobe/ac/ant/tasks/tasks.properties" />
+	
+	<target name="all" depends="compile-tests, compile-application" />
+
+	
+	<target name="compile-tests" >
+		<echo message="Compiling tests." />
+		<mxmlc file="${working}/${testApplication}/src/AntTestRunner.mxml" keep-generated-actionscript="true" output="${output}/swfs/AntTestRunner.swf">
+			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
+        	<source-path path-element="${FLEX_HOME}/frameworks"/>
+        	<source-path path-element="${working}/${mainApplication}"/>
+        	<source-path path-element="${working}/${testApplication}/src"/>
+        	<compiler.library-path dir="${working}/${testApplication}/libs" append="true">
+                <include name="flexunit.swc" />
+        		<include name="FlexUnitOptional.swc" />
+            </compiler.library-path>
+		</mxmlc>
+		<merge-template template="${output}/swfs/index.template.html" output="${output}/swfs/AntTestRunner.html" title="${ant.project.name}" swf="AntTestRunner" />
+	</target>
+	
+	<target name="compile-application">
+		<echo message="Compiling application." />
+		<mxmlc file="${working}/${mainApplication}/main.mxml" keep-generated-actionscript="true" output="${output}/index.swf">
+			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
+        	<source-path path-element="${FLEX_HOME}/frameworks"/>
+        	
+		</mxmlc>
+		<merge-template template="${output}/swfs/index.template.html" output="${output}/swfs/index.html" title="${ant.project.name}" />
+	</target>
+
+	<macrodef name="merge-template">
+		<attribute name="template"/>
+		<attribute name="output" />
+		<attribute name="title" default="default template title"  />
+		<attribute name="height" default="100%"  />
+		<attribute name="width" default="100%" />
+		<attribute name="application" default="app" />
+		<attribute name="swf" default="index" />
+		<attribute name="bgcolor" default="000"/>
+		<attribute name="version-major" default="9" />
+		<attribute name="version-minor" default="0" />
+		<attribute name="version-revision" default="0" />
+		<sequential>
+			<copy file="@{template}" toFile="@{output}" />
+
+			<replace file="@{output}">
+				<replacefilter token="${title}" value="@{title}"/>
+				<replacefilter token="${height}" value="@{height}"/>
+				<replacefilter token="${width}" value="@{width}"/>
+				<replacefilter token="${application}" value="@{application}"/>
+				<replacefilter token="${swf}" value="@{swf}"/>
+				<replacefilter token="${bgcolor}" value="@{bgcolor}" />
+				<replacefilter token="${version_major}" value="@{version-major}"/>
+				<replacefilter token="${version_minor}" value="@{version-minor}"/>
+				<replacefilter token="${version_revision}" value="@{version-revision}"/>
+			</replace>
+		</sequential>
+	</macrodef>
+
+	
+</project>

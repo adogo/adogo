@@ -1,0 +1,41 @@
+<project name="sample" default="all" basedir=".">
+    <description>
+        rolling build script for sample project
+    </description>
+	
+	<property name="svnURL"  value="http://ryan-PC:81/svn/freebase"/>
+	<property name="svnBranch"  value="/trunk"/>
+	<property name="username"  value="ryan"/>
+	<property name="password"  value="1234"/>
+	<property name="distTarget"  value="C:\www\freeweb" />
+	<property name="web.host.name"  value="localhost/freeweb" />
+	<property name="base.url"  value="http://${web.host.name}" />
+	<property name="working"  location="working" />
+	<property name="reports.dir"  location="reports" />
+	<property name="logs.dir"  location="logs" />
+	<property name="output"  location="output" />
+	<property name="FLEX_HOME" value="../../flex2sdk" />
+	
+	<target name="all" depends="update, compile" />
+
+	<target name="update">
+		<ant antfile="./update.xml"  inheritAll="true" />
+	</target>
+	
+	<target name="compile" >
+		<ant antfile="./compile.xml"  inheritAll="true" />
+	</target>
+	
+	<target name="deploy">
+		<ant antfile="./deploy"  inheritAll="true" />
+	</target>
+	
+	<target name="test">
+		<ant antfile="./test.xml" inheritAll="true" />
+	</target>
+	
+	
+	
+	
+
+</project>

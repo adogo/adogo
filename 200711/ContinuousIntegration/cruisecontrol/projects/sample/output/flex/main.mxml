@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:services="com.freebase.services.*" 
+	xmlns:view="com.freebase.view.*" 
+	layout="absolute"  >
+	
+	<mx:Script>
+		<![CDATA[
+	
+		public var myNum:int = 1000;
+		[Bindable] public var myString:String = "bar";
+		public var works:Boolean = true;
+		
+		
+		
+		]]>
+	</mx:Script>
+	
+	<mx:Label text="{myString}" />
+	
+	
+</mx:Application>
+

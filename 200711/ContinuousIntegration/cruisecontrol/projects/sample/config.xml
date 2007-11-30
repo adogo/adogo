@@ -1,0 +1,70 @@
+<project name="sample" buildafterfailed="true">
+	<!-- global properties -->
+	<property name="svnURL"  value="http://ryan-PC:81/svn/freebase"/>
+	<property name="svnBranch"  value="/trunk"/>
+	<property name="username"  value="ryan"/>
+	<property name="password"  value="1234"/>
+	<property name="distTarget"  value="C:\www\freeweb" />
+	<property name="web.host.name"  value="localhost/freeweb" />
+	<property name="base.url"  value="http://${web.host.name}" />
+	<property name="working"  location="working" />
+	<property name="reports.dir"  location="reports" />
+	<property name="logs.dir"  location="logs" />
+	<property name="output"  location="output" />
+	
+	
+
+    <listeners>
+        <currentbuildstatuslistener file="logs/${project.name}/status.txt"/>
+    </listeners>
+
+    <bootstrappers>
+    </bootstrappers>
+
+    <modificationset quietperiod="100" >
+        <svn RepositoryLocation="${svnURL}${svnBranch}/"  />
+    </modificationset>
+
+    <schedule interval="3600">
+		<ant anthome="apache-ant-1.6.5" buildfile="projects/${project.name}/build.xml" uselogger="false" usequiet="false" usedebug="false">
+			<property name="FLEX_HOME" value="${FLEX_HOME}" />
+			<property name="svnURL"  value="http://ryan-PC:81/svn/freebase"/>
+			<property name="svnBranch"  value="${svnBranch}"/>
+			<property name="username"  value="${username}"/>
+			<property name="password"  value="${password}"/>
+			<property name="distTarget"  value="${distTarget}" />
+			<property name="web.host.name"  value="${web.host.name}" />
+			<property name="base.url"  value="${base.url}" />
+			<property name="working"  location="${working}" />
+			<property name="reports.dir"  location="${reports.dir}" />
+			<property name="logs.dir"  location="${logs.dir}" />
+			<property name="output"  location="${output}" />
+		</ant>
+    </schedule>
+
+    
+
+	<publishers>
+		<artifactspublisher dest="artifacts/${project.name}" dir="projects/${project.name}/reports/"/>
+			<!-- onsuccess>
+				 <antpublisher anthome="apache-ant-1.6.5" buildfile="common/autotag/build.xml" uselogger="false" usequiet="false" usedebug="false">
+					<property name="svnURL" value="${svnURL}"/>
+					<property name="svnBranch" value="${svnBranch}"/>
+					<property name="workingCopy" value="../../projects/${project.name}/${working}" />
+				</antpublisher>
+			</onsuccess -->
+		<!-- email mailhost="smtp.gmail.com" 
+			mailport="465"
+			usessl="true"
+			username="ninjascience"
+			password="******"
+			buildresultsurl="http://localhost:8080/buildresults/sample" 
+			reportsuccess="never" 
+			returnaddress="builder@localhost.com"
+			subjectprefix="CruiseControl"
+			skipusers="true">
+			<failure address="ninjascience@gmail.com" />
+		</email -->
+    </publishers>
+
+</project>

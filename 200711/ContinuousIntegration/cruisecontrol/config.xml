@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE cruisecontrol [
+	<!ENTITY sampleProject SYSTEM "projects/sample/config.xml">
+]>
+<cruisecontrol>
+    
+    <!-- global properties -->
+	<property environment="env" toupper="true"/> <!-- all environment vars in env.* -->
+	<property name="FLEX_HOME" value="${env.CCDIR}/flex2sdk" />
+	<property name="working"  value="working"/>
+	<property name="reports.dir"  value="reports"/>
+	<property name="timeout"  value="30"/>
+	
+	&sampleProject;
+	
+</cruisecontrol>
