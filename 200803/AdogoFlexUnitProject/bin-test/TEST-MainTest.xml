@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite errors="0" failures="0" name="MainTest" tests="5" time="0"> 
+  <testcase classname="MainTest" name="shouldBindNvcUserToUserForm" time="0"/>  
+  <testcase classname="MainTest" name="shouldHavePasswordTextInputSetToPassword" time="0"/>  
+  <testcase classname="MainTest" name="shouldSwitchStackToSiteWhenAutenticationPasses" time="0"/>  
+  <testcase classname="MainTest" name="shouldCallAuthenticationNvcWhenLoginClicked" time="0"/>  
+  <testcase classname="MainTest" name="shouldShowErrorMessageIfAuthenticationFailed" time="0"/> 
+</testsuite>

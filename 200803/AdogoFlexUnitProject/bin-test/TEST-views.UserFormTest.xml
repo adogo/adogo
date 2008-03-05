@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite errors="0" failures="0" name="views.UserFormTest" tests="3" time="0"> 
+  <testcase classname="views.UserFormTest" name="shouldSetTextInputsWhenUserSet" time="0"/>  
+  <testcase classname="views.UserFormTest" name="shouldUpdateFieldsWhenUserUpdated" time="0"/>  
+  <testcase classname="views.UserFormTest" name="shouldUpdateWelcomeWhenUserSet" time="0"/> 
+</testsuite>

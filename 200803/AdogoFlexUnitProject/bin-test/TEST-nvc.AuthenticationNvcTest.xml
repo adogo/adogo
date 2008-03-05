@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite errors="0" failures="0" name="nvc.AuthenticationNvcTest" tests="10" time="0"> 
+  <testcase classname="nvc.AuthenticationNvcTest" name="shouldSetUserIfAuthenticated" time="0"/>  
+  <testcase classname="nvc.AuthenticationNvcTest" name="shouldInitializeWithUserSetToNull" time="0"/>  
+  <testcase classname="nvc.AuthenticationNvcTest" name="shouldFailAuthenticationForAnyUserOtherThanDaniel" time="0"/>  
+  <testcase classname="nvc.AuthenticationNvcTest" name="shouldAuthenticateForUserDanielPasswordPassword" time="0"/>  
+  <testcase classname="nvc.AuthenticationNvcTest" name="shouldDispatchAuthenticationEventPassWhenAuthenticationSucceeds" time="0"/>  
+  <testcase classname="nvc.AuthenticationNvcTest" name="shouldInitializeWithFailedAuthenticationSetToFalse" time="0"/>  
+  <testcase classname="nvc.AuthenticationNvcTest" name="shouldInitializeWithAuthenticatedSetToFalse" time="0"/>  
+  <testcase classname="nvc.AuthenticationNvcTest" name="shouldFailAuthenticationForAnyPasswordOtherThanPassword" time="0"/>  
+  <testcase classname="nvc.AuthenticationNvcTest" name="shouldNotSetUserIfFailedAuthenticated" time="0"/>  
+  <testcase classname="nvc.AuthenticationNvcTest" name="shouldDispatchAuthenticationEventFailWhenAuthenticationFails" time="0"/> 
+</testsuite>

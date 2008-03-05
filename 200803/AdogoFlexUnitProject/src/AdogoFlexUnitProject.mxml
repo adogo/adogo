@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" height="600" width="800" xmlns:views="views.*">
+   <mx:Style>
+      ViewStack {
+         paddingTop: 10;   
+         paddingBottom: 10;
+         paddingRight: 10;
+         paddingLeft: 10;
+      }
+   </mx:Style>
+   
+   <views:Main />
+</mx:WindowedApplication>

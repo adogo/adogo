@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"                 
+                xmlns:flexunit="flexunit.flexui.*"
+                creationComplete="onCreationComplete()">
+   <mx:Script>
+      <![CDATA[
+         import flash.system.fscommand;
+         import flexunit.junit.JUnitTestRunner;
+         import flexunit.framework.TestSuite;
+         
+         [Bindable]
+         private var runner : JUnitTestRunner;
+         
+         private function onCreationComplete() : void
+         {
+            testStatus.text = "Please wait running test suite...";
+            
+            runner = new JUnitTestRunner();
+            runner.run(AllTests.suite, onTestComplete);
+         }
+         
+         private function onTestComplete() : void
+         {
+            testStatus.text = "Finished running test suite.";
+            
+            fscommand("quit");
+         }
+      ]]>
+   </mx:Script>
+   
+   <mx:Label id="testStatus" />
+</mx:Application>

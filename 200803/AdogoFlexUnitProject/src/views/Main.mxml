@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:views="views.*" xmlns:nvc="nvc.*" horizontalAlign="center" verticalAlign="middle">
+   <mx:Script>
+      <![CDATA[
+         import events.AuthenticationEvent;
+         private function loginClick(event : MouseEvent) : void {
+            authenticationNvc.authenticate(username.text, password.text);
+         }
+         
+         private function handlePassAuthentication(event : AuthenticationEvent) : void {
+            stack.selectedChild = site;
+         }
+      ]]>
+   </mx:Script>
+   
+   <nvc:AuthenticationNvc id="authenticationNvc" pass="handlePassAuthentication(event)" />
+   
+   <mx:ViewStack id="stack" backgroundColor="#FFFFFF" width="300" height="300" creationPolicy="all">
+      <mx:VBox id="login">
+         <mx:Label id="loginError" text="Login Failed, Try Again" color="#FF0000" visible="{authenticationNvc.failedAuthentication}" />
+      
+         <mx:HBox>
+            <mx:Label text="Username: " />
+            <mx:TextInput id="username" />   
+         </mx:HBox>
+         
+         <mx:HBox>
+            <mx:Label text="Password: " />
+            <mx:TextInput id="password" displayAsPassword="true" />
+         </mx:HBox>
+         
+        <mx:Button id="loginButton" label="login" click="loginClick(event)" />
+      </mx:VBox>
+      
+      <mx:VBox id="site">
+         <views:UserForm id="userForm" user="{authenticationNvc.user}" />
+      </mx:VBox>
+   </mx:ViewStack>
+</mx:VBox>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
+   <mx:Script>
+      <![CDATA[
+         import model.User;
+      
+         [Bindable]
+         public var user : User;
+      ]]>
+   </mx:Script>
+
+   <mx:HBox>
+      <mx:Label id="greeting" text="Welcome {user.firstName} {user.lastName}!" />
+   </mx:HBox>
+   
+   <mx:HBox>
+      <mx:Label text="Username: " />
+      <mx:TextInput id="username" text="{user.username}" />    
+   </mx:HBox>
+   
+   <mx:HBox>
+      <mx:Label text="First Name: " />
+      <mx:TextInput id="first_name" text="{user.firstName}" />    
+   </mx:HBox>
+   
+   <mx:HBox>
+      <mx:Label text="Last Name: " />
+      <mx:TextInput id="last_name" text="{user.lastName}" />    
+   </mx:HBox>
+</mx:VBox>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite errors="0" failures="0" name="model.UserTest" tests="3" time="0"> 
+  <testcase classname="model.UserTest" name="shouldHavePublicPropertyForLastName" time="0"/>  
+  <testcase classname="model.UserTest" name="shouldHavePublicPropertyForUsername" time="0"/>  
+  <testcase classname="model.UserTest" name="shouldHavePublicPropertyForFirstName" time="0"/> 
+</testsuite>
