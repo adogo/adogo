@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	This file was prepared the a presentation for the ADOGO.us group.
+	
+	This is a very simple implementation of Flex connecting to a RESTful Rails application.
+	
+	In order to prepare the backend Rails application you must have Rails 2 installed and run the following commands
+	
+	#rails adogo
+	#cd adogo
+	#./script/generate scaffold user first_name:string last_name:string email:string
+	#./script/server
+	
+	You may also want to edit the rendering of your users in the controller to not change _ to -.
+	instead of 
+	
+	format.xml { render :xml => @users }
+	
+	to 
+	
+	format.xml  { render :xml => @users.to_xml( :dasherize => false) }
+
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+		creationComplete="hsList.send()">
+		
+	<mx:HTTPService id="hsList" url="http://0.0.0.0:3000/users.xml"  />
+	<mx:HTTPService id="hsCreate" url="http://0.0.0.0:3000/users.xml"
+		method="POST" contentType="application/xml" result="hsList.send()">
+		<mx:request xmlns="">
+			<user>
+				<first_name>Joe</first_name>
+				<last_name>monkey</last_name>
+				<email>Joe@monkey.com</email>
+			</user>
+		</mx:request>
+	</mx:HTTPService>
+	<mx:HTTPService id="hsUpdate" url="http://0.0.0.0:3000/users/{dg.selectedItem.id}.xml?_method=put"
+		contentType="application/xml" result="hsList.send()">
+		<mx:request xmlns="">
+			<user>
+				<first_name>{fname.text}</first_name>
+				<last_name>{lname.text}</last_name>
+				<email>{email.text}</email>
+			</user>
+		</mx:request>
+	</mx:HTTPService>
+	<mx:HTTPService id="hsDelete" url="http://0.0.0.0:3000/users/destroy/{dg.selectedItem.id}.xml"
+		result="hsList.send()" />
+	
+	<mx:DataGrid id="dg" dataProvider="{hsList.lastResult.users.user}" />
+	
+	<mx:Form>
+		<mx:FormItem label="First Name">
+			<mx:TextInput id="fname" text="{dg.selectedItem.first_name}" />
+		</mx:FormItem>
+		<mx:FormItem label="Last Name">
+			<mx:TextInput id="lname" text="{dg.selectedItem.last_name}" />
+		</mx:FormItem>
+		<mx:FormItem label="Email">
+			<mx:TextInput id="email" text="{dg.selectedItem.email}" />
+		</mx:FormItem>
+	</mx:Form>
+	<mx:HBox>
+		<mx:Button label="New" click="hsCreate.send()" />
+		<mx:Button label="Update" click="hsUpdate.send()" />
+		<mx:Button label="Delete" click="hsDelete.send()" />
+	</mx:HBox>
+	
+</mx:Application>
