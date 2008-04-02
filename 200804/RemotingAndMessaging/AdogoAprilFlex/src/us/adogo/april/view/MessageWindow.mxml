@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="100%">
+	
+	<mx:Metadata>
+    	[Event(name="messageCreated", type="us.adogo.april.event.MessageCreatedEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.utils.StringUtil;
+			import us.adogo.april.event.MessageCreatedEvent;
+			
+			private function createMessage() : void {
+				if(StringUtil.trim(this.chatMessageBox.text) != ""){
+					dispatchEvent(new MessageCreatedEvent(this.chatMessageBox.text));
+					this.chatMessageBox.text = "";
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:HBox width="100%">
+		<mx:TextArea id="chatMessageBox" 
+			width="100%" 
+			fontSize="14" />
+		<mx:Button id="sendButton" 
+			label="Send" 
+			height="100%" 
+			fontSize="16"
+			click="this.createMessage();" />
+	</mx:HBox>
+</mx:VBox>

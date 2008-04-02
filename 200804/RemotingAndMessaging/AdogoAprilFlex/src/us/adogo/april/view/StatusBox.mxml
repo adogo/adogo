@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:nvc="us.adogo.april.nvc.*"
+	width="100%">
+	
+	<mx:Metadata>
+    	[Event(name="messageCreated", type="us.adogo.april.event.MessageCreatedEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import us.adogo.april.event.MessageCreatedEvent;
+
+			private function createMessage() : void {
+				dispatchEvent(new MessageCreatedEvent(this.statusBox.selectedItem.message));
+			}
+		]]>
+	</mx:Script>
+	
+	<nvc:StatusComponent id="statusComponent" />
+
+	<mx:ComboBox id="statusBox" 
+		width="100%"
+		height="40" 
+		selectionColor="#FFFFFF"
+		dataProvider="{this.statusComponent.statuses}" 
+		change="this.createMessage();" 
+		itemRenderer="us.adogo.april.view.StatusItemRenderer"
+		fontSize="16" />
+</mx:Canvas>

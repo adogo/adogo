@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:view="us.adogo.april.view.*"
+	xmlns:nvc="us.adogo.april.nvc.*"
+	xmlns:vo="us.adogo.april.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import us.adogo.april.event.MessageCreatedEvent;
+			import us.adogo.april.ChatMessage;
+			
+			private function transmit(event : MessageCreatedEvent) : void
+			{
+				var message : ChatMessage = new ChatMessage();
+				message.sender = this.user;
+				message.body = event.message;
+				 
+				this.chatComponent.sendMessage(message);
+			}			
+		]]>
+	</mx:Script>
+
+	<vo:User id="user" />	
+
+	<nvc:ChatComponent id="chatComponent" 
+		user="{user}"/>
+	
+	<mx:Text text="chatwithme"  
+		fontSize="32" 
+		color="#FFFFFF" />
+	<view:StatusBox id="statusBox"
+		messageCreated="this.transmit(event);" />
+	<view:ChatWindow id="chatWindow"
+		messages="{this.chatComponent.messages}" />
+	<view:MessageWindow id="messageWindow" 
+		messageCreated="this.transmit(event);" />
+</mx:VBox>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	verticalAlign="middle"
+	horizontalAlign="center">
+	
+	<mx:Metadata>
+    	[Event(name="userProvided", type="us.adogo.april.event.UserProvidedEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import us.adogo.april.event.UserProvidedEvent;
+			import us.adogo.april.User;	
+			import mx.utils.StringUtil;
+		
+			private function submitUser() : void {
+				if(StringUtil.trim(usernameBox.text) != ""){
+					var user : User = new User();
+					user.name = usernameBox.text;
+										
+					dispatchEvent(new UserProvidedEvent(user));
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Text text="chatwithme"  
+		fontSize="32" 
+		color="#FFFFFF"/>
+	<mx:Text text="Enter a username:" 
+		fontWeight="bold" 
+		fontSize="16" />
+	<mx:TextInput id="usernameBox" 
+		width="100%" 
+		fontSize="14"
+		enter="this.submitUser();" />
+	<mx:Button id="submitButton" 
+		label="Accept"
+		fontSize="16"
+		click="this.submitUser();" />
+</mx:VBox>

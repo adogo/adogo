@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:view="us.adogo.april.view.*"
+	xmlns:vo="us.adogo.april.*" 
+	layout="vertical"
+	width="100%"
+	height="100%"
+	horizontalAlign="center"
+	verticalAlign="middle">
+
+	<mx:Script>
+		<![CDATA[
+			import us.adogo.april.event.UserProvidedEvent;
+
+			private function showChatView(event : UserProvidedEvent) : void {
+				this.user = event.user;
+				this.appStack.selectedChild = this.chatView;
+			}
+		]]>
+	</mx:Script>
+	
+	<vo:User id="user" />
+
+	<mx:WipeDown id="wipe" duration="1000" />
+	
+	<mx:ViewStack id="appStack"
+		width="400" 
+		height="450">
+		<view:UsernameView id="usernameView" 
+			userProvided="this.showChatView(event);" />
+		<view:ChatView id="chatView" 
+			user="{user}" 
+			showEffect="wipe" /> 
+	</mx:ViewStack>
+	
+</mx:Application>

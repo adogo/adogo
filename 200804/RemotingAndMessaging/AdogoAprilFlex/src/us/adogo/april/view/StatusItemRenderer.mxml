@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Image source="resources/{data.code}.jpg" 
+		height="50" 
+		width="50"/>
+	<mx:Text text="{data.name}" 
+		fontSize="20"
+		width="100%" />
+</mx:HBox>
