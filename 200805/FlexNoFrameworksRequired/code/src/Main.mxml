@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:view="view.*"
+				width="100%" 
+				height="100%"
+				styleName="main">
+	
+	<mx:Style source="patternbasedstore.css" />
+	
+	<!--
+		The ApplicationLayout does pretty much all the work from a UI and
+		Mediator perspective. Look inside this and in the comments for the
+		ActionScript classes for more info.
+	-->
+	<view:ApplicationLayout width="100%"
+							height="555"
+							horizontalGap="4"
+							horizontalAlign="center"/>
+
+</mx:Application>

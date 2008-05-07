@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	A simple widget that displays Products in a grid.
+-->
+<mx:Canvas	xmlns:mx="http://www.adobe.com/2006/mxml" 
+			width="100%"
+			height="100%">
+		   
+	<mx:Metadata>
+		[Event(name="productSelection", type="events.ProductSelectionEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+	<![CDATA[
+		import events.ProductSelectionEvent;
+		import com.maximporges.store.Product;
+
+		import controller.Registry;
+		import mx.collections.ICollectionView;
+
+		[Bindable]
+		public var products : ICollectionView;
+		
+		public function updateSelectedProduct(event : Object) : void 
+		{
+			dispatchEvent(new ProductSelectionEvent(productGrid.selectedItem as Product));
+		}
+	
+	]]>
+	</mx:Script>
+	
+	<mx:TileList	id="productGrid" 
+				   	width="100%" 
+				   	height="100%" 
+					dataProvider="{products}" 
+					change="updateSelectedProduct(event);" 
+					itemRenderer="view.ProductThumbnail" 
+					columnWidth="122"
+					rowHeight="118" 
+					dragEnabled="true" 	
+					borderStyle="none" />
+					
+</mx:Canvas>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Widget to expose the contents of the ShoppingCart to the world. This widget
+	also allows the user to delete items directly, and broadcasts product
+	selection events when the items in the cart are selected.
+-->
+<mx:Panel	xmlns:mx="http://www.adobe.com/2006/mxml" 
+			title="Shopping Cart"
+			xmlns:view="view.*">
+
+	<mx:Metadata>
+		[Event(name="productSelection", type="events.ProductSelectionEvent")]
+		[Event(name="checkOut", type="events.CheckOutEvent")]
+	</mx:Metadata>
+	
+	<view:StoreCurrencyFormatter id="currencyFormatter" />
+	
+	<mx:Script>
+	<![CDATA[
+		import events.ProductSelectionEvent;
+		import com.maximporges.store.LineItem;
+		import com.maximporges.store.ShoppingCart;
+		import com.maximporges.store.Product;
+		import events.CheckOutEvent;
+		import mx.controls.Alert;
+		import mx.formatters.CurrencyFormatter;
+		import mx.managers.DragManager;
+		import mx.events.DragEvent;	
+		import mx.core.IUIComponent;
+		
+		[Bindable]
+		public var cart : ShoppingCart;
+		
+		public function format(item : Object, dataField : String) : String 
+		{
+		   return currencyFormatter.format(item.lineItemTotal);
+		}
+		
+		public function addProductToShoppingCart(product : Product) : void 
+		{
+			cart.addItemToCart(product);
+		}
+
+		public function doDragOver(event : DragEvent) : void
+		{
+			event.currentTarget.showDropFeedback(event);
+		}
+   	
+		public function doDragEnter(event : DragEvent) : void 
+		{
+			DragManager.acceptDragDrop(IUIComponent(event.currentTarget));
+		}
+   	
+		public function doDragExit(event : DragEvent) : void 
+		{
+			event.currentTarget.hideDropFeedback(event);
+		}
+   	
+		public function doDragDrop(event : DragEvent) : void 
+		{			
+			var item : Object = event.dragSource.dataForFormat("item");
+			if (item == null) 
+			{
+				/*Item was dragged from the product catalog */
+				var items : Object = event.dragSource.dataForFormat("items");
+				item = items[0];
+			}
+
+			/*
+			FYI: A change event of a DataGrid or a TileList might fire 
+			after the dragDrop event of the DataGrid. Therefore we add the 
+			item property of the dragging operation and not selectedItem of view.
+			*/
+			addProductToShoppingCart(Product(item));
+			doDragExit(event);
+		}
+   	
+		public function doDragComplete(event : DragEvent) : void 
+		{
+			doDragExit(event);
+		}
+   	
+		public function removeLineItem() : void 
+		{
+			cart.removeLineItem(cartDetails.selectedItem as LineItem);
+		}
+   		
+		public function showProductDetails(event : Object) : void 
+		{		
+			dispatchEvent(new ProductSelectionEvent(cartDetails.selectedItem.product as Product));
+		}		
+						
+	]]>
+	</mx:Script>
+
+	<mx:DataGrid	id="cartDetails"
+					width="100%"
+					height="100%" 
+					dataProvider="{cart.lineItems}"
+					change="showProductDetails(event);"
+					dragEnter="doDragEnter(event)"
+					dragExit="doDragExit(event)"
+					dragDrop="doDragDrop(event)"
+					dragOver="doDragOver(event)">
+        
+		<mx:columns>
+			<mx:Array>
+				<mx:DataGridColumn dataField="name" 
+                				   headerText="Name" 
+                				   width="180"/>
+                				   
+                <mx:DataGridColumn dataField="quantity" 
+                				   headerText="Qty" 
+                				   width="50" 
+                				   textAlign="right" 
+                				   paddingRight="4"/>
+                				   
+                <mx:DataGridColumn dataField="lineItemTotal" 
+                				   labelFunction="format" 
+                				   headerText="Price" 
+                				   width="60" 
+                				   textAlign="right" 
+                				   paddingRight="4"/>
+            </mx:Array>
+        </mx:columns>
+    </mx:DataGrid>
+	
+	<mx:ControlBar id="cartControlBar" height="50">
+		<mx:Button	label="Delete"
+					click="removeLineItem();" 
+					enabled="{cartDetails.selectedItem != null}" />
+				   
+		<mx:Button	label="Checkout"
+					enabled="{cart.lineItems.length != 0}"
+					click="dispatchEvent(new CheckOutEvent())" />
+			
+		<mx:Label	text="Total: {currencyFormatter.format(cart.total)}" 
+					styleName="price" />
+	</mx:ControlBar>
+
+</mx:Panel>

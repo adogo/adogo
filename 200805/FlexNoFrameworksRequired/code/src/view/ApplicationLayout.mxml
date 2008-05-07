@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	This is both the application layout and a very basic Mediator.
+
+	The job of the Mediator is to introduce Views and Controllers, which is
+	most of what this object does. In a larger application, you might have
+	multiple Mediators for varying views. Also, as the Mediators spread out,
+	they might be interested in each other's events. As this happens, you might
+	want to have Controllers emit events and have the Mediators react to them.
+	The Mediators can express interest in these events by looking up the
+	Controllers with the Registry, and calling addEventListener for the event
+	types. This application is too small to warrant this approach, and as a
+	result this approach is not demonstrated here. 
+	
+	A note on Mediators: since there are multiple places in your application
+	where you will create one or more layouts that are app-specific, these
+	are the components that I typically use as Mediators. They are introducing
+	specific Views and Controllers to each other in a way that only this
+	application will want them introduced, so you don't lose anything through
+	this approach. 
+-->
+<mx:HBox 	xmlns:mx="http://www.adobe.com/2006/mxml"
+			xmlns:view="view.*">
+
+	<mx:Script>
+		<![CDATA[
+			import events.ProductSelectionEvent;
+			import mx.controls.Alert;
+			import view.StoreCurrencyFormatter;
+			import mx.formatters.CurrencyFormatter;
+			import controller.Registry;
+			
+			/**
+			 * This function is called whenever a Product is selected in either
+			 * the ShoppingCartView or the ProductCatalog. It calls a function
+			 * on the ProductDetails widget's API to tell it to display details
+			 * for a specific Product.
+			 */  
+			private function showProductDetails(event : ProductSelectionEvent) : void
+			{
+				productDetails.setSelectedProduct(event.product);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Panel title="Product Catalog" width="512" height="100%" >
+		<!--
+			ProductCatalog widget. Requires a reference to the collection of
+			Products it should display.
+		-->
+		<view:ProductCatalog	id="productCatalog"
+								products="{Registry.cartController.products}"
+								productSelection="showProductDetails(event)" />
+	</mx:Panel>
+
+	<mx:VBox width="370" height="100%">
+		<!--
+			ProductDetails widget. Requires a reference to the ShoppingCart
+			that it should call if somebody wants to add a Product to the
+			cart.
+			
+			An alternate implementation of this app might have the ProductDetails
+			widget broadcast a custom event (something like "addProductToCart").
+			This event would be caught by this Mediator, which would then tell
+			the ShoppingCart to add the Product. This is also perfectly acceptable
+			and is a matter of preference. 
+		-->
+		<view:ProductDetails	id="productDetails"
+								width="100%"
+								height="325"
+								cart="{Registry.cartController.cart}" />
+
+		<!--
+			A widget that shows what's in the ShoppingCart. This also requires
+			a reference to the ShoppingCart.
+			
+			Once again, if you prefer to broadcast events out of your widgets
+			and manage Controller interactions in this Mediator instead, have
+			at it.
+		-->
+		<view:ShoppingCartView	id="shoppingCartComp"
+								width="100%"
+								height="100%"
+								cart="{Registry.cartController.cart}"
+								productSelection="showProductDetails(event)"
+								checkOut="{Registry.cartController.checkOut()}"/>
+	</mx:VBox>
+
+</mx:HBox>

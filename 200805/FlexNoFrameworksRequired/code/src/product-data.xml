@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<products>
+	<product id="1">
+		<name>USB Watch</name>
+		<description><![CDATA[So, you need to tell the time of course, but you also need a way to carry your valuable data with you at all times (you know - your MP3 files, favorite images, your ThinkGeek shopping list). This watch can handle the mission for you and do it in style. It can store up to 256 Megs of data.]]></description>
+		<price>129.99</price>
+		<image>assets/products/usbwatch.jpg</image>
+		<thumbnail>assets/products/usbwatch_sm.jpg</thumbnail>
+	</product>
+  <product id="2">
+		<name>007 Digital Camera</name>
+		<description><![CDATA[There is finally a hi-tech gadget from Q''s laboratory that can be had by the measly (albeit smart) masses who are not fortunate enough to carry a license to kill. This inconspicuous Zippo look-alike actually contains a digital camera capable of holding over 300 images.]]></description>
+		<price>99.99</price>
+		<image>assets/products/007camera.jpg</image>
+		<thumbnail>assets/products/007camera_sm.jpg</thumbnail>
+	</product>	
+  <product id="3">
+		<name>2-Way Radio Watch</name>
+		<description><![CDATA[The only wristwatch with a 2-way radio available to date. It features a built-in 22-channel FRS walkie talkie with a 1.5-mile range. The voice-activated feature allows you to speak into the microphone and your words will be beamed directly to the speaker of any other FRS walkie talkie user.]]></description>
+		<price>49.99</price>
+		<image>assets/products/radiowatch.jpg</image>
+		<thumbnail>assets/products/radiowatch_sm.jpg</thumbnail>
+	</product>
+  <product id="4">
+		<name>USB Desk Fan</name>
+		<description><![CDATA[Some people are addicted to fans. They have one running when they sleep (the background noise can be soothing) and they have one on their desk at all times. Other people just like to have a little moving air. Whether you are a fan addict or just a casual user, we have just the device for you.]]></description>
+		<price>19.99</price>
+		<image>assets/products/usbfan.jpg</image>
+		<thumbnail>assets/products/usbfan_sm.jpg</thumbnail>
+	</product>
+  <product id="5">
+		<name>Caffeinated Soap</name>
+		<description><![CDATA[Tired of waking up and having to wait for your morning java to brew? Are you one of those groggy early morning types that just needs that extra kick? Introducing Shower Shock, the original and world''s first caffeinated soap. When you think about it, ShowerShock is the ultimate clean buzz.]]></description>
+		<price>19.99</price>
+		<image>assets/products/soap.jpg</image>
+		<thumbnail>assets/products/soap_sm.jpg</thumbnail>
+	</product>
+  <product id="6">
+		<name>Desktop Rovers</name>
+		<description><![CDATA[Inspired by NASA''s planetary exploration program, this miniature ''caterpillar drive'' rover belongs officially in the ''way too cool'' category. These mini remote controlled desktop rovers with tank treads are only 4 inches long and ready to explore the 'Alien Landscapes' around your home or office.]]></description>
+		<price>49.99</price>
+		<image>assets/products/rover.jpg</image>
+		<thumbnail>assets/products/rover_sm.jpg</thumbnail>
+	</product>
+  <product id="7">
+		<name>PC Volume Knob</name>
+		<description><![CDATA[The coolest volume knob your computer has ever seen and so much more. Use it to edit home movies or scroll through long documents and web pages. Program it to do anything you want in any application. Customize it to your own needs and get wild.]]></description>
+		<price>34.99</price>
+		<image>assets/products/volume.jpg</image>
+		<thumbnail>assets/products/volume_sm.jpg</thumbnail>
+	</product>
+  <product id="8">
+		<name>Wireless Antenna</name>
+		<description><![CDATA[A Cantenna is simply an inexpensive version of the long-range antennas used by wireless internet providers and mobile phone companies. Now, with your own Cantenna you can extend the range of your wireless network or connect to other wireless networks in your neighborhood.]]></description>
+		<price>49.99</price>
+		<image>assets/products/cantenna.jpg</image>
+		<thumbnail>assets/products/cantenna_sm.jpg</thumbnail>
+	</product>
+</products>

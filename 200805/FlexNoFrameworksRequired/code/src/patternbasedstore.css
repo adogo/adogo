@@ -1,0 +1,77 @@
+.main
+{
+	padding-top : 8;
+	vertical-gap : 0;
+}
+ 
+.appTitle 
+{
+    font-weight : bold;
+    color : #FFFFFF;
+    font-size : 16px;
+}
+
+.title 
+{
+    font-weight : bold;
+    color : #333333;
+    font-size : 14px;
+}
+
+.price 
+{
+    font-weight : bold;
+    color : #FF6600;
+    font-size : 14px;
+}
+
+.priceThumb 
+{
+    font-weight : bold;
+}
+
+.outerProductThumbnail 
+{
+	padding-left : 2;
+	padding-right : 2;
+}
+
+.innerProductThumbnail 
+{
+	vertical-gap : 0;
+	horizontal-align : center; 
+	background-color : #FFFFFF;
+}
+
+.productDetails 
+{
+	padding-top : 8;
+	padding-bottom : 8;
+	padding-left : 8;
+	padding-right : 8;
+}
+
+.productDetailsTitle
+{
+	vertical-align : middle;
+}
+
+.checkout
+{
+	vertical-gap : 10;
+	padding-top : 10;
+	padding-bottom : 20;
+}
+
+.bottomRightButton
+{
+	vertical-align : bottom;
+	horizontal-align : right;
+	padding-right : 16;
+	padding-bottom : 16;
+}
+
+.filterControls
+{
+	vertical-align : middle;
+}
