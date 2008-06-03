@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<restaurants>
+	<restaurant id="1">
+		<name>Kentucky Fried Chicken</name>
+		<description><![CDATA[Every day, nearly eight million customers are served around the world. KFC's menu includes Original Recipe® chicken -- made with the same great taste Colonel Harland Sanders created more than a half-century ago. Customers around the globe also enjoy more than 300 other products -- from a Chunky Chicken Pot Pie in the United States to a salmon sandwich in Japan.]]></description>
+		<genre>FAST_FOOD</genre>
+	</restaurant>
+	<restaurant id="2">
+		<name>McDonald's</name>
+		<description><![CDATA[Ray Kroc mortgaged his home and invested his entire life savings to become the exclusive distributor of a five-spindled milk shake maker called the Multimixer. Hearing about the McDonald's hamburger stand in California running eight Multimixers at a time, he packed up his car and headed West. It was 1954. He was 52 years old.]]></description>
+		<genre>FAST_FOOD</genre>
+	</restaurant>
+	<restaurant id="3">
+		<name>Houston's</name>
+		<description><![CDATA[Unless you go early or late, expect a considerable wait for a table---but you can grab a drink from the bar and slide into one of the Adirondack chairs on the wraparound patio with a nice breeze off Lake Killarney. Houston's bar is packed by 6 p.m., though not everyone there is waiting for a coveted table. Once you get a seat, the attractive wait staff snaps into action, and the food is delivered pronto. Portions are generous, so we skip their trademark spinach-artichoke dip and go straight for the salads, sandwiches and specials. It's one of the few places we can recommend the veggie burger, with a batch of crisp, skinny fries. Some patrons come just for the mashed potatoes, but we prefer them with a slice of their prime rib or a grilled steak. Kids love the tempura-battered chicken fingers. Linger over a cappuccino, but not too long---the next wave of diners is patiently waiting for your table.]]></description>
+		<genre>AMERICAN</genre>
+	</restaurant>
+</restaurants>
