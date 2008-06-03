@@ -3,23 +3,21 @@
 	paddingLeft="8">
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.Image;
+		
 			private const IMAGE_PATH : String = "assets/star.png";			
     			
-			override public function set data(value : Object) : void
+			override public function set data(item : Object) : void
 			{
-				for(var i : Number = 1; i <= Number(value); i++)
-				{
-					this.getChildByName("star" + i).visible = true;
-				}
+				this.removeAllChildren();
 				
-				//super.data = value;
+				for (var i : int = 0; i < item.value; i++)
+				{
+					var image : Image = new Image();
+					image.load(IMAGE_PATH);
+					this.addChild(image);
+				}
 			}
 		]]>
 	</mx:Script>
-	
-	<mx:Image id="star1" width="15" height="15" source="{IMAGE_PATH}" visible="false" />
-	<mx:Image id="star2" width="15" height="15" source="{IMAGE_PATH}" visible="false" />
-	<mx:Image id="star3" width="15" height="15" source="{IMAGE_PATH}" visible="false" />
-	<mx:Image id="star4" width="15" height="15" source="{IMAGE_PATH}" visible="false" />
-	<mx:Image id="star5" width="15" height="15" source="{IMAGE_PATH}" visible="false" />
 </mx:HBox>
