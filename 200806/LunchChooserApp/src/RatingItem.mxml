@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	paddingLeft="8">
+	<mx:Script>
+		<![CDATA[
+			private const IMAGE_PATH : String = "assets/star.png";			
+    			
+			override public function set data(value : Object) : void
+			{
+				for(var i : Number = 1; i <= Number(value); i++)
+				{
+					this.getChildByName("star" + i).visible = true;
+				}
+				
+				//super.data = value;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Image id="star1" width="15" height="15" source="{IMAGE_PATH}" visible="false" />
+	<mx:Image id="star2" width="15" height="15" source="{IMAGE_PATH}" visible="false" />
+	<mx:Image id="star3" width="15" height="15" source="{IMAGE_PATH}" visible="false" />
+	<mx:Image id="star4" width="15" height="15" source="{IMAGE_PATH}" visible="false" />
+	<mx:Image id="star5" width="15" height="15" source="{IMAGE_PATH}" visible="false" />
+</mx:HBox>

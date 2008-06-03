@@ -1,0 +1,33 @@
+Application
+{
+	backgroundColor: #000000;
+	horizontal-align: center;
+	vertical-align: middle;
+}
+
+.title
+{
+	fontSize: 24;
+	color: #FFFFFF;
+}
+
+
+.wrapper
+{
+	horizontalAlign: center;
+}
+
+.description
+{
+	backgroundColor: #000000;
+	color: #FFFFFF;
+	borderColor: #000000;
+	fontSize: 12;
+	padding-top: 10;
+	text-align: center;
+}
+
+.findButton
+{
+	color: #000000;
+}

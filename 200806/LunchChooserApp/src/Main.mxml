@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:lc="us.adogo.lunchchooser.*" 
+	layout="horizontal"
+	width="100%"
+	height="100%">
+	
+	<mx:Style source="assets/main.css"/>
+	
+	<mx:Script>
+		<![CDATA[
+			private function showDescription() : void
+			{
+				if(this.restaurantGrid.selectedItem != null)
+				{
+					this.descriptionLabel.text = this.restaurantGrid.selectedItem.description;
+				}
+			}
+		
+			private function findRandomRestaurant() : void
+			{
+				
+			}
+		]]>
+	</mx:Script>
+	
+	<lc:RestaurantGateway id="gateway" />
+	
+	<mx:VBox styleName="wrapper" 
+		width="600"
+		height="400">
+		
+		<mx:Text id="title" styleName="title" text="Time for Lunch" />
+				
+		<mx:DataGrid id="restaurantGrid" 
+			width="100%" 
+			allowMultipleSelection="false"
+			dataProvider="{gateway.restaurants}" 
+			click="showDescription();">
+			
+			<mx:columns>
+		        <mx:DataGridColumn headerText="Name" dataField="name" />
+		        <mx:DataGridColumn headerText="Genre" dataField="genre" />
+		        <mx:DataGridColumn headerText="Rating" dataField="rating" itemRenderer="RatingItem" />
+		    </mx:columns>
+		</mx:DataGrid>
+		
+		<mx:TextArea id="descriptionLabel" 
+			text="Click on restaurant to see its description." 
+			width="100%" 
+			height="150" 
+			editable="false" 
+			verticalScrollPolicy="auto"
+			styleName="description" />
+			
+		<mx:Button id="findButton" 
+			label="Where's lunch today?" 
+			styleName="findButton"
+			click="findRandomRestaurant();" />
+	</mx:VBox>
+</mx:Application>
