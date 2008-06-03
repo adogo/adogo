@@ -1,7 +1,11 @@
 package us.adogo.lunchchooser
 {
+	/**
+	 * Simple domain class representing Restaurant.
+	 */
 	public class Restaurant
 	{
+		public var id : String;
 		public var name : String;
 		public var description : String;
 		public var genre : String;

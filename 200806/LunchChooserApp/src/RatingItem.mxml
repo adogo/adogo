@@ -4,8 +4,7 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.controls.Image;
-		
-			private var IMAGE_PATH : String = "assets/star.png";			
+			import us.adogo.lunchchooser.Registry;			
     			
 			override public function set data(item : Object) : void
 			{
@@ -14,7 +13,7 @@
 				for (var i : Number = 0; i < item.rating; i++)
 				{
 					var image : Image = new Image();
-					image.load(IMAGE_PATH);
+					image.load(Registry.starImageUrl);
 					image.height = 15;
 					image.width = 15;
 					this.addChild(image);

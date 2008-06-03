@@ -3,79 +3,79 @@
 	<restaurant id="1">
 		<name>Kentucky Fried Chicken</name>
 		<description><![CDATA[Every day, nearly eight million customers are served around the world. KFC's menu includes Original Recipe® chicken -- made with the same great taste Colonel Harland Sanders created more than a half-century ago. Customers around the globe also enjoy more than 300 other products -- from a Chunky Chicken Pot Pie in the United States to a salmon sandwich in Japan.]]></description>
-		<genre>FAST_FOOD</genre>
+		<genre>American</genre>
 		<rating>2</rating>
 	</restaurant>
 	<restaurant id="2">
 		<name>McDonald's</name>
 		<description><![CDATA[Ray Kroc mortgaged his home and invested his entire life savings to become the exclusive distributor of a five-spindled milk shake maker called the Multimixer. Hearing about the McDonald's hamburger stand in California running eight Multimixers at a time, he packed up his car and headed West. It was 1954. He was 52 years old.]]></description>
-		<genre>FAST_FOOD</genre>
+		<genre>American</genre>
 		<rating>1</rating>
 	</restaurant>
 	<restaurant id="3">
 		<name>Houston's</name>
 		<description><![CDATA[Unless you go early or late, expect a considerable wait for a table---but you can grab a drink from the bar and slide into one of the Adirondack chairs on the wraparound patio with a nice breeze off Lake Killarney. Houston's bar is packed by 6 p.m., though not everyone there is waiting for a coveted table. Once you get a seat, the attractive wait staff snaps into action, and the food is delivered pronto. Portions are generous, so we skip their trademark spinach-artichoke dip and go straight for the salads, sandwiches and specials. It's one of the few places we can recommend the veggie burger, with a batch of crisp, skinny fries. Some patrons come just for the mashed potatoes, but we prefer them with a slice of their prime rib or a grilled steak. Kids love the tempura-battered chicken fingers. Linger over a cappuccino, but not too long---the next wave of diners is patiently waiting for your table.]]></description>
-		<genre>AMERICAN</genre>
+		<genre>American</genre>
 		<rating>3</rating>
 	</restaurant>
 	<restaurant id="4">
 		<name>Izziban Sushi</name>
 		<description><![CDATA[Located in the shopping plaza with World Market, Izziban has taken over the the space formally occupied by Saucy Bella. The restaurant layout hasn’t changed too much, but the decor is simple and well done; I especially like the collection of designer saki bottles lining the back wall. It’s your typical “wait to be seated” place. We were seated right away, our drink and food orders were taken, and our food was received all within 20 minutes. The lunch menu was a single page, back and front, with a great sampling of dishes. They have a large selection of bento boxes and lunch-sized entrees as well as sushi, sushimi, and roll lunches.]]></description>
-		<genre>JAPANESE</genre>
+		<genre>Japanese</genre>
 		<rating>4</rating>
 	</restaurant>
 	<restaurant id="5">
 		<name>G and G Thai Cuisine</name>
 		<description><![CDATA[G & G Thai Cuisine is located next to Jersey Mike’s in the Conroy/Turkey Lake plaza. The restaurant is cozy with a great lay back and modern atmosphere. G & G’s menu has the classic dishes you come to expect from Thai dining, but it’s the twists on those classics that set them apart from their competitors. For some strange reason, I am obsessed with anything pumpkin, so once I saw the Pumpkin Chicken Curry ($9.50), I had to order it. The food arrived within 10 minutes or so and mine was piping hot. The Pumpkin Chicken Curry came with thinly sliced pieces of chicken placed in a flavorful mixture of coconut milk, spices, green pepper, chunks cut from a small pumpkin, and red curry. The meal also came with a large portion of white rice. This was probably one of the best red curry dishes I’ve had in a long time. It is always so hard to find a good balance between heat and flavor when it comes to preparing spicy food, especially Thai. G & G has found that perfect balance; my meal was oustanding. Some others at the table had the Pineapple Chicken Curry and said it was just as good. Someone else ordered the Panang, which also looked really tasty. Did I mention they split the check 7 ways without any issue, because they did, which another plus in my book.]]></description>
-		<genre>THAI</genre>
+		<genre>Thai</genre>
 		<rating>4</rating>
 	</restaurant>
 	<restaurant id="6">
 		<name> Jockamo’s New Orleans Kitchen</name>
 		<description><![CDATA[Jockamo’s has a small spot in a strip mall next to a Dunkin Donuts and Five Guys and is always packed for lunch. Their menu has a great selection of po’boys including crawfish, oyster, catfish, and grouper. Jambalya and red beans and rice, with or without sausage, are also available daily. Now don’t get me wrong, their regular menu is great, but it’s the daily specials that’ll make you go back. Different types of etouffee, gumbo, fish, and bread pudding are available. For lunch, I ordered a large crawfish and shrimp etoufee (~$6) and the banana foster’s bread pudding (~$5) with a regular drink ($1.50). The roux they use for their all of their dishes reminds me of Mom’s home cooking and that’s pretty hard to do. I’ve also tried the cherries jubilee and peach bread pudding and they don’t disappoint either. Additionally, they have a homemade strudel, but I haven’t seen it on the menu in a while.]]></description>
-		<genre>CAJUN</genre>
+		<genre>Cajun</genre>
 		<rating>4</rating>
 	</restaurant>
 	<restaurant id="7">
 		<name>Dragon China</name>
 		<description><![CDATA[Each combo has an A or B option; A is the meal and rice, B is the meal, rice, and an egg roll or soup. We ordered the Pork with mixed vegetables, pork egg foo young, Mongolian chicken, and bourbon chicken as well as the wonton soup, hot and sour soup, and an egg roll. Additionally, for $1.50 you can add brown rice to any meal. The egg roll didn’t seem to be anything too special. The wonton soup was your basic chicken stock with scallion and wonton. The hot and sour however was done pretty well; it was made with a nice variety of fresh mushrooms, bamboo, and spices and wasn’t too salty. The meals themselves were pretty good made with fresh veggies and lean meats. The brown rice was equally as good and a nice option with our meals.]]></description>
-		<genre>CHINESE</genre>
+		<genre>Chinese</genre>
 		<rating>4</rating>
 	</restaurant>
 	<restaurant id="8">
 		<name>Seasons 52</name>
 		<description><![CDATA[Season’s 52 is a Darden restaurant and has a healthy choice grilled American cuisine. The restaurant opened in February of 2003 but we had not considered going there because we assumed it would be a high dollar plate considering the location in the ritzy part of town. We did not make our first visit to the restaurant until Papa was in town and needed to eat on the healthy side. Seasons 52 was the logical choice after Papa described the type of meal he was looking for. Seasons 52 is unique in that it only has menu items that are 475 calories or less. Their food selection is inspired by the season hence the name Seasons and 52 for 52 weeks in a year. Their menu changes weekly which offers a variety to the consumer. We are pretty hearty eaters so we were intimidated by the low calorie menu but went to enjoy our evening with Papa’s needs in mind and assumed it would be bland and that we would leave hungry which is why I suppose you’re not suppose to judge a book by its cover.]]></description>
-		<genre>AMERICAN</genre>
+		<genre>American</genre>
 		<rating>5</rating>
 	</restaurant>
 	<restaurant id="9">
 		<name> Colorado Fondue Company</name>
 		<description><![CDATA[Everything from the atmosphere to the server to, especially, the food is top notch. They have some of my favorite American micro-brew selections (e.g. - Rouge, Shipyard, Dogfish, etc), including seasonal selections, as well as a full liquor bar. Every server we’ve ever had, has been very attentive and great about hooking us up with extra food if we have larger parties. The quality of the food is great and the variations they offer on their menu have been the direction I’ve seen other fondue restaurants mimic, regardless of whether Colorado Fondue is that driving force. I never hesitate to take large parties to the restaurant and the only thing that have ever bothered me is that sometimes I need to make a reservation to guarantee I can get in.]]></description>
-		<genre>FONDUE</genre>
+		<genre>Fondue</genre>
 		<rating>3</rating>
 	</restaurant>
 	<restaurant id="10">
 		<name>Memories of India</name>
 		<description><![CDATA[What made me decide to never go to the restaurant again were two things: the service and the re-use of food (that’s right, you heard me). For lunch, anywhere from 4 to 8 of us from work would go out. Each and every time we’d go, we had the same issue with splitting up the check. The conditions under which they could split up the check always changed and when we finally got our bill sorted out, it would take over a half hour to pay so we could leave. As far as food re-use, the waiter took a bowl of rice pudding that someone took a bite out of and didn’t like, and served it to another table where it was promptly gobbled up. Whether he knew it had been eaten from or not, wow, that sucks. I know plenty of you will probably tell me that it happens all the time and it’s probably happened to me, but I saw it this time. So with that I’m not going back to Memories of India in Dr. Phillips ever again. Maybe other have had better luck, but that place is off my list.]]></description>
-		<genre>INDIAN</genre>
-		<rating>5</rating>
+		<genre>Indian</genre>
+		<rating>1</rating>
 	</restaurant>
 	<restaurant id="11">
 		<name>Woodlands</name>
 		<description><![CDATA[Woodlands Indian Cuisine is a vegetarian Indian restaurant on OBT that is truly a great spot to eat. I was first introduced to it by a co-worker of mine for lunch and have been hooked ever since. It’s funny that a few days later, I spoke to a friend of mine who knows some great Indian establishments, and mentioned the Woodlands to her. Not only did she know about the Woodlands, but she was pissed (well as upset as she never is) that I had to opportunity to eat there more recently than she did. Slowly but surely I began to realize that this particular Woodlands location was a pretty big favorite amongst Orlando locals. In fact, I’m still amazed at the number of people who already know about this place. I will admit, I do have to be in the mood for Indian food, but most of the time the mood is available. I think it’s because I’m Cajun, but I’m not sure. I’m used to a lot of stews and sauces with varied contents so when I can’t find a good gumbo or etouffee, Indian food is a great substitute.]]></description>
-		<genre>INDIAN</genre>
+		<genre>Indian</genre>
 		<rating>4</rating>
 	</restaurant>
 	<restaurant id="12">
 		<name>Pups</name>
 		<description><![CDATA[For lunch today a bunch of us from the office decided to hit up what has become one of our regular places, Pup’s. Pup’s is a hot dog, burger, gyro, sandwich shop that I’ve come to really enjoy when I want to get a quick American-style meal. We’ve been going to Pup’s for almost a year now and they’ve undergone quite a transformation during that time. In addition to some new cool tables, Pup’s got a larger menu and started serving drinks (wine and malt beverages) and $1 drafts.Since it was lunch, I reluctantly passed on the beer, but I did order the gyro, homemade Parmesan potato chips, and a soda ($~8). They have the cylinder of lamb(?) spinning in the roaster, so the meat is always tender and the chips are good, but a little salty because of the cheese. 2 of my colleagues ordered the latest addition to the menu on the hot dog side, the Dominator. It’s a fried hot dog with chili, cheese, onion, sourkraut, and bacon on what looks like an herb-flavored hoagie roll because it’s a foot long (not sure about the price). I’m 100% sure that about now they have the meat sweats.]]></description>
-		<genre>AMERICAN</genre>
+		<genre>American</genre>
 		<rating>3</rating>
 	</restaurant>
 	<restaurant id="13">
 		<name>Bella Cafe</name>
 		<description><![CDATA[The soups of the day were Lobster Bisque and Hearty Vegatable. I ordered the “Choice of Two” ($8) with the bisque and Capannoli sandwich as well as a water. The sandwich was made from fresh grilled tuna with red onion, carrot, celery, a little mayo, and herbs grilled on pumpernickel bread with aged cheddar. The soup tasted like a heavy cream-based bisque but the puree used in the soup was well seasoned. The portion size of my meal was just right. When I finished I wasn’t stuffed but I was full, I mean flip that (full but not stuffed). In the spirit of getting a fuller experience, and because I don’t know when to stop eating, I ordered dessert as well. I got what seemed to be a 7-Layer Bar ($2.25) filled and topped with coconut, giant chocolate chips, caramel, flaky pastry, nuts, and chocolate sauce. It came out plated at room temperature and tasted great. It was a nice sweet cap to the end of the meal.]]></description>
-		<genre>AMERICAN</genre>
+		<genre>Italian</genre>
 		<rating>4</rating>
 	</restaurant>
 </restaurants>

@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:lc="us.adogo.lunchchooser.*" 
+	xmlns:remote="us.adogo.lunchchooser.gateway.*"
 	layout="horizontal"
 	width="100%"
-	height="100%">
+	height="100%"
+	creationComplete="init();">
 	
-	<mx:Style source="assets/main.css"/>
+	<mx:Style source="assets/main.css" />
 	
 	<mx:Script>
 		<![CDATA[
+			/**
+			 * Called to initialize the application 
+			 **/
+			private function init() : void
+			{
+				this.gateway.load();
+			}
+
+			/**
+			 * Show the description of a Restaurant
+			 **/		
 			private function showDescription() : void
 			{
 				if(this.restaurantGrid.selectedItem != null)
@@ -17,20 +29,27 @@
 				}
 			}
 		
+			/**
+			 * Called to randomly select a restaurant for lunch
+			 **/
 			private function findRandomRestaurant() : void
 			{
-				
+				//Implement this handler to randomly find a Restaurant in gateway.restaurants
+				//and select it from the list.  Add whatever effects you'd like to get
+				//a feel for Flex.
 			}
 		]]>
 	</mx:Script>
 	
-	<lc:RestaurantGateway id="gateway" />
+	<remote:RestaurantGateway id="gateway" />
 	
 	<mx:VBox styleName="wrapper" 
 		width="600"
 		height="400">
 		
-		<mx:Text id="title" styleName="title" text="Time for Lunch" />
+		<mx:Text id="title" 
+			styleName="title" 
+			text="Time for Lunch" />
 				
 		<mx:DataGrid id="restaurantGrid" 
 			width="100%" 
@@ -41,7 +60,8 @@
 			<mx:columns>
 		        <mx:DataGridColumn headerText="Name" dataField="name" />
 		        <mx:DataGridColumn headerText="Genre" dataField="genre" />
-		        <mx:DataGridColumn headerText="Rating" dataField="rating" itemRenderer="RatingItem" />
+		        <mx:DataGridColumn headerText="Rating" dataField="rating" 
+		        	itemRenderer="RatingItem" />
 		    </mx:columns>
 		</mx:DataGrid>
 		
