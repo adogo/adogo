@@ -1,4 +1,4 @@
-package us.adogo.lunchchooser.gateway
+package us.adogo.lunchchooser
 {
 	import mx.collections.ArrayCollection;
 	import mx.events.CollectionEvent;
@@ -10,9 +10,6 @@ package us.adogo.lunchchooser.gateway
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
 	import mx.utils.StringUtil;
-	
-	import us.adogo.lunchchooser.Registry;
-	import us.adogo.lunchchooser.Restaurant;
 	
 	/**
 	 * Gateway wrapping all access to remote services required for working with Restaurant instances.

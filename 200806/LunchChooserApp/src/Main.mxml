@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:remote="us.adogo.lunchchooser.gateway.*"
+	xmlns:lc="us.adogo.lunchchooser.*"
 	layout="horizontal"
 	width="100%"
 	height="100%"
@@ -41,7 +41,7 @@
 		]]>
 	</mx:Script>
 	
-	<remote:RestaurantGateway id="gateway" />
+	<lc:RestaurantGateway id="gateway" />
 	
 	<mx:VBox styleName="wrapper" 
 		width="600"
