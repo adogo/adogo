@@ -5,16 +5,18 @@
 		<![CDATA[
 			import mx.controls.Image;
 		
-			private const IMAGE_PATH : String = "assets/star.png";			
+			private var IMAGE_PATH : String = "assets/star.png";			
     			
 			override public function set data(item : Object) : void
 			{
 				this.removeAllChildren();
 				
-				for (var i : int = 0; i < item.value; i++)
+				for (var i : Number = 0; i < item.rating; i++)
 				{
 					var image : Image = new Image();
 					image.load(IMAGE_PATH);
+					image.height = 15;
+					image.width = 15;
 					this.addChild(image);
 				}
 			}
