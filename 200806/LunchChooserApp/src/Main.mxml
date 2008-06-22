@@ -34,8 +34,7 @@
 			 **/
 			private function findRandomRestaurant() : void
 			{
-				var size : Number = this.gateway.restaurants.length;
-				var index : Number = (Math.random() * 1000) % size;
+				var index : Number = (Math.random() * 1000) % this.gateway.restaurants.length;
 				
 				this.restaurantGrid.selectedIndex = index;
 				this.restaurantGrid.scrollToIndex(index);
