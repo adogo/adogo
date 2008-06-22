@@ -34,9 +34,12 @@
 			 **/
 			private function findRandomRestaurant() : void
 			{
-				//Implement this handler to randomly find a Restaurant in gateway.restaurants
-				//and select it from the list.  Add whatever effects you'd like to get
-				//a feel for Flex.
+				var size : Number = this.gateway.restaurants.length;
+				var index : Number = (Math.random() * 1000) % size;
+				
+				this.restaurantGrid.selectedIndex = index;
+				this.restaurantGrid.scrollToIndex(index);
+				this.showDescription();
 			}
 		]]>
 	</mx:Script>
