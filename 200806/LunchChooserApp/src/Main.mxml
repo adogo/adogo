@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:lc="us.adogo.lunchchooser.*"
-	layout="horizontal"
+	xmlns:local="us.adogo.lunchchooser.*"
+	xmlns:view="us.adogo.lunchchooser.view.*"
+	layout="vertical"
 	width="100%"
 	height="100%"
 	creationComplete="init();">
@@ -10,6 +11,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+		
 			/**
 			 * Called to initialize the application 
 			 **/
@@ -18,66 +20,10 @@
 				this.gateway.load();
 			}
 
-			/**
-			 * Show the description of a Restaurant
-			 **/		
-			private function showDescription() : void
-			{
-				if(this.restaurantGrid.selectedItem != null)
-				{
-					this.descriptionLabel.text = this.restaurantGrid.selectedItem.description;
-				}
-			}
-		
-			/**
-			 * Called to randomly select a restaurant for lunch
-			 **/
-			private function findRandomRestaurant() : void
-			{
-				var index : Number = (Math.random() * 1000) % this.gateway.restaurants.length;
-				
-				this.restaurantGrid.selectedIndex = index;
-				this.restaurantGrid.scrollToIndex(index);
-				this.showDescription();
-			}
 		]]>
 	</mx:Script>
 	
-	<lc:RestaurantGateway id="gateway" />
+	<local:RestaurantGateway id="gateway" />
+	<view:RestaurantViewer id="restaurantViewer" restaurantDataProvider="{gateway.restaurants}" />
 	
-	<mx:VBox styleName="wrapper" 
-		width="600"
-		height="400">
-		
-		<mx:Text id="title" 
-			styleName="title" 
-			text="Time for Lunch" />
-				
-		<mx:DataGrid id="restaurantGrid" 
-			width="100%" 
-			allowMultipleSelection="false"
-			dataProvider="{gateway.restaurants}" 
-			click="showDescription();">
-			
-			<mx:columns>
-		        <mx:DataGridColumn headerText="Name" dataField="name" />
-		        <mx:DataGridColumn headerText="Genre" dataField="genre" />
-		        <mx:DataGridColumn headerText="Rating" dataField="rating" 
-		        	itemRenderer="RatingItem" />
-		    </mx:columns>
-		</mx:DataGrid>
-		
-		<mx:TextArea id="descriptionLabel" 
-			text="Click on restaurant to see its description." 
-			width="100%" 
-			height="150" 
-			editable="false" 
-			verticalScrollPolicy="auto"
-			styleName="description" />
-			
-		<mx:Button id="findButton" 
-			label="Where's lunch today?" 
-			styleName="findButton"
-			click="findRandomRestaurant();" />
-	</mx:VBox>
 </mx:Application>

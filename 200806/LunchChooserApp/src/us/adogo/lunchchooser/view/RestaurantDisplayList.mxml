@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	<p>
+	MXML component for displaying restaurants in a grid. An ArrayCollection of Restaurant objects is provided to this
+	component as it is instantiated.
+	</p>
+	
+	<p>
+	This component dispatches RestaurantSelectionEvents as Restaurants are selected.
+	These events can be listened for by external code and reacted to (such as capturing the event and displaying
+	the description of the restaurant).
+	</p>
+	
+	<p>
+	This component can alsobe asked to select a Restaurant from its list at random. After selecting a Restaurant, it
+	dispatches a RestaurantSelectionEvent once again so that external observers can stay in sync with this component
+	if they want to.
+	</p>  
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="us.adogo.lunchchooser.view.*">
+	
+	<mx:ArrayCollection id="restaurantDataProvider" />
+	
+	<mx:Metadata>
+		[Event(name="restaurantSelected",type="us.adogo.lunchchooser.events.RestaurantSelectionEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import adobe.utils.CustomActions;
+			import us.adogo.lunchchooser.Restaurant;
+			import us.adogo.lunchchooser.events.RestaurantSelectionEvent;
+			
+			/**
+			 * Dispatches a custom event containing a reference to the Restaurant that has been
+			 * selected. This event is dispatched when the Restaurant is selected manually in the
+			 * grid using the mouse, and also when a Restaurant is chosen from the grid at random.
+			 */
+			private function dispatchRestaurantSelectionEvent() : void
+			{
+				var restaurantSelectedEvent : RestaurantSelectionEvent =
+					new RestaurantSelectionEvent(this.restaurantGrid.selectedItem as Restaurant);
+				
+				dispatchEvent(restaurantSelectedEvent);
+			}
+			
+			/**
+			 * Called to randomly select a restaurant for lunch
+			 **/
+			public function findRandomRestaurant() : void
+			{
+				var index : Number = (Math.random() * 1000) % restaurantDataProvider.length;
+				
+				this.restaurantGrid.selectedIndex = index;
+				this.restaurantGrid.scrollToIndex(index);
+				dispatchRestaurantSelectionEvent();
+			}			
+			
+		]]>
+	</mx:Script>
+	
+	<mx:DataGrid id="restaurantGrid" 
+		width="100%" 
+		allowMultipleSelection="false"
+		dataProvider="{restaurantDataProvider}" 
+		click="dispatchRestaurantSelectionEvent();">
+		
+		<mx:columns>
+	        <mx:DataGridColumn headerText="Name" dataField="name" />
+	        <mx:DataGridColumn headerText="Genre" dataField="genre" />
+	        <mx:DataGridColumn headerText="Rating" dataField="rating" itemRenderer="{customRatingRenderer}" />
+	    </mx:columns>
+	</mx:DataGrid>
+	
+	<mx:Component id="customRatingRenderer">
+		<view:RatingItem />
+	</mx:Component>
+	
+</mx:Canvas>
