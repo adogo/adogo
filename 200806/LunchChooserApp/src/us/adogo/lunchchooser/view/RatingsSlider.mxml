@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	verticalAlign="middle">
+	<mx:Metadata>
+		[Event(name="ratingSliderChanged",type="us.adogo.lunchchooser.events.RatingSliderChangeEvent")]
+	</mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+			import us.adogo.lunchchooser.events.RatingSliderChangeEvent;
+			import mx.events.SliderEvent;
+		
+			private function dispatchRatingSliderEvent(event : SliderEvent) : void
+			{
+				//Implement this method to dispatch the RatingSliderChangeEvent
+				//using the value of the HSlider as the payload for the event
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Text text="Filter by rating: "
+		styleName="description" />
+
+	<mx:HSlider id="ratingSlider"
+		minimum="0"
+		maximum="5"
+        snapInterval="1" 
+        tickInterval="1"
+        labels="[All,1,2,3,4,5]"
+        change="{dispatchRatingSliderEvent(event)}" 
+    	themeColor="white"
+    	tickColor="white" 
+    	fillColors="white"
+    	labelStyleName="description"/>
+</mx:HBox>

@@ -63,7 +63,7 @@
 		width="100%" 
 		allowMultipleSelection="false"
 		dataProvider="{restaurantDataProvider}" 
-		click="dispatchRestaurantSelectionEvent();">
+		click="{dispatchRestaurantSelectionEvent()}">
 		
 		<mx:columns>
 	        <mx:DataGridColumn headerText="Name" dataField="name" />

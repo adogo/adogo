@@ -23,6 +23,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import us.adogo.lunchchooser.events.RatingSliderChangeEvent;
 
 			import us.adogo.lunchchooser.events.RestaurantSelectionEvent;
 			
@@ -34,6 +35,19 @@
 				this.descriptionLabel.text = event.restaurant.description;
 			}
 			
+			private function filterDataProvider(event : RatingSliderChangeEvent) : void
+			{
+				//Comparison function used to determine which items in the DataGrid to show
+				this.restaurantDataProvider.filterFunction = 
+					function(item : Object) : Boolean {
+						return (event.rating == 0) ? true : (item.rating == event.rating);
+					}
+				
+				//Has to be called so that the new filterFunction above can be applied
+				this.restaurantDataProvider.refresh();
+				
+				//IDEA: Maybe try to add effects to the filtering process
+			}
 		]]>
 	</mx:Script>
 	
@@ -46,6 +60,11 @@
 	<view:RestaurantDisplayList id="restaurantList"
 		restaurantSelected="{showDescription(event)}"
 		restaurantDataProvider="{restaurantDataProvider}"
+		width="600" />
+		
+	<view:RatingsSlider id="ratingsSlider"
+		ratingSliderChanged="{filterDataProvider(event)}"
+		horizontalAlign="center" 
 		width="600" />
 	
 	<mx:TextArea id="descriptionLabel" 
