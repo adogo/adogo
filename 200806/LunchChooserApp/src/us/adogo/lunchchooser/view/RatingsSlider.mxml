@@ -12,8 +12,7 @@
 		
 			private function dispatchRatingSliderEvent(event : SliderEvent) : void
 			{
-				//Implement this method to dispatch the RatingSliderChangeEvent
-				//using the value of the HSlider as the payload for the event
+				dispatchEvent(new RatingSliderChangeEvent(event.value));
 			}
 		]]>
 	</mx:Script>
