@@ -15,10 +15,5 @@ package us.adogo.lunchchooser
 		 * Returns the URL for the star image used in ratings. 
 		 */
 		public static var starImageUrl : String = "assets/star.png";
-		
-		/**
-		 * Returns the URL for the system tray icon 
-		 */
-		public static var applicationIcon : String = "assets/adogo.png";
 	}
 }

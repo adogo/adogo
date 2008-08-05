@@ -62,7 +62,8 @@ package us.adogo.lunchchooser
 			}
 		}
    
-   
+   		// Setup the system tray/doc icon. Also add the default function that should run when we click on the
+   		// system tray/dock icon. We want to undock it, so set that up now.
 		public function prepareForSystray(event:Event):void
 		{
 			dockImage = event.target.content.bitmapData;
@@ -83,28 +84,29 @@ package us.adogo.lunchchooser
 				sysTrayIcon.addEventListener(MouseEvent.CLICK, undock);
 				sysTrayIcon.menu = createSystrayRootMenu();
 
-				//Listen to the display state changing of the window, so that we can catch the minimize       
+				// Listen to the display state changing of the window, so that we can catch the minimize       
 				this.application.stage.nativeWindow.addEventListener(NativeWindowDisplayStateEvent.DISPLAY_STATE_CHANGING, nwMinimized); //Catch the minimize event 
 			}
 			
 		}
 
+		// Sets up the right click menu for windows, or the mac dock menu
 		private function createSystrayRootMenu():NativeMenu
 		{
 			// Create the menu when the user right clicks on it 
 			var menu:NativeMenu = new NativeMenu();
 			var openNativeMenuItem:NativeMenuItem = new NativeMenuItem("Open");
 			var exitNativeMenuItem:NativeMenuItem = new NativeMenuItem("Exit");
-			var somethingelseNativeMenuItem:NativeMenuItem = new NativeMenuItem("Do Something Else...");
+			var quickFindMenuItem:NativeMenuItem = new NativeMenuItem("Quick Find");
 
 			// What should happen when the user clicks on something...       
 			openNativeMenuItem.addEventListener(Event.SELECT, undock);
 			exitNativeMenuItem.addEventListener(Event.SELECT, closeApp);
-			somethingelseNativeMenuItem.addEventListener(Event.SELECT, something);
+			quickFindMenuItem.addEventListener(Event.SELECT, quickFind);
 			
 			//Add the menuitems to the menu 
 			menu.addItem(openNativeMenuItem);
-			menu.addItem(somethingelseNativeMenuItem);
+			menu.addItem(quickFindMenuItem);
 			menu.addItem(new NativeMenuItem("",true)); //separator
 			menu.addItem(exitNativeMenuItem);
 
@@ -140,14 +142,15 @@ package us.adogo.lunchchooser
 		// Handle showing the application
 		public function undock(evt:Event):void
 		{
-			// After setting the window to visible, make sure that the application is ordered to the front, or 
-			// else in Windows we'll still need to click on the application on the taskbar to make it visible 
+			// Show the application, since it's not using the OS to hide itself
 			this.application.stage.nativeWindow.visible = true;
-			this.application.stage.nativeWindow.orderToFront();
 
-			// Clearing the bitmaps array so windows doesn't store it in the tray while it's open. 
-			// Could remove this if we wanted the icon to always be in the system tray. 
 			if (NativeApplication.supportsSystemTrayIcon) {
+				// Bring this window to the front, otherwise it may show up behind some others
+				this.application.stage.nativeWindow.orderToFront();
+
+				// Clearing the bitmaps array so windows doesn't store it in the tray while it's open. 
+				// Could remove this if we wanted the icon to always be in the system tray. 
 				NativeApplication.nativeApplication.icon.bitmaps = [];
 			}
 		}
@@ -158,10 +161,10 @@ package us.adogo.lunchchooser
 			this.application.stage.nativeWindow.close();
 		}
 		
-		// Custom method
-		private function something(evt:Event):void
+		// Show the application and select a random restaurant
+		private function quickFind(evt:Event):void
 		{
-			Alert.show("Something else was clicked!");
+			 
 		}
 	}
 }
