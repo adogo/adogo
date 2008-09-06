@@ -3,8 +3,10 @@ var messageList = '#chat .messages';
 var newMessageText = '#chat .newMessage textarea';
 var messageButton = '#chat .newMessage button';
 
+//Ideally these global variables could be wrapped in some type of proxy object
 var producer = null;
 var consumer = null;
+var topic = "chat-topic";
 
 //bootstrap FDS bridge (callback fxn called after bridge is loaded)
 FDMSLibrary.load("/adogo_ajax_explained/lib/FDMSBridge.swf", configureBridge);
@@ -22,12 +24,12 @@ function configureBridge(){
    
    //set up ability to send chat messages
    producer = new Producer();
-   producer.setDestination("chat-topic");
+   producer.setDestination(topic);
    producer.setChannelSet(channelSet);
 
    //set up ability to recieve chat message
    consumer = new Consumer();
-   consumer.setDestination("chat-topic");
+   consumer.setDestination(topic);
    consumer.addEventListener("message", receiveMessage);
    consumer.setChannelSet(channelSet);
    consumer.subscribe();
@@ -36,6 +38,7 @@ function configureBridge(){
 function sendMessage() {  
    var message = new AsyncMessage();
    
+   //build payload
    var body = {
       'user': $(userText).val(),
       'text': $(newMessageText).val(),
@@ -52,7 +55,7 @@ function receiveMessage(event) {
    //code to get payload(body) out of message
    var message = event.getMessage().getBody();   
    
-   //create an <li> to represent the chat
+   //create an <li> to represent the chat payload
    $(messageList + ' > ul').append(
       $('<li/>').html(
          '<span class="'
