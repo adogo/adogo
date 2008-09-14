@@ -17,6 +17,7 @@ $(document).ready(function() {
 
 function configureBridge(){
    var channelSet = new ChannelSet();
+   //if you're running on another BlazeDS instance than localhost, change path
    channelSet.addChannel(
       new StreamingAMFChannel("my-streaming-amf", 
             "http://localhost:8400/blazeds/messagebroker/streamingamf")
