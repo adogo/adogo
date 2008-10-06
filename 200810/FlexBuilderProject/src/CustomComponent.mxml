@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:example="adogo.example.*"
+				layout="absolute">
+	
+	<mx:Style>
+				
+		.textAreaStyle
+		{
+			/*
+			border-style: solid;
+			border-color: #ff0000;
+			border-thickness: 2;
+			*/
+		}
+		
+	</mx:Style>
+
+	<mx:Panel title="Comment Form" x="10" y="10">
+		
+		<mx:Form>
+			<mx:FormItem label="First Name">
+				<mx:TextInput width="100%" />
+			</mx:FormItem>
+			<mx:FormItem label="Last Name">
+				<mx:TextInput width="100%" />
+			</mx:FormItem>
+			<mx:FormItem label="Email Address">
+				<mx:TextInput width="100%" />
+			</mx:FormItem>
+			<mx:FormItem label="Comment">
+				
+				<!-- Handy dandy custom component -->
+				<example:ResizableTextArea	styleName="textAreaStyle"
+											handleRadius="10"
+											width="200"
+											height="200">
+					<example:text>This is the default text in the text area.</example:text>
+				</example:ResizableTextArea>
+			
+			</mx:FormItem>
+			<mx:FormItem>
+				<mx:Button label="Send Comment" />
+			</mx:FormItem>
+		</mx:Form>
+
+	</mx:Panel>
+
+</mx:Application>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:demos="adogo.demos.*">
+	
+	<!-- This example shows the lifecycle methods being called
+	<demos:DemonstrateUIComponentLifecycle id="demoUIComponent" />
+	-->
+	
+	<!-- This example shows what happens when a VBox component is given children (see traces)
+	<demos:DemonstrateVBoxLifecycle id="demoVBox" backgroundColor="#ffffff">
+	-->
+	<!--
+		<mx:Button label="Button 1" />
+		<mx:Button label="Button 2" />
+	-->
+	<!--
+	</demos:DemonstrateVBoxLifecycle>
+	-->
+
+	<!-- This example shows what happens when a component implements the measure() method
+	<mx:VBox id="demoMeasurement">
+		<mx:Button label="Button 1" />
+		
+		<demos:MeasuredCustomComponent id="measuredCustomComponent" backgroundColor="#000" />
+		
+		<mx:Button label="Button 2" />
+	</mx:VBox>
+	-->
+
+</mx:Application>
