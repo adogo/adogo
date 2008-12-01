@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
 	verticalAlign="middle">
+	
 	<mx:Metadata>
 		[Event(name="ratingSliderChanged",type="us.adogo.lunchchooser.events.RatingSliderChangeEvent")]
 	</mx:Metadata>

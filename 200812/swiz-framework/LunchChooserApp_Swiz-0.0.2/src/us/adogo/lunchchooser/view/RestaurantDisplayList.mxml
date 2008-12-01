@@ -19,17 +19,19 @@
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="us.adogo.lunchchooser.view.*">
 	
-	<mx:ArrayCollection id="restaurantDataProvider" />
-	
 	<mx:Metadata>
 		[Event(name="restaurantSelected",type="us.adogo.lunchchooser.events.RestaurantSelectionEvent")]
 	</mx:Metadata>
 	
 	<mx:Script>
 		<![CDATA[
-			import adobe.utils.CustomActions;
+			import mx.collections.ArrayCollection;
 			import us.adogo.lunchchooser.Restaurant;
 			import us.adogo.lunchchooser.events.RestaurantSelectionEvent;
+			
+			[Autowire(bean="restaurants")]
+			[Bindable]
+			public var restaurantDataProvider : ArrayCollection;
 			
 			/**
 			 * Dispatches a custom event containing a reference to the Restaurant that has been
@@ -44,18 +46,12 @@
 				dispatchEvent(restaurantSelectedEvent);
 			}
 			
-			/**
-			 * Called to randomly select a restaurant for lunch
-			 **/
-			public function findRandomRestaurant() : void
+			[Mediate(event="restaurantSelected", properties="restaurant")]
+			public function selectRestaurant(restaurant : Restaurant) : void
 			{
-				var index : Number = (Math.random() * 1000) % restaurantDataProvider.length;
-				
-				this.restaurantGrid.selectedIndex = index;
-				this.restaurantGrid.scrollToIndex(index);
-				dispatchRestaurantSelectionEvent();
-			}			
-			
+				restaurantGrid.selectedItem = restaurant;
+				restaurantGrid.scrollToIndex(restaurantGrid.selectedIndex);
+			}
 		]]>
 	</mx:Script>
 	

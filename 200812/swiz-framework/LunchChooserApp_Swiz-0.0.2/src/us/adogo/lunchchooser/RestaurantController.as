@@ -1,45 +1,63 @@
 package us.adogo.lunchchooser
 {
 	import mx.collections.ArrayCollection;
-	import mx.events.CollectionEvent;
-	import mx.events.CollectionEventKind;
-	import mx.messaging.messages.HTTPRequestMessage;
 	import mx.rpc.AsyncToken;
 	import mx.rpc.Responder;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
-	import mx.rpc.http.HTTPService;
+	import mx.rpc.http.mxml.HTTPService;
 	import mx.utils.StringUtil;
+	
+	import us.adogo.lunchchooser.events.RestaurantSelectionEvent;
 	
 	/**
 	 * Gateway wrapping all access to remote services required for working with Restaurant instances.
 	 */
-	public class RestaurantGateway
+	[Event(name="restaurantSelected", type="us.adogo.lunchchooser.events.RestaurantSelectionEvent")]
+	public class RestaurantController
 	{
 		/**
-		 * Internal handle to the actual remote service class.
+		 * The remote service class to use for remote calls.
 		 */
-		private var service : HTTPService;
+		public var service : HTTPService;
 
 		/**
 		 * Typed ArrayCollection publicly available for outside code to bind to and watch. 
 		 */
 		[Bindable]
-		[ArrayElementType("Restaurant")]
 		public var restaurants : ArrayCollection;
 		
 		/**
 		 * Constructor accepting the URL to the service endpoint. This parameter is configurable
 		 * to facilitate testing as well as use against the real data set.
 		 */
-		public function RestaurantGateway()
+		public function RestaurantController()
 		{
-			this.restaurants = new ArrayCollection();
+			super();
+		}
+		
+		[Mediate(event="ratingSliderChanged", properties="rating")]
+		public function filterRestaurantsByRating(rating : Number) : void
+		{
+			//Comparison function used to determine which items in the DataGrid to show
+			this.restaurants.filterFunction = 
+				function(item : Object) : Boolean {
+					return (rating == 0) ? true : (item.rating == rating);
+				}
+				
+			//Has to be called so that the new filterFunction above can be applied
+			this.restaurants.refresh();
+		}
 			
-			this.service = new HTTPService();
-			this.service.method = HTTPRequestMessage.POST_METHOD;
-			this.service.resultFormat = HTTPService.RESULT_FORMAT_E4X;
-			this.service.url = Registry.serviceUrl;
+		/**
+		 * Called to randomly select a restaurant for lunch
+		 **/
+		public function findRandomRestaurant() : void
+		{
+			var index : Number = (Math.random() * 1000) % restaurants.length;
+			var restaurant : Restaurant = restaurants.getItemAt(index) as Restaurant;
+			
+			dispatchEvent(new RestaurantSelectionEvent(restaurant));
 		}
 		
 		/**
@@ -75,16 +93,16 @@ package us.adogo.lunchchooser
 				restaurant.genre = restaurantNode.genre;
 				restaurant.rating = restaurantNode.rating;
 				
-				restaurantTempArray[restaurantTempArray.length] = restaurant;
+				restaurantTempArray.push(restaurant);
 			}
 			
-			this.restaurants = new ArrayCollection(restaurantTempArray);
+			this.restaurants.source = restaurantTempArray;
 		}
 
 		/**
 		 * Generic service fault handler for all remote service calls for this object.
 		 */
-		public function fault(faultEvent : FaultEvent) : void
+		private function fault(faultEvent : FaultEvent) : void
 		{
 			var errorMessage : String =
 				StringUtil.substitute(	"Error in {0}: {1} - {2}",

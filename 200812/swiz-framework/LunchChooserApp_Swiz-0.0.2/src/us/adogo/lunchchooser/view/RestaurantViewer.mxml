@@ -23,35 +23,22 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import us.adogo.lunchchooser.RestaurantController;
 			import us.adogo.lunchchooser.events.RatingSliderChangeEvent;
-
 			import us.adogo.lunchchooser.events.RestaurantSelectionEvent;
+			
+			[Autowire(bean="restaurantController")]
+			public var restaurantController : RestaurantController;
 			
 			/**
 			 * Show the description of a Restaurant
 			 **/		
 			private function showDescription(event : RestaurantSelectionEvent) : void
 			{
-				this.descriptionLabel.text = event.restaurant.description;
-			}
-			
-			private function filterDataProvider(event : RatingSliderChangeEvent) : void
-			{
-				//Comparison function used to determine which items in the DataGrid to show
-				this.restaurantDataProvider.filterFunction = 
-					function(item : Object) : Boolean {
-						return (event.rating == 0) ? true : (item.rating == event.rating);
-					}
-				
-				//Has to be called so that the new filterFunction above can be applied
-				this.restaurantDataProvider.refresh();
-				
-				//IDEA: Maybe try to add effects to the filtering process
+				this.descriptionLabel.text = (event.restaurant) ? event.restaurant.description : undefined;
 			}
 		]]>
 	</mx:Script>
-	
-	<mx:ArrayCollection id="restaurantDataProvider" />
 	
 	<mx:Text id="title" 
 		styleName="title" 
@@ -59,11 +46,9 @@
 	
 	<view:RestaurantDisplayList id="restaurantList"
 		restaurantSelected="{showDescription(event)}"
-		restaurantDataProvider="{restaurantDataProvider}"
 		width="600" />
 		
 	<view:RatingsSlider id="ratingsSlider"
-		ratingSliderChanged="{filterDataProvider(event)}"
 		horizontalAlign="center" 
 		width="600" />
 	
@@ -78,6 +63,6 @@
 	<mx:Button id="findButton" 
 		label="Where's lunch today?" 
 		styleName="findButton"
-		click="{restaurantList.findRandomRestaurant()}" />
+		click="{restaurantController.findRandomRestaurant()}" />
 
 </mx:VBox>

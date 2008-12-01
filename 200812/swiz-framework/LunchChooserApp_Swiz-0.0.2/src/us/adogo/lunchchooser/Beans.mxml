@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<util:BeanLoader xmlns="*" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:util="org.swizframework.util.*" xmlns:lunchchooser="us.adogo.lunchchooser.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.messaging.messages.HTTPRequestMessage;
+			import mx.rpc.http.HTTPService;
+		]]>
+	</mx:Script>
+	<!--
+	 CONSTANTS
+	-->
+	<mx:String id="serviceUrl">assets/restaurants.xml</mx:String>
+	<mx:String id="starImageUrl">assets/star.png</mx:String>
+	
+	<!--
+	 SERVICES
+	-->
+	<mx:HTTPService id="httpService">
+		<mx:method>{HTTPRequestMessage.POST_METHOD}</mx:method>
+		<mx:resultFormat>{mx.rpc.http.HTTPService.RESULT_FORMAT_E4X}</mx:resultFormat>
+		<mx:url>{serviceUrl}</mx:url>
+	</mx:HTTPService>
+	
+	<!--
+	 DATA STRUCTURES
+	-->
+	<mx:ArrayCollection id="restaurants" />
+	
+	<!--
+	 CONTROLLERS
+	-->
+	<lunchchooser:RestaurantController id="restaurantController">
+		<lunchchooser:restaurants>{restaurants}</lunchchooser:restaurants>
+		<lunchchooser:service>{httpService}</lunchchooser:service>
+	</lunchchooser:RestaurantController>
+</util:BeanLoader>

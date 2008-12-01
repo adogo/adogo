@@ -5,25 +5,31 @@
 	layout="vertical"
 	width="100%"
 	height="100%"
-	creationComplete="init();">
+	initialize="init();">
 	
 	<mx:Style source="assets/main.css" />
 	
 	<mx:Script>
 		<![CDATA[
+			import us.adogo.lunchchooser.RestaurantController;
+			import us.adogo.lunchchooser.Beans;
+			import org.swizframework.Swiz;
+			
+			[Autowire(bean="restaurantController")]
+			public var restaurantController : RestaurantController;
 		
 			/**
 			 * Called to initialize the application 
 			 **/
 			private function init() : void
 			{
-				this.gateway.load();
+				Swiz.getInstance().loadBeans([Beans]);
+				restaurantController.load();
 			}
 
 		]]>
 	</mx:Script>
 	
-	<local:RestaurantGateway id="gateway" />
-	<view:RestaurantViewer id="restaurantViewer" restaurantDataProvider="{gateway.restaurants}" />
+	<view:RestaurantViewer id="restaurantViewer" />
 	
 </mx:Application>
