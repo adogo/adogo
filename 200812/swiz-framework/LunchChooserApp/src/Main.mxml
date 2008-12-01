@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:local="us.adogo.lunchchooser.*"
+	xmlns:view="us.adogo.lunchchooser.view.*"
+	layout="vertical"
+	width="100%"
+	height="100%"
+	creationComplete="init();">
+	
+	<mx:Style source="assets/main.css" />
+	
+	<mx:Script>
+		<![CDATA[
+		
+			/**
+			 * Called to initialize the application 
+			 **/
+			private function init() : void
+			{
+				this.gateway.load();
+			}
+
+		]]>
+	</mx:Script>
+	
+	<local:RestaurantGateway id="gateway" />
+	<view:RestaurantViewer id="restaurantViewer" restaurantDataProvider="{gateway.restaurants}" />
+	
+</mx:Application>

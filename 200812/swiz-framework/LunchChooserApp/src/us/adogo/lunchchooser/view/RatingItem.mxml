@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	paddingLeft="8">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Image;
+			import us.adogo.lunchchooser.Registry;			
+    			
+			override public function set data(item : Object) : void
+			{
+				this.removeAllChildren();
+				
+				for (var i : Number = 0; i < item.rating; i++)
+				{
+					var image : Image = new Image();
+					image.load(Registry.starImageUrl);
+					image.height = 15;
+					image.width = 15;
+					this.addChild(image);
+				}
+			}
+		]]>
+	</mx:Script>
+</mx:HBox>

@@ -1,0 +1,32 @@
+<project name="LunchChooserApp" default="build" basedir=".">
+	<!-- Update this path to the location of mxmlc on your PC -->
+	<property name="flex.mxmlc.loc" location="C:/adogo/FlexBuilder3/sdks/3.0.0/bin/mxmlc.exe" />
+	
+	<property name="src.loc" location="${basedir}/src" />
+	<property name="bin.loc" location="${basedir}/ant-bin" />
+	
+	<target name="init">
+		<mkdir dir="${bin.loc}" />
+	</target>
+	
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${bin.loc}" defaultexcludes="false">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<target name="build" depends="init">
+		<exec dir="${src.loc}" executable="${flex.mxmlc.loc}">
+			<arg line="-output '${bin.loc}/Main.swf'" />
+			<arg line="Main.mxml" />
+		</exec>
+		
+		<copy todir="${bin.loc}/assets">
+			<fileset dir="${src.loc}/assets">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+</project>
