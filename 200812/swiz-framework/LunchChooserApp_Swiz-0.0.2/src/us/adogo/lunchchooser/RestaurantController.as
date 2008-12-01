@@ -54,8 +54,8 @@ package us.adogo.lunchchooser
 		 **/
 		public function findRandomRestaurant() : void
 		{
-			var index : Number = (Math.random() * 1000) % restaurants.length;
-			var restaurant : Restaurant = restaurants.getItemAt(index) as Restaurant;
+			var index : Number = (Math.random() * 1000) % this.restaurants.length;
+			var restaurant : Restaurant = this.restaurants.getItemAt(index) as Restaurant;
 			
 			dispatchEvent(new RestaurantSelectionEvent(restaurant));
 		}
