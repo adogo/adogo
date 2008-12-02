@@ -26,12 +26,13 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
+			import mx.collections.ICollectionView;
 			import us.adogo.lunchchooser.Restaurant;
 			import us.adogo.lunchchooser.events.RestaurantSelectionEvent;
 			
 			[Autowire(bean="restaurants")]
 			[Bindable]
-			public var restaurantDataProvider : ArrayCollection;
+			public var restaurantDataProvider : ICollectionView;
 			
 			/**
 			 * Dispatches a custom event containing a reference to the Restaurant that has been
