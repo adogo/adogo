@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <name>Restaurant Grid Component</name>
+   <groupId>us.adogo</groupId>
+   <artifactId>restaurantgrid</artifactId>
+   <packaging>swc</packaging>
+   <version>1.0.0-SNAPSHOT</version>
+   <parent>
+      <groupId>info.flex-mojos</groupId>
+      <artifactId>flex-super-pom</artifactId>
+      <version>2.0.3</version>
+   </parent>
+   <ciManagement>
+      <system>Hudson</system>
+      <url>http://localhost:8080/hudson</url>   
+   </ciManagement>
+   <properties>
+      <flex.home>/Users/blegros/api/flexsdk/3.2.0/</flex.home>
+      <fluint.testrunner>/Applications/FluintAIRTestRunner.app/Contents/MacOS/FluintAIRTestRunner</fluint.testrunner>
+   </properties>
+   <scm>
+      <connection>
+         scm:svn:svn://localhost/RestaurantGrid/trunk
+      </connection>
+      <developerConnection>
+         scm:svn:svn://localhost/RestaurantGrid/trunk
+      </developerConnection>
+   </scm>
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>info.flex-mojos</groupId>
+            <artifactId>flex-compiler-mojo</artifactId>
+            <version>2.0.3</version>
+            <extensions>true</extensions>
+            <configuration>
+               <skipTests>true</skipTests>
+               <includeSources>
+                  <sources>${project.build.sourceDirectory}</sources>
+               </includeSources>
+               <sourcePaths>
+                  <paths>${project.build.sourceDirectory}</paths>
+               </sourcePaths>
+            </configuration>
+         </plugin>
+         <!-- Assumes you always have tests setup to compile and run in project.build.testSourceDirectory -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>fluint-test-compile</id>
+                  <phase>test-compile</phase>
+                  <configuration>
+                     <tasks>
+                        <!-- Pull in Flex Ant Tasks -->
+                        <taskdef resource="flexTasks.tasks" />
+      
+                        <property name="FLEX_HOME" location="${flex.home}" />
+      
+                        <!-- Create test-classes directory -->
+                        <mkdir dir="${project.build.testOutputDirectory}" />
+                 
+                        <mxmlc file="${project.build.testSourceDirectory}/AirRunner.mxml" 
+                           output="${project.build.testOutputDirectory}/AirRunner.swf" 
+                           keep-generated-actionscript="false">
+                           <compiler.library-path dir="${project.build.directory}/.." append="true">
+                              <include name="libs" />
+                           </compiler.library-path>
+                           <compiler.library-path dir="${project.build.directory}" append="true">
+                              <include name="*.swc" />
+                           </compiler.library-path>
+                        </mxmlc>      
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+               <execution>
+                  <id>fluint-test-run</id>
+                  <phase>test</phase>
+                  <configuration>
+                     <tasks>
+                        <!-- Pull in Fluint Ant Task -->
+                        <taskdef name="fluint" classname="net.digitalprimates.ant.tasks.fluint.Fluint" />     
+      
+                        <property name="test.report.loc" location="${project.build.directory}/surefire-reports" />
+      
+                        <!-- Create reporting directory -->
+                        <mkdir dir="${test.report.loc}" />
+      
+                        <fluint debug="true" 
+                           headless="true"
+                           testRunner="${fluint.testrunner}" 
+                           outputDir="${test.report.loc}" 
+                           workingDir="${project.build.testOutputDirectory}">
+                        
+                           <fileset dir="${project.build.testOutputDirectory}">
+                              <include name="**/AirRunner.swf"/>
+                           </fileset>
+                        </fluint>      
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <dependencies>
+               <dependency>
+                  <groupId>org.apache.ant</groupId>
+                  <artifactId>ant</artifactId>
+                  <version>1.7.0</version>
+               </dependency>
+               <!-- All these below should be installed in your local repository -->
+               <dependency>
+                  <groupId>flex.ant</groupId>
+                  <artifactId>flexTasks</artifactId>
+                  <version>1.0.0</version>
+               </dependency>
+               <dependency>
+                  <groupId>net.digitalprimates</groupId>
+                  <artifactId>FluintAnt</artifactId>
+                  <version>1.0.1</version>
+               </dependency>
+            </dependencies>
+         </plugin>
+      </plugins>
+   </build>
+   <reporting>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <configuration>
+               <aggregate>true</aggregate>
+               <reportsDirectories>
+                  <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+               </reportsDirectories>
+            </configuration>
+            <reportSets>
+               <reportSet>
+                  <reports>
+                     <report>report-only</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+         <plugin>
+             <groupId>info.flex-mojos</groupId>
+              <artifactId>asdoc</artifactId>
+           </plugin>
+      </plugins>
+   </reporting>
+</project>

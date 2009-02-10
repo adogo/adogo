@@ -1,0 +1,96 @@
+<project name="LunchChooser" basedir="." default="package">
+	
+	<!-- Delcare external tasks and associated properties -->
+	<taskdef resource="flexTasks.tasks" />
+	<taskdef name="fluint" classname="net.digitalprimates.ant.tasks.fluint.Fluint" />
+	<property name="FLEX_HOME" location="/Users/blegros/api/flexsdk/3.2.0" />
+	<property name="fluint.testrunner" location="/Applications/FluintAIRTestRunner.app/Contents/MacOS/FluintAIRTestRunner" />
+	
+	<!-- Folders -->
+	<property name="lib.loc" location="${basedir}/libs" />
+	<property name="src.main.loc" location="${basedir}/src/main/flex" />
+	<property name="src.locales.loc" location="${basedir}/src/main/locales" />
+	<property name="src.test.loc" location="${basedir}/src/test/flex" />
+	<property name="bin.loc" location="${basedir}/target" />
+	<property name="bin.main.loc" location="${bin.loc}/classes" />
+	<property name="bin.main.name" value="Main.swf" />
+	<property name="bin.test.loc" location="${bin.loc}/test-classes" />
+	<property name="bin.test.name" value="AirRunner.swf" />
+	<property name="report.loc" location="${bin.loc}/report" />
+	<property name="package.loc" location="${bin.loc}" />
+	<property name="package.artifact.name" value="LunchChooser.zip" />
+	<property name="doc.loc" location="${bin.loc}/doc" />
+	
+	<target name="clean">
+        <delete dir="${bin.loc}" />
+    </target>
+	
+	<target name="init">
+		<mkdir dir="${bin.loc}" />
+		<mkdir dir="${bin.main.loc}" />
+		<mkdir dir="${bin.test.loc}" />
+		<mkdir dir="${report.loc}" />
+		<mkdir dir="${doc.loc}" />
+	</target>
+	
+	<target name="build" depends="init">
+		<!-- Compile SWF -->
+		<mxmlc file="${src.main.loc}/Main.mxml" output="${bin.main.loc}/${bin.main.name}" keep-generated-actionscript="false">
+			<compiler.library-path dir="${lib.loc}" append="true">
+		    	<include name="*.swc" />
+		    </compiler.library-path>
+			<source-path path-element="${src.locales.loc}/{locale}" />
+		</mxmlc>
+		
+		<!-- Copy over non-embeddable assets -->
+		<copy todir="${bin.main.loc}/assets">
+			<fileset dir="${src.main.loc}/assets">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		
+		<!-- Generate HTML wrapper -->
+		<html-wrapper 
+	        title="Time For Lunch"
+			width="100%"
+			height="100%"
+	        file="index.html"
+	        application="Main"
+	        swf="Main"
+	        version-major="9"
+	        version-minor="0"
+	        version-revision="0"
+	        template="express-installation"
+	        output="${bin.main.loc}"/>
+    </target>
+	
+	<target name="test" depends="build">
+		<!-- Compile test SWF -->
+		<mxmlc file="${src.test.loc}/AirRunner.mxml" output="${bin.test.loc}/${bin.test.name}" keep-generated-actionscript="false">
+			<compiler.library-path dir="${lib.loc}" append="true">
+		    	<include name="*.swc" />
+		    </compiler.library-path>
+			<source-path path-element="${src.main.loc}" />
+			<source-path path-element="${src.locales.loc}/{locale}" />
+		</mxmlc>
+		
+		<!-- Execute tests -->
+		<fluint headless="true" testRunner="${fluint.testrunner}" outputDir="${report.loc}" workingDir="${bin.test.loc}">
+			<fileset dir="${bin.test.loc}">
+		    	<include name="**/${bin.test.name}" />
+			</fileset>
+		</fluint>
+	</target>
+	
+	<target name="package" depends="test">
+		<!-- Generate ASDocs -->
+		<exec dir="${basedir}" executable="${FLEX_HOME}/bin/asdoc" failonerror="true">
+			<arg line="-doc-sources '${src.main.loc}'" />
+			<arg line="-source-path+='${src.main.loc}'" />
+			<arg line="-output '${doc.loc}'" />
+			<arg line="-library-path+='${lib.loc}'" />
+		</exec>
+		
+		<zip destfile="${package.loc}/${package.artifact.name}" basedir="${bin.main.loc}" />
+	</target>
+</project>

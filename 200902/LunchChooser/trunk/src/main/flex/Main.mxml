@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:view="info.itsrandom.lunchchooser.view.*"
+	layout="vertical"
+	width="100%"
+	height="100%"
+	creationComplete="init();">
+	
+	<mx:Style source="assets/main.css" />
+
+	<view:RestaurantViewer id="restaurantViewer" />
+	
+</mx:Application>
