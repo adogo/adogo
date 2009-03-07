@@ -1,0 +1,24 @@
+When I run asc I am actually running: java -jar /opt/tamarin/asc/lib/asc.jar -import /opt/tamarin/asc/abc/builtin.abc -import /opt/tamarin/asc/abc/toplevel.abc
+
+asc ./BaseClass.as
+abcdump ./BaseClass.abc
+cat BaseClass.abc.il
+asc -import ./BaseClass.abc ./SubClass.as
+abcdump ./SubClass.abc
+cat SubClass.abc.il
+
+== avmplus
+echo 'trace("Larday dardy we like to party")' > math.as 
+asc math.as 
+avmplus math.abc
+
+echo 'var x = 0; var y=2; trace("result: " + (x + y))' > math.as
+asc math.as 
+avmplus math.abc 
+
+echo 'import amazing.code.BaseClass; var x : BaseClass = new BaseClass(); trace(x.doSomething());' > math.as
+asc -import amazing/code/BaseClass.abc math.as 
+avmplus amazing/code/BaseClass.abc math.abc
+doSomething() in BaseClass.
+undefined
+ 

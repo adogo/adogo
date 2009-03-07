@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="{init()}">
+	
+	<mx:Script>
+		<![CDATA[
+			import amazing.code.SubClass;
+			
+			private function init() : void
+			{
+				var subclassInstance : SubClass = new SubClass();
+				subclassInstance.closures["doSomething"] =
+				    function() : void
+				    {
+				    	trace(">>> This is the code that would be our 'before' advice...");
+				    };
+			    subclassInstance.doSomething();
+			    
+                subclassInstance.closures["doSomething"] =
+                    function() : void
+                    {
+                        throw new Error("You're not authorized to call this method!");
+                    };
+                subclassInstance.doSomething();
+			}
+			
+		]]>
+	</mx:Script>
+	
+</mx:Application>

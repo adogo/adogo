@@ -1,0 +1,212 @@
+InstanceInfo[
+	className=QName[Namespace[public::loom.template]:DynamicFunctionProxy]
+	superclassName=QName[Namespace[public::loom.template]:BaseClass]
+	isProtected=true
+	protectedNamespace=Namespace[protectedNamespace::loom.template:DynamicFunctionProxy]
+	interfaceCount=0
+	interfaces=
+	instanceInitializer=[object CMethodInfo]
+	traits=[
+		MethodTrait[name=QName[Namespace[public]:operationTwo], dispositionId=0, method=[object CMethodInfo]]
+		SlotOrConstantTrait[kind=[object TraitKind], name=QName[Namespace[private::loom.template:DynamicFunctionProxy]:dictionary], slot=0, typeName=QName[Namespace[public::flash.utils]:Dictionary], vindex=0, vkind=null]
+		MethodTrait[name=QName[Namespace[public]:getMappedFunctionFor], dispositionId=0, method=[object CMethodInfo]]
+		MethodTrait[name=QName[Namespace[public]:invokeMethod], dispositionId=0, method=[object CMethodInfo]]
+		MethodTrait[name=QName[Namespace[public]:setMappedFunctionFor], dispositionId=0, method=[object CMethodInfo]]
+		MethodTrait[name=QName[Namespace[public]:operationOne], dispositionId=0, method=[object CMethodInfo]]
+	]
+]
+Integer Pool: 0
+Uint Pool: 0
+Double Pool: 0
+String Pool:
+	*
+	loom.template:DynamicFunctionProxy
+	
+	Dictionary
+	DynamicFunctionProxy.as$1
+	loom.template
+	loom.template:BaseClass
+	Object
+	flash.utils
+	dictionary
+	void
+	String
+	Function
+	getMappedFunctionFor
+	apply
+	Array
+	operationOne
+	invokeMethod
+	operationTwo
+	int
+	setMappedFunctionFor
+	DynamicFunctionProxy
+	BaseClass
+Namespace Pool:
+	Namespace[namespace::*]
+	Namespace[private::loom.template:DynamicFunctionProxy]
+	Namespace[private::DynamicFunctionProxy.as$1]
+	Namespace[public]
+	Namespace[public::loom.template]
+	Namespace[packageInternalNamespace::loom.template]
+	Namespace[protectedNamespace::loom.template:DynamicFunctionProxy]
+	Namespace[staticProtectedNamespace::loom.template:DynamicFunctionProxy]
+	Namespace[staticProtectedNamespace::loom.template:BaseClass]
+	Namespace[staticProtectedNamespace::Object]
+	Namespace[public::flash.utils]
+Namespace Set Pool:
+	[Namespace[namespace::*]]
+	[Namespace[private::loom.template:DynamicFunctionProxy], Namespace[private::DynamicFunctionProxy.as$1], Namespace[public], Namespace[public::loom.template], Namespace[packageInternalNamespace::loom.template], Namespace[protectedNamespace::loom.template:DynamicFunctionProxy], Namespace[staticProtectedNamespace::loom.template:DynamicFunctionProxy], Namespace[staticProtectedNamespace::loom.template:BaseClass], Namespace[staticProtectedNamespace::Object], Namespace[public::flash.utils]]
+	[Namespace[private::loom.template:DynamicFunctionProxy], Namespace[private::DynamicFunctionProxy.as$1], Namespace[public], Namespace[public::loom.template], Namespace[packageInternalNamespace::loom.template], Namespace[protectedNamespace::loom.template:DynamicFunctionProxy], Namespace[staticProtectedNamespace::loom.template:DynamicFunctionProxy], Namespace[staticProtectedNamespace::loom.template:BaseClass], Namespace[staticProtectedNamespace::Object]]
+	[Namespace[private::DynamicFunctionProxy.as$1], Namespace[public], Namespace[public::loom.template], Namespace[packageInternalNamespace::loom.template]]
+Multiname Pool:
+	QName[Namespace[namespace::*]:*]
+	Multiname[name=Dictionary, nsset={2}]
+	Multiname[name=dictionary, nsset={2}]
+	Multiname_L[nsset=[Namespace[private::loom.template:DynamicFunctionProxy], Namespace[private::DynamicFunctionProxy.as$1], Namespace[public], Namespace[public::loom.template], Namespace[packageInternalNamespace::loom.template], Namespace[protectedNamespace::loom.template:DynamicFunctionProxy], Namespace[staticProtectedNamespace::loom.template:DynamicFunctionProxy], Namespace[staticProtectedNamespace::loom.template:BaseClass], Namespace[staticProtectedNamespace::Object]]]
+	QName[Namespace[public]:void]
+	QName[Namespace[public]:String]
+	QName[Namespace[public]:Function]
+	Multiname[name=getMappedFunctionFor, nsset={2}]
+	Multiname[name=apply, nsset={2}]
+	QName[Namespace[public]:Array]
+	Multiname[name=invokeMethod, nsset={2}]
+	QName[Namespace[public]:int]
+	QName[Namespace[public]:Object]
+	QName[Namespace[public]:operationTwo]
+	QName[Namespace[private::loom.template:DynamicFunctionProxy]:dictionary]
+	QName[Namespace[public::flash.utils]:Dictionary]
+	QName[Namespace[public]:getMappedFunctionFor]
+	QName[Namespace[public]:invokeMethod]
+	QName[Namespace[public]:setMappedFunctionFor]
+	QName[Namespace[public]:operationOne]
+	QName[Namespace[public::loom.template]:DynamicFunctionProxy]
+	QName[Namespace[public::loom.template]:BaseClass]
+	Multiname[name=BaseClass, nsset={2}]
+InstanceInfo[
+	className=QName[Namespace[public::loom.template]:DynamicFunctionProxy]
+	superclassName=QName[Namespace[public::loom.template]:BaseClass]
+	isProtected=true
+	protectedNamespace=Namespace[protectedNamespace::loom.template:DynamicFunctionProxy]
+	interfaceCount=0
+	interfaces=
+	instanceInitializer=[object CMethodInfo]
+	traits=[
+		MethodTrait[name=QName[Namespace[public]:operationTwo], dispositionId=0, method=[object CMethodInfo]]
+		SlotOrConstantTrait[kind=[object TraitKind], name=QName[Namespace[private::loom.template:DynamicFunctionProxy]:dictionary], slot=0, typeName=QName[Namespace[public::flash.utils]:Dictionary], vindex=0, vkind=null]
+		MethodTrait[name=QName[Namespace[public]:getMappedFunctionFor], dispositionId=0, method=[object CMethodInfo]]
+		MethodTrait[name=QName[Namespace[public]:invokeMethod], dispositionId=0, method=[object CMethodInfo]]
+		MethodTrait[name=QName[Namespace[public]:setMappedFunctionFor], dispositionId=0, method=[object CMethodInfo]]
+		MethodTrait[name=QName[Namespace[public]:operationOne], dispositionId=0, method=[object CMethodInfo]]
+	]
+]
+ClassInfo[
+	staticInitializer=[object CMethodInfo]
+	traits=[
+		
+	]
+]
+ScriptInfo[
+	scriptInitializer=[object CMethodInfo]
+	traits=[
+		ClassTrait[name=QName[Namespace[public::loom.template]:DynamicFunctionProxy], classSlotId=0, classIndex=0]
+	]
+]
+
+	[object CMethodInfo]
+	{	
+		//maxStack=1, localCount=1, initScopeDepth=4, maxScopeDepth=5
+		(3 opcodes)
+	}
+traits=[
+	
+],
+	[object CMethodInfo]
+	{	
+		//maxStack=2, localCount=1, initScopeDepth=5, maxScopeDepth=6
+		(14 opcodes)
+	}
+traits=[
+	
+],
+	[object CMethodInfo]
+	{	
+		//maxStack=3, localCount=3, initScopeDepth=5, maxScopeDepth=6
+		(10 opcodes)
+	}
+traits=[
+	
+],
+	[object CMethodInfo]
+	{	
+		//maxStack=2, localCount=2, initScopeDepth=5, maxScopeDepth=6
+		(9 opcodes)
+	}
+traits=[
+	
+],
+	[object CMethodInfo]
+	{	
+		//maxStack=3, localCount=4, initScopeDepth=5, maxScopeDepth=6
+		(38 opcodes)
+	}
+traits=[
+	
+],
+	[object CMethodInfo]
+	{	
+		//maxStack=3, localCount=1, initScopeDepth=5, maxScopeDepth=6
+		(12 opcodes)
+	}
+traits=[
+	
+],
+	[object CMethodInfo]
+	{	
+		//maxStack=5, localCount=4, initScopeDepth=5, maxScopeDepth=6
+		(15 opcodes)
+	}
+traits=[
+	
+],
+	[object CMethodInfo]
+	{	
+		//maxStack=2, localCount=1, initScopeDepth=1, maxScopeDepth=4
+		(25 opcodes)
+	}
+traits=[
+	
+]
+public sealed class loom.template::DynamicFunctionProxy extends loom.template::BaseClass 
+{
+	// fields
+	private var dictionary : flash.utils:Dictionary;
+
+	//constructor
+	public function {instance initializer (constructor?)} () : QName[Namespace[namespace::*]:*]
+	{
+		opcode count: 14
+	}
+
+	// methods
+	public override function operationTwo (String, int, Object) : QName[Namespace[public]:void]
+	{
+		opcode count: 15
+	}
+	public function getMappedFunctionFor (String) : QName[Namespace[public]:Function]
+	{
+		opcode count: 9
+	}
+	public function invokeMethod (String, Array) : QName[Namespace[namespace::*]:*]
+	{
+		opcode count: 38
+	}
+	public function setMappedFunctionFor (String, Function) : QName[Namespace[public]:void]
+	{
+		opcode count: 10
+	}
+	public override function operationOne () : QName[Namespace[public]:void]
+	{
+		opcode count: 12
+	}
+}
