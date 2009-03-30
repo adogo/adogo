@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"	paddingLeft="8">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Image;
+    	
+    	   [Embed('/assets/star.png')]
+    	   private var _ratingImage : Class;
+    	
+			override public function set data(item : Object) : void
+			{
+				this.removeAllChildren();
+				
+				for (var i : Number = 0; i < item.rating; i++)
+				{
+					var image : Image = new Image();
+					image.source = _ratingImage;
+					image.height = 15;
+					image.width = 15;
+					this.addChild(image);
+				}
+			}
+		]]>
+	</mx:Script>
+</mx:HBox>
