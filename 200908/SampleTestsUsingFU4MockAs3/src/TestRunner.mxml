@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+   xmlns:flexUnitUIRunner="http://www.adobe.com/2009/flexUnitUIRunner"
+   creationComplete="runTests();"
+   layout="absolute">
+   
+   <mx:Script>
+      <![CDATA[
+         import us.adogo.simple.SimpleSuite;
+         import us.adogo.mock.MockSuite;
+         import us.adogo.simple.BasicMathTest;
+         import org.flexunit.runner.Request;
+         import us.adogo.context.ExampleSpec;
+         import org.flexunit.listeners.UIListener;
+         import org.flexunit.runner.FlexUnitCore;
+         import org.flexunit.experimental.context.ContextRunner;
+         
+         private var contextRunner : ContextRunner;
+         
+         public function runTests() : void {
+				var core : FlexUnitCore = new FlexUnitCore();
+				core.addListener(new UIListener(uiListener));
+            //core.run(SimpleSuite); //run with a suite
+            //core.run(ExampleSpec); //run with a test class
+            //core.run(Request.method(BasicMathTest, "addition")); //run with a single test method
+            //core.run([SimpleSuite, ExampleSpec, Request.method(BasicMathTest, "subtraction")]); //run with an array of suites, classes, methods
+            //core.run(SimpleSuite, ExampleSpec, Request.method(BasicMathTest, "subtraction")); //run with arguments of suites, classes, methods
+            core.run(MockSuite) //run mock-as3 tests
+         }
+      ]]>
+   </mx:Script>
+   <flexUnitUIRunner:TestRunnerBase id="uiListener" width="100%" height="100%"  />
+</mx:Application>
