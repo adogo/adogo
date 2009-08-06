@@ -24,10 +24,10 @@
 				core.addListener(new UIListener(uiListener));
             //core.run(SimpleSuite); //run with a suite
             //core.run(ExampleSpec); //run with a test class
+            //core.run(MockSuite) //run mock-as3 tests
             //core.run(Request.method(BasicMathTest, "addition")); //run with a single test method
-            //core.run([SimpleSuite, ExampleSpec, Request.method(BasicMathTest, "subtraction")]); //run with an array of suites, classes, methods
-            //core.run(SimpleSuite, ExampleSpec, Request.method(BasicMathTest, "subtraction")); //run with arguments of suites, classes, methods
-            core.run(MockSuite) //run mock-as3 tests
+            //core.run([SimpleSuite, MockSuite, ExampleSpec, Request.method(BasicMathTest, "subtraction")]); //run with an array of suites, classes, methods
+            core.run(SimpleSuite, MockSuite, ExampleSpec, Request.method(BasicMathTest, "subtraction")); //run with arguments of suites, classes, methods
          }
       ]]>
    </mx:Script>

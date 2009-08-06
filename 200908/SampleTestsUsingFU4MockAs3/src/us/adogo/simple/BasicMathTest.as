@@ -4,8 +4,6 @@ package us.adogo.simple {
 	import org.hamcrest.collection.hasItems;
 	import org.hamcrest.number.greaterThan;
 	
-	import us.adogo.simple.SimpleMath;
-	
 	public class BasicMathTest {
 	   public static var multiplier : Number = 0;
 	   
@@ -48,9 +46,13 @@ package us.adogo.simple {
 		    Assert.assertEquals(9, simpleMath.subtract(12, 3));   
 		}
 
-		[Test(expects="TypeError")]  
-		public function divisionWithException():void {   
-		    simpleMath.divide( 11, 0 );
+		[Test(expects="ArgumentError")]  
+		public function testingDivideWithException():void {   
+		    var divide : Function = function (x : Number, y : Number) : Number {
+		      return simpleMath.divide(x, y); 
+		    };
+		    
+		    divide(3);
 		} 
 
 		[Ignore("Not Ready to Run")]   
