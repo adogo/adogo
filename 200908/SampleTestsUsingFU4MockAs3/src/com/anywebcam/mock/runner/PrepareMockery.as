@@ -27,6 +27,10 @@ package com.anywebcam.mock.runner
       }
       
       public function evaluate(parentToken : AsyncTestToken) : void {
+         if(classesToPrepare.length == 0) {
+            parentToken.sendResult(null);
+         }
+         
          var timer : Timer = new Timer(TIMEOUT);
 			timer.addEventListener(TimerEvent.TIMER, function(event : Event = null) : void {
 			      timer.stop();

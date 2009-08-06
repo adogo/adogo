@@ -12,7 +12,7 @@ package us.adogo.mock
    public class ExampleUsingMockAs3Runner {
       public var mockery : Mockery;
       
-      [Mock(type="strict")]
+      [Mock]
       public var user : User;
       
       private var controller : UserController; 

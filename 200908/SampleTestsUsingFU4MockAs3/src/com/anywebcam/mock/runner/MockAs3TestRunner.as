@@ -61,13 +61,9 @@ package com.anywebcam.mock.runner
          
          for each(var field : Field in klass.fields) {
             if(field.hasMetaData("Mock")) {
-               /*if(!field.isProperty) {
-                  throw new InitializationError(field.name + " must be acessible as a property to use [Mock] metadata.");
-               }*/
-               
                var mockType : String = field.getMetaData("Mock", "type");
                if(["nice", "strict"].indexOf(mockType) == -1 && mockType != null) {
-                  throw new InitializationError(field.name + " must declare a mock type of either 'nice' or 'strict'; '" + mockType + "' is NOT a valid option.");
+                  throw new InitializationError("Property '" + field.name + "' must declare a mock type of either 'nice' or 'strict'; '" + mockType + "' is NOT a valid type.");
                } 
                
                var property : Dictionary = new Dictionary(true);
@@ -86,10 +82,6 @@ package com.anywebcam.mock.runner
        * Overriden from parent to implement hook to run mock preparation before [BeforeClass] 
        */
       protected override function classBlock(notifier : IRunNotifier) : IAsyncStatement {
-         if(propertyNamesToInject.length == 0) {
-            return super.classBlock(notifier);
-         }
-         
          //build array of all class types to prepare
          var classes : Array = this.propertyNamesToInject.map(function(property : Dictionary, index : int, source : Array) : Class {
                return property["klass"] as Class;
@@ -104,13 +96,9 @@ package com.anywebcam.mock.runner
       }
       
       /**
-       * Overriden from parent to implement hook to run mock injection before [Before] and verify after [After]
+       * Overriden from parent to implement hook to run mockery and mock injection before [Before] and verify after [After]
        */
       protected override function methodBlock(method : FrameworkMethod) : IAsyncStatement {
-         if(propertyNamesToInject.length == 0) {
-            return super.methodBlock(method);
-         }
-         
          //copy/paste of methodBlock from parent
          //we need a shared instance of the test class to inject the properties, so we can't call super since it doesn't provide a handle
          var test : Object = null;
@@ -124,8 +112,9 @@ package com.anywebcam.mock.runner
 			}
 			
 			var sequencer:StatementSequencer = new StatementSequencer();
-			//inject mocks before any befores executes
-			sequencer.addStep(new InjectMocks(this.mockery, this.mockeryFieldName, propertyNamesToInject, test));
+			//inject mockery and mocks before any befores executes
+			sequencer.addStep(new InjectMockery(mockery, mockeryFieldName, test));
+			sequencer.addStep(new InjectMocks(this.mockery, propertyNamesToInject, test));
 			
 			//flow from base class
 			sequencer.addStep(withBefores(method, test));
