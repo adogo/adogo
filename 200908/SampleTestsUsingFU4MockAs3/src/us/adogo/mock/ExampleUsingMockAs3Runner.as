@@ -3,22 +3,23 @@ package us.adogo.mock
    import com.anywebcam.mock.Mockery;
    
    import org.flexunit.assertThat;
+   import org.hamcrest.core.not;
+   import org.hamcrest.object.equalTo;
    import org.hamcrest.object.hasProperty;
    import org.hamcrest.object.nullValue;
    
    [RunWith("com.anywebcam.mock.runner.MockAs3TestRunner")]
-   public class ExampleUsingMocks
-   {
-      private mockery : Mockery;
+   public class ExampleUsingMockAs3Runner {
+      public var mockery : Mockery;
       
       [Mock(type="strict")]
-      private user : User;
+      public var user : User;
       
-      private controller : UserController; 
+      private var controller : UserController; 
       
       [Before]
       public function setUp() : void {
-         this.controller = new Controller(); 
+         this.controller = new UserController(); 
       }
       
       [Test]
@@ -42,7 +43,7 @@ package us.adogo.mock
       
       [Test(verify="false")]
       public function testDefaultUserSize() : void {
-         assertThat(controller, hasProperty(currentUsers));
+         assertThat(controller, hasProperty("currentUsers"));
          assertThat(controller.currentUsers, not(nullValue()));
          assertThat(controller.currentUsers.length, equalTo(0));
       }

@@ -6,6 +6,7 @@
    
    <mx:Script>
       <![CDATA[
+         import com.anywebcam.mock.runner.MockAs3TestRunner;
          import us.adogo.simple.SimpleSuite;
          import us.adogo.mock.MockSuite;
          import us.adogo.simple.BasicMathTest;
@@ -16,6 +17,7 @@
          import org.flexunit.experimental.context.ContextRunner;
          
          private var contextRunner : ContextRunner;
+         private var mockRunner : MockAs3TestRunner;
          
          public function runTests() : void {
 				var core : FlexUnitCore = new FlexUnitCore();

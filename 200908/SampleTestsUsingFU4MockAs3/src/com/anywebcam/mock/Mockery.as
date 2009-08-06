@@ -25,6 +25,10 @@ package com.anywebcam.mock
 
         public function prepare(... classes):void
         {
+           if(classes.length > 0 && classes[0] is Array) {
+              classes = classes[0];
+           }
+           
             var dispatcher:IEventDispatcher = proxyRepository.prepare(classes, ApplicationDomain.currentDomain);
             dispatcher.addEventListener(Event.COMPLETE, function(event:Event):void
                 {
