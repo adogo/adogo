@@ -10,6 +10,10 @@ package us.adogo.mock
          currentUsers = new ArrayCollection();
       }
       
+      public function validateUser(user : User, account : Account) : Boolean {
+         return account.isValid(user);
+      }
+      
       public function addUser(user : User) : void {
          user.save();
          currentUsers.addItem(user);

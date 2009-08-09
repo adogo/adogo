@@ -11,9 +11,10 @@ package us.adogo.mock
       public var username : String;
       public var password : String;
       public var rememberMe : Boolean = false;
+      public var account : Account;
 
       public var service : RemoteObject;
-      
+
       public function save() : void {
          var token : AsyncToken = this.service.save(this);
          token.addEventListener(ResultEvent.RESULT, function(event : DynamicEvent) : void {

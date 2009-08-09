@@ -3,7 +3,6 @@ package com.anywebcam.mock.runner
    import com.anywebcam.mock.Mockery;
    
    import flash.utils.Dictionary;
-   import flash.utils.describeType;
    
    import flex.lang.reflect.Field;
    import flex.lang.reflect.Klass;
@@ -61,15 +60,30 @@ package com.anywebcam.mock.runner
          
          for each(var field : Field in klass.fields) {
             if(field.hasMetaData("Mock")) {
-               var mockType : String = field.getMetaData("Mock", "type");
-               if(["nice", "strict"].indexOf(mockType) == -1 && mockType != null) {
+               var mockType : String = field.getMetaData("Mock", "type") || "nice";
+               if(["nice", "strict"].indexOf(mockType) == -1) {
                   throw new InitializationError("Property '" + field.name + "' must declare a mock type of either 'nice' or 'strict'; '" + mockType + "' is NOT a valid type.");
                } 
+               
+               var injectable : String = field.getMetaData("Mock", "inject") || "true";
+               if(["true", "false"].indexOf(injectable) == -1) {
+                  throw new InitializationError("Property '" + field.name + "' must declare the attribute inject as either 'true' or 'false'; '" + injectable + "' is NOT valid.");
+               }
+               
+               if(injectable == "true") {
+                  var constructorParamLength : Number = new Klass(field.type).constructor.parameterTypes.length;
+                  if(constructorParamLength != 0) {
+                     throw new InitializationError("Cannot inject mock of type '" + field.type 
+                        + "' into property '" + field.name 
+                        + "'; constructor arguments are required!  Please set inject='false' and manually create the mock in the [Before] for this test class.");
+                  }
+               }
                
                var property : Dictionary = new Dictionary(true);
                property["name"] = field.name;
                property["klass"] = field.type;
-               property["type"] = mockType || "nice";
+               property["type"] = mockType;
+               property["inject"] = (injectable == "true");
                
                injectionConfig.push(property);
             }

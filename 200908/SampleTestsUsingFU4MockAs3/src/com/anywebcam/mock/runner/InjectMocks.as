@@ -24,16 +24,18 @@ package com.anywebcam.mock.runner
       public function evaluate(parentToken : AsyncTestToken) : void {
          //find properties on target, inject using nice/strict and casting as klass
          for each(var property : Dictionary in propertyNamesToInject) {
-            var mock : Object = null;
+            if(property["inject"]) {
+               var mock : Object = null;
                
-            if(property["type"] == "strict") {
-               mock = mockery.strict(property["klass"]);
+               if(property["type"] == "strict") {
+                  mock = mockery.strict(property["klass"]);
+               }
+               else {
+                  mock = mockery.nice(property["klass"]); 
+               }
+               
+               target[property["name"]] = mock as property["klass"];
             }
-            else {
-               mock = mockery.nice(property["klass"]); 
-            }
-            
-            target[property["name"]] = mock as property["klass"];
          }
          
          parentToken.sendResult(null);
