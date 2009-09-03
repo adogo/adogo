@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:maps="com.google.maps.*" >
+	
+	<mx:Metadata>
+		[Event(name="restaurantSelected", type="events.RestaurantSelectionEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import events.RestaurantSelectionEvent;
+			import com.google.maps.services.Placemark;
+			import info.itsrandom.restaurantGuide.RestaurantMarker;
+			import mx.collections.ArrayCollection;
+			import info.itsrandom.restaurantGuide.Restaurant;
+			import info.itsrandom.restaurantGuide.Registry;
+						
+			import com.google.maps.MapMouseEvent;
+			import com.google.maps.MapEvent;
+			import com.google.maps.controls.ZoomControl;
+			import com.google.maps.MapType;
+			import com.google.maps.LatLng;
+			import com.google.maps.services.ClientGeocoder;
+			import com.google.maps.services.GeocodingEvent;
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.InfoWindowOptions;
+			
+			private var _markers : Dictionary;
+			private var _selectedRestaurant : Restaurant;
+			
+			private function onMapReady(event:MapEvent):void {
+				_markers = new Dictionary();
+				
+				map.enableScrollWheelZoom();
+				map.enableContinuousZoom();
+				
+				// set center coordinates for map
+				map.setCenter(new LatLng(28.108326, -80.606689), 13, MapType.NORMAL_MAP_TYPE);
+
+				var geocoder : ClientGeocoder = new ClientGeocoder();
+				geocoder.addEventListener(GeocodingEvent.GEOCODING_FAILURE, handleGeocodingFailure);
+				geocoder.addEventListener(GeocodingEvent.GEOCODING_SUCCESS, function(event : GeocodingEvent) : void {
+				if (event.response.placemarks.length > 0) {
+   				   var placemark : Placemark = event.response.placemarks[0];
+   				   var restaurant : Restaurant = _markers[event.response.name];
+   				   
+   					var marker : RestaurantMarker = createMarker(restaurant, placemark.point);
+   					map.addOverlay(marker);
+   					map.setCenter(marker.getLatLng());
+   					
+   					_markers[event.response.name] = marker;
+   				}
+				});
+				
+				for each(var restaurant : Restaurant in restaurantDataProvider)
+				{
+				   _markers[restaurant.address] = restaurant;
+				   geocoder.geocode(restaurant.address);
+				}
+			}
+			
+			private function createMarker(restaurant : Restaurant, point : LatLng) : RestaurantMarker {
+				var marker : RestaurantMarker = new RestaurantMarker(restaurant, point);
+				marker.addEventListener(MapMouseEvent.CLICK, function (event:MapMouseEvent):void {
+					map.setCenter(point);
+					marker.openInfoWindow(generateInfoWindow(restaurant));
+               
+					var restaurantSelectedEvent:RestaurantSelectionEvent = new RestaurantSelectionEvent(restaurant);
+				   	dispatchEvent(restaurantSelectedEvent);
+         		});
+         	
+         		return marker;
+			}
+			
+			private function findRestaurant(address : String) : Restaurant {
+			   return _markers[address];
+			}
+
+			private function handleGeocodingFailure(event:GeocodingEvent):void {
+				trace("Geocoding Failed");
+				trace(event);
+            	trace(event.status);
+			}
+			
+			private function generateInfoWindow(restaurant : Restaurant) : InfoWindowOptions {
+			   return new InfoWindowOptions({title: restaurant.name, content: restaurant.address});
+			}
+			
+			[Bindable]
+			public function get selectedRestaurant() : Restaurant {
+			   return _selectedRestaurant;
+			}
+			
+			public function set selectedRestaurant(value : Restaurant) : void {
+			   _selectedRestaurant = value;
+			   _markers[_selectedRestaurant.address].openInfoWindow(generateInfoWindow(_selectedRestaurant));
+			}
+
+		]]>
+	</mx:Script>
+
+   <mx:ArrayCollection id="restaurantDataProvider" />
+
+   <maps:Map 
+      id="map"
+      url="http://localhost/"
+      key="{Registry.GOOGLE_MAP_KEY}" 
+      mapevent_mapready="onMapReady(event)" 
+      width="100%" height="100%" />
+
+</mx:Canvas>

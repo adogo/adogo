@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:views="views.*"
+	creationComplete="init()">
+	
+	<mx:Script>
+		<![CDATA[
+			import events.RestaurantSelectionEvent;
+			import info.itsrandom.restaurantGuide.Restaurant;
+		
+			[Bindable]
+			public var selectedRestaurant:Restaurant;
+			
+			private function init():void {
+			}
+			
+			private function restaurantSelectedHandler(event:RestaurantSelectionEvent):void {
+				selectedRestaurant = event.restaurant;
+			}
+		]]>
+	</mx:Script>
+
+	<mx:ArrayCollection id="restaurantDataProvider" />
+
+	<views:RestaurantListView id="listing" 
+		left="90" top="196" 
+		width="244" height="102"
+		restaurantSelected="{restaurantSelectedHandler(event)}"
+		restaurantDataProvider="{restaurantDataProvider}"
+		selectedRestaurant="{selectedRestaurant}" />
+
+	<views:MapView id="map" 
+		top="125" right="180"
+		width="420" height="220"
+		restaurantSelected="{restaurantSelectedHandler(event)}"
+		restaurantDataProvider="{restaurantDataProvider}"
+		selectedRestaurant="{selectedRestaurant}" />
+	
+	<views:ReviewView id="review"
+		left="90" top="420" 
+		width="305" height="228"
+		reviews="{selectedRestaurant.reviews}" />
+	
+	<views:RatingView id="votes" 
+		width="400" height="240" 
+		right="180" bottom="57" 
+		rating="{selectedRestaurant.rating}" />
+
+</mx:Canvas>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+		   import mx.collections.ArrayCollection;
+
+         private var _reviews : ArrayCollection;
+         
+         [Bindable]
+         private var finalReviewText : String;
+
+			[Bindable]
+			public function get reviews() : ArrayCollection
+			{
+			   return _reviews;
+			}
+			
+			public function set reviews(reviews : ArrayCollection) : void
+			{
+			   _reviews = reviews;
+			   finalReviewText = _reviews.source.join("\n----------------------------------------------------\n");
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:TextArea wordWrap="true" 
+	   borderStyle="none" 
+	   alpha="1.0" 
+	   backgroundAlpha="0.0" 
+	   editable="false" 
+	   fontSize="12" 
+	   fontWeight="normal" 
+	   fontFamily="Verdana"
+	   width="100%" 
+	   height="100%"
+	   text="{finalReviewText}"/>
+	
+</mx:Canvas>

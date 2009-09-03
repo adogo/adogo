@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:domain="info.itsrandom.restaurantGuide.*">
+
+	<mx:Metadata>
+		[Event(name="restaurantSelected", type="events.RestaurantSelectionEvent")]
+	</mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+		   import mx.events.PropertyChangeEvent;
+			import info.itsrandom.restaurantGuide.Restaurant;
+			import events.RestaurantSelectionEvent;
+			import mx.events.ListEvent;
+			import mx.utils.StringUtil;
+	
+			private function displayRestaurants(item:Object):String {
+				return StringUtil.substitute("{0}.  {1}", restaurantDataProvider.getItemIndex(item)+1, item.name);
+			}
+
+			/**
+			 * Dispatches a custom event containing a reference to the Restaurant that has been
+			 * selected. This event is dispatched when the Restaurant is selected manually in the
+			 * list using the mouse, and also when a Restaurant is chosen from the map.
+			 */
+			private function itemClickEvent(event:ListEvent):void {
+				// dispatch an event when a resturant is selected
+				var restaurantSelectedEvent:RestaurantSelectionEvent = new RestaurantSelectionEvent(restaurantList.selectedItem as Restaurant);
+				dispatchEvent(restaurantSelectedEvent);
+			}
+			
+			public function selectRestaurant(restaurant : Restaurant) : void {
+			   restaurantList.selectedIndex = restaurantDataProvider.getItemIndex(restaurant);
+			}
+			
+			[Bindable]
+			public function get selectedRestaurant() : Restaurant {
+			   return restaurantList.selectedItem as Restaurant;
+			}
+			
+			public function set selectedRestaurant(value : Restaurant) : void {
+			   restaurantList.selectedItem = value;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:ArrayCollection id="restaurantDataProvider" />
+		
+	<mx:List id="restaurantList" dataProvider="{restaurantDataProvider}"
+		width="100%" height="100%"  
+		borderStyle="none" borderThickness="0" borderColor="#9494BC" 
+		alpha="1.0" rowHeight="17"
+		fontSize="12" fontFamily="Verdana" fontWeight="normal"
+		alternatingItemColors="[#FFFFFF, #EAF2E5]"
+		labelFunction="displayRestaurants" 
+		itemClick="itemClickEvent(event)" />
+
+</mx:Canvas>

@@ -1,0 +1,8 @@
+/* CSS file */
+Application {    
+    background-image:	Embed("images/bg.png");
+    background-repeat:	repeat;
+    background-position:center;
+    background-blend:	multiply;
+    borderSkin:			ClassReference("com.degrafa.skins.CSSSkin");
+}

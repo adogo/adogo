@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.utils.StringUtil;
+			
+			private var _rating : Number;
+			
+			[Bindable]
+			private var dataProvider : Array;
+			
+			[Bindable]
+			public function get rating() : Number
+			{
+			   return _rating;
+			}
+			
+			public function set rating(rating : Number) : void
+			{
+			   _rating = rating;
+			   
+			   starRatingText.visible = true;
+			   star.visible = true;
+			   
+			   dataProvider = [
+			      {data: 5.0 - rating},
+			      {data: rating}
+			   ];
+			}
+		]]>
+	</mx:Script>
+	
+    <!-- Define custom colors for use as pie wedge fills. -->
+    <mx:SolidColor id="sc1" color="white" alpha=".6"/>
+    <mx:SolidColor id="sc2" color="red" alpha=".6"/>
+
+    <!-- This Stroke is used to separate the wedges in the pie. -->
+    <mx:Stroke id="radial" weight="1" color="0xFFFFCC" alpha=".3"/>
+
+    <!-- This Stroke is used for the outer border of the pie. -->
+    <mx:Stroke id="pieborder" color="0x000000" weight="2" alpha=".5"/>
+    <mx:PieChart id="pieChart"
+            dataProvider="{dataProvider}"
+            showDataTips="false"
+            height="100%"
+            width="100%">
+        <mx:series>
+            <mx:PieSeries id="pieSeries"
+                    field="data"
+                    radialStroke="{radial}"
+                    stroke="{pieborder}"
+                    fills="{[sc1, sc2]}" />
+        </mx:series>
+    </mx:PieChart>
+    
+    <mx:HBox height="100%" width="100%" horizontalAlign="center" verticalAlign="middle">
+       <mx:Image id="star" source="images/star.png" height="50" width="50" visible="false" />
+    </mx:HBox>
+    
+    <mx:VBox height="100%" width="100%" horizontalAlign="center" verticalAlign="middle">
+       <mx:Label id="starRatingText" text="{rating.toPrecision(2)}" fontSize="50" fontWeight="bold" paddingBottom="0" visible="false" />
+    </mx:VBox>
+</mx:Canvas>
