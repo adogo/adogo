@@ -39,11 +39,15 @@
 	<views:ReviewView id="review"
 		left="90" top="420" 
 		width="305" height="228"
-		reviews="{selectedRestaurant.reviews}" />
+		reviews="{selectedRestaurant.bindableReviews}" />
 	
 	<views:RatingView id="votes" 
 		width="400" height="240" 
 		right="180" bottom="57" 
 		rating="{selectedRestaurant.rating}" />
 
+   <mx:VBox right="10" bottom="40">
+      <mx:Label text="powered by"  paddingBottom="-15" paddingLeft="-10" />
+      <mx:Image source="images/yelp_logo.png" width="100" height="50" />   
+   </mx:VBox>
 </mx:Canvas>

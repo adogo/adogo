@@ -1,6 +1,8 @@
 package info.itsrandom.restaurantGuide
 {
    import mx.collections.ArrayCollection;
+   import mx.rpc.AsyncToken;
+   import mx.rpc.Responder;
    import mx.rpc.events.ResultEvent;
    import mx.rpc.remoting.RemoteObject;
    
@@ -9,12 +11,15 @@ package info.itsrandom.restaurantGuide
       public function AmfRestaurantGateway()
       {
          super();
-         super.service = new RemoteObject("restaurants");
+         super.service = new RemoteObject("rubyamf");
+         super.service.endpoint = Registry.amfServiceUrl;
+         super.service.source = "RestaurantsController";
+         
       }
 
       public override function load() : void
 		{
-			var token: AsyncToken = this.service.list();
+			var token: AsyncToken = this.service.index();
 			token.addResponder(new Responder(result, fault));
 		}
 		

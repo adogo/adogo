@@ -19,9 +19,9 @@
 		]]>
 	</mx:Script>
 	
-	<local:XmlRestaurantGateway id="gateway" />
+	<!--<local:XmlRestaurantGateway id="gateway" />-->
    <!--<local:JsonRestaurantGateway id="gateway" />-->
-	<!--<local:AmfRestaurantGateway id="gateway" />-->
+	<local:AmfRestaurantGateway id="gateway" />
 	
 	<view:MainView id="wrapper" 
 		backgroundImage="images/table.jpg"

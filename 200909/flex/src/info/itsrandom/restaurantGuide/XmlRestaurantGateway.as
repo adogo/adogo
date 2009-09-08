@@ -44,7 +44,7 @@ package info.itsrandom.restaurantGuide
 				
 				for each(var review : String in restaurantNode.reviews.review)
 				{
-				   restaurant.reviews.addItem(review);
+				   restaurant.reviews.push(review);
 				}
 				
 				restaurant.rating = restaurantNode.rating;

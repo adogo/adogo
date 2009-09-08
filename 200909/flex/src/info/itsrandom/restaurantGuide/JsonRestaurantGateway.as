@@ -46,8 +46,7 @@ package info.itsrandom.restaurantGuide
       			restaurant.id = index+1;	
       			restaurant.name = item.name;	
       			restaurant.address = item.address;
-      			restaurant.reviews.source = item.reviews;
-      			restaurant.reviews.refresh();	
+      			restaurant.reviews = item.reviews;
       			restaurant.rating = item.rating;
       			
       			return restaurant;
